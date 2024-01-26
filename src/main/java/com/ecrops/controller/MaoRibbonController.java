@@ -138,4 +138,15 @@ public String getCropInsGri(Model model) {
 public String getSupChkRecrdAlloted(Model model) {
 	return "SuperCheckRecordsAlloted";
 }
+
+@GetMapping("/supchkappr")
+public String getSupChkAppr(Model model) {
+	return "SpuperChkAppr";
+	
+}
+@GetMapping("/supchk")
+public String getSupChR(Model model) {
+	return "SpuperCheck";
+	
+}
 }

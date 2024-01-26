@@ -145,5 +145,8 @@ interface DeviceRegDetails{
 	String getRemarks();
 	}
 	
+	
+		
+	
 
 }

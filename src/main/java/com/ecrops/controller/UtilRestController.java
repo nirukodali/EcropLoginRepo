@@ -28,13 +28,17 @@ import com.ecrops.entity.RbkSurveyNoMappingDrpdwn;
 import com.ecrops.entity.RofrBookedExtent;
 import com.ecrops.entity.RofrBookedExtentPartitions;
 import com.ecrops.entity.SeasonCropBookedExtent;
+import com.ecrops.entity.SpuperChkAppr;
 import com.ecrops.entity.SuperCheckRecordsAlloted;
+import com.ecrops.entity.SuperChkReport;
 import com.ecrops.model.RequestModel;
 import com.ecrops.partitions.AllocatedSurveyNoMappingPartition;
 import com.ecrops.partitions.DataSourceWiseBookingReportPartitions;
 import com.ecrops.partitions.RbkSurveyNoMappingDrpdwnPartitions;
 import com.ecrops.partitions.SeasonCropBookedExtentPartition;
+import com.ecrops.partitions.SpuperChkApprPartition;
 import com.ecrops.partitions.SuperCheckRecordsAllotedPartition;
+import com.ecrops.partitions.SuperChkReportPartition;
 import com.ecrops.projections.MasterProjections;
 import com.ecrops.repo.AllocataedSurveyNoMappingRepo;
 import com.ecrops.repo.FarmerBookingDetailsPartitions;
@@ -508,7 +512,40 @@ List<SuperCheckRecordsAlloted> spckr = superCheckRecordsAllotedPartition.getSupc
 		requestModel.getCropyear());
 	System.out.println("details===================>" + spckr.size());
 	return spckr;
-}	
+}
+//================SpuperCheck APPR Report==================//
+@Autowired
+SpuperChkApprPartition spuperChkApprPartition;
+
+@PostMapping("/supchapprintf")
+	List<SpuperChkAppr> getSupChkAppr(@RequestBody RequestModel requestModel ) {
+	System.out.println("requestModel=>"+requestModel.toString());
+
+List<SpuperChkAppr> spcapr = spuperChkApprPartition.getSupchkAppr( 
+		requestModel.getWbdcode(),
+		requestModel.getWbmcode(),
+		requestModel.getUserid(),
+		requestModel.getCropyear());
+	System.out.println("details===================>" + spcapr.size());
+	return spcapr;
+}
+//=========================SuperCheck Report===============================//
+
+@Autowired
+SuperChkReportPartition superChkReportPartition;
+
+@PostMapping("/supcheckReport")
+	List<SuperChkReport> getSupChk(@RequestBody RequestModel requestModel ) {
+	System.out.println("requestModel=>"+requestModel.toString());
+
+List<SuperChkReport> supkr = superChkReportPartition.getSupchkRep( 
+		requestModel.getWbdcode(),
+		requestModel.getWbmcode(),
+		requestModel.getUserid(),
+		requestModel.getCropyear());
+	System.out.println("details===================>" + supkr.size());
+	return supkr;
+}
 }
 
 
