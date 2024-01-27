@@ -82,12 +82,11 @@ public class SuperChk_rejReportPartition {
 			entity.setVarietyname((String) row[8]);
 			entity.setBookedext((String) row[9]);
 			entity.setWsrcdesc((String) row[10]);
-			entity.setWsrcdesc((String) row[11]);
-			entity.setCr_sow_date((String) row[12]);
-			entity.setKh_no((String) row[13]);
-			entity.setCr_sno((String) row[14]);
-			entity.setSupercheck_userid((String) row[15]);
-			entity.setRemarks((String) row[16]);
+			entity.setCr_sow_date((String) row[11]);
+			entity.setKh_no((String) row[12]);
+			entity.setCr_sno((String) row[13]);
+			entity.setSupercheck_userid((String) row[14]);
+			entity.setRemarks((String) row[15]);
 			detailsEntities.add(entity);
 	
 		}

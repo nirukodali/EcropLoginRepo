@@ -106,9 +106,18 @@
 			success: function (resp) {
 				alert(JSON.stringify(resp));
 				var sno = 0;
+				var remarks='';
 				for (var j = 0; j < resp.length; j++) {
-					sno = sno + 1;
 					var bean = resp[j];
+					sno = sno + 1;
+					
+					if(remarks =='Entry Found Correct'){
+						remarks = '<font color="black">'+remarks+'</font>';	
+					}
+					if(remarks =='Entry Found Incorrect'){
+						remarks = '<font color="red">'+remarks+'</font>';
+					}
+					
 					$("#databody").append('<tr style="fontsize:200px; font-weight: bold;">'
 						+ '<td>' + sno + '</td>'
 						+ '<td>' + bean.wbdname + '</td>'
@@ -125,7 +134,7 @@
 						+ '<td>' + bean.kh_no + '</td>'
 						+ '<td>' + bean.cr_sno + '</td>'
 						+ '<td>' + bean.supercheck_userid + '</td>'
-						+ '<td>' + bean.remarks + '</td>'
+						+ '<td style="background-color: #e8f4f0; border: 1px solid black">' + bean.remarks + '</td>'
 					+ '</tr>');
 				}
 			}
