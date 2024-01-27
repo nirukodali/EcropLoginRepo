@@ -31,6 +31,7 @@ import com.ecrops.entity.SeasonCropBookedExtent;
 import com.ecrops.entity.SpuperChkAppr;
 import com.ecrops.entity.SuperCheckRecordsAlloted;
 import com.ecrops.entity.SuperChkReport;
+import com.ecrops.entity.SuperChk_rejReport;
 import com.ecrops.model.RequestModel;
 import com.ecrops.partitions.AllocatedSurveyNoMappingPartition;
 import com.ecrops.partitions.DataSourceWiseBookingReportPartitions;
@@ -39,6 +40,7 @@ import com.ecrops.partitions.SeasonCropBookedExtentPartition;
 import com.ecrops.partitions.SpuperChkApprPartition;
 import com.ecrops.partitions.SuperCheckRecordsAllotedPartition;
 import com.ecrops.partitions.SuperChkReportPartition;
+import com.ecrops.partitions.SuperChk_rejReportPartition;
 import com.ecrops.projections.MasterProjections;
 import com.ecrops.repo.AllocataedSurveyNoMappingRepo;
 import com.ecrops.repo.FarmerBookingDetailsPartitions;
@@ -545,6 +547,24 @@ List<SuperChkReport> supkr = superChkReportPartition.getSupchkRep(
 		requestModel.getCropyear());
 	System.out.println("details===================>" + supkr.size());
 	return supkr;
+}
+//========================== SuperCheck Rejected===============================//
+
+
+@Autowired
+SuperChk_rejReportPartition superChk_rejReportPartition;
+
+@PostMapping("/supchkrej")
+	List<SuperChk_rejReport> getSupChkRejrReport(@RequestBody RequestModel requestModel ) {
+	System.out.println("requestModel=>"+requestModel.toString());
+
+List<SuperChk_rejReport> supkrej = superChk_rejReportPartition.getSupchkRej( 
+		requestModel.getWbdcode(),
+		requestModel.getWbmcode(),
+		//requestModel.getUserid(),
+		requestModel.getCropyear());
+	System.out.println("details===================>" + supkrej.size());
+	return supkrej;
 }
 }
 

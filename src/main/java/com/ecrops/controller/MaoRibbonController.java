@@ -149,4 +149,9 @@ public String getSupChR(Model model) {
 	return "SpuperCheck";
 	
 }
+@GetMapping("/supchkrejreport")
+public String getSupChRej(Model model) {
+	return "SuperChk_rejReport";
+	
+}
 }
