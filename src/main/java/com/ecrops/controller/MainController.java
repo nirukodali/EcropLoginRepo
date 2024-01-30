@@ -89,11 +89,13 @@ public class MainController {
 			
 			httpSession.setAttribute("wbedname", wbMaster.getWbedname());
 			httpSession.setAttribute("wbemname", wbMaster.getWbemname());
+			httpSession.setAttribute("wbevname", wbMaster.getWbevname());
 			httpSession.setAttribute("dcode", userRegEntity.getDistCode());
 			httpSession.setAttribute("mcode", userRegEntity.getMandCode());
 			httpSession.setAttribute("wbdcode", userRegEntity.getWbDcode());
 			httpSession.setAttribute("wbmcode", userRegEntity.getWbMcode());
-			httpSession.setAttribute("mcodee", wbMaster.getMcode());
+			httpSession.setAttribute("wbvcode", userRegEntity.getWbvcode());
+			//httpSession.setAttribute("mcodee", wbMaster.getMcode());
 			
 		} else if (userType != null && "25".equalsIgnoreCase(userType)) {
 			wbMaster = wbMasterService.getWbMasterDetailsForVillage(userRegEntity.getWbvcode(),

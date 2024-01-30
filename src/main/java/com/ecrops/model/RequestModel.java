@@ -10,12 +10,15 @@ public class RequestModel {
 	private String wbmcode;
 	private String wbvode;
 	private String vcode;
+	private String  crop;
+	private String  bookingid;
+	private String  year;
 	public RequestModel() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public RequestModel(String dcode, String mcode, String cropyear, String season, String userid, String wbdcode,
-			String wbmcode, String wbvode, String vcode) {
+			String wbmcode, String wbvode, String vcode, String crop, String bookingid, String year) {
 		super();
 		this.dcode = dcode;
 		this.mcode = mcode;
@@ -26,6 +29,9 @@ public class RequestModel {
 		this.wbmcode = wbmcode;
 		this.wbvode = wbvode;
 		this.vcode = vcode;
+		this.crop = crop;
+		this.bookingid = bookingid;
+		this.year = year;
 	}
 	public String getDcode() {
 		return dcode;
@@ -81,12 +87,31 @@ public class RequestModel {
 	public void setVcode(String vcode) {
 		this.vcode = vcode;
 	}
+	public String getCrop() {
+		return crop;
+	}
+	public void setCrop(String crop) {
+		this.crop = crop;
+	}
+	public String getBookingid() {
+		return bookingid;
+	}
+	public void setBookingid(String bookingid) {
+		this.bookingid = bookingid;
+	}
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
 	@Override
 	public String toString() {
 		return "RequestModel [dcode=" + dcode + ", mcode=" + mcode + ", cropyear=" + cropyear + ", season=" + season
 				+ ", userid=" + userid + ", wbdcode=" + wbdcode + ", wbmcode=" + wbmcode + ", wbvode=" + wbvode
-				+ ", vcode=" + vcode + "]";
+				+ ", vcode=" + vcode + ", crop=" + crop + ", bookingid=" + bookingid + ", year=" + year + "]";
 	}
-
+	
+	
 	
 }

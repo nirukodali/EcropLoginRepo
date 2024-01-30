@@ -154,4 +154,9 @@ public String getSupChRej(Model model) {
 	return "SuperChk_rejReport";
 	
 }
+@GetMapping("/cropbmao")
+public String getcrpMao(Model model) {
+	return "CropBookingDetailsMaoIntf";
+	
+}
 }

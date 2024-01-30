@@ -1,5 +1,6 @@
 package com.ecrops.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecrops.entity.AllocatedSurveyNoMapping;
+import com.ecrops.entity.CropBookingDetailsMaoIntf;
 import com.ecrops.entity.DataSourceWiseBookingReport;
 import com.ecrops.entity.FarmerBookingDetails;
 import com.ecrops.entity.MaoAuthVaaVroekyc;
@@ -34,6 +36,7 @@ import com.ecrops.entity.SuperChkReport;
 import com.ecrops.entity.SuperChk_rejReport;
 import com.ecrops.model.RequestModel;
 import com.ecrops.partitions.AllocatedSurveyNoMappingPartition;
+import com.ecrops.partitions.CropBookingDetailsMaoIntfPartition;
 import com.ecrops.partitions.DataSourceWiseBookingReportPartitions;
 import com.ecrops.partitions.RbkSurveyNoMappingDrpdwnPartitions;
 import com.ecrops.partitions.SeasonCropBookedExtentPartition;
@@ -61,6 +64,7 @@ import com.ecrops.repo.SeasonCropBookedExtentRepo.DeviceRegDetails;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.EmployeeList;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.ObjUnobj;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.RepVaaDetails;
+import com.ecrops.util.MasterFunctions;
 
 @RestController
 
@@ -101,8 +105,6 @@ public class UtilRestController {
 		List<MasterProjections> list = maoAuthVaaVroekycRepo.getAllCrops();
 		return list;
 	}
-
-	
 	
 	@GetMapping("/getAllMandals")
 	public List<MasterProjections> getMandals( Integer dcode) {
@@ -554,9 +556,13 @@ List<SuperChkReport> supkr = superChkReportPartition.getSupchkRep(
 @Autowired
 SuperChk_rejReportPartition superChk_rejReportPartition;
 
+//@Autowired MasterFunctions masterFunctions;
+
 @PostMapping("/supchkrej")
 	List<SuperChk_rejReport> getSupChkRejrReport(@RequestBody RequestModel requestModel ) {
 	System.out.println("requestModel=>"+requestModel.toString());
+	
+	//masterFunctions.getCropImageMao(null, null, null, null, null, null)
 
 List<SuperChk_rejReport> supkrej = superChk_rejReportPartition.getSupchkRej( 
 		requestModel.getWbdcode(),
@@ -566,6 +572,27 @@ List<SuperChk_rejReport> supkrej = superChk_rejReportPartition.getSupchkRej(
 	System.out.println("details===================>" + supkrej.size());
 	return supkrej;
 }
+	//================CropBookingDetailsMaoIntf====================//
+	
+	@Autowired
+	CropBookingDetailsMaoIntfPartition cropBookingDetailsMaoIntfPartition;
+
+	@Autowired MasterFunctions masterFunctions;
+
+	@PostMapping("/crpmao")
+		List<CropBookingDetailsMaoIntf> getCropdetMao(@RequestBody RequestModel requestModel ) throws SQLException {
+		System.out.println("requestModel=>"+requestModel.toString());
+
+	List<CropBookingDetailsMaoIntf> crdbmao = cropBookingDetailsMaoIntfPartition.getCropDetailsMao( 
+			requestModel.getWbdcode(),
+			requestModel.getDcode(),
+			requestModel.getWbmcode(),
+			requestModel.getVcode(),
+			requestModel.getCropyear(),
+		   requestModel.getCrop());		
+		System.out.println("details===================>" + crdbmao.size());
+		return crdbmao;
+	}
 }
 
 
