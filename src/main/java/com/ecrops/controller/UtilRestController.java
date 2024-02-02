@@ -28,6 +28,7 @@ import com.ecrops.entity.NormalAreasMwiseMao;
 import com.ecrops.entity.PhyAckVwise;
 import com.ecrops.entity.RbkSurveyNoMapping;
 import com.ecrops.entity.RbkSurveyNoMappingDrpdwn;
+import com.ecrops.entity.RepLandDataDetails;
 import com.ecrops.entity.Rep_DownloadedDetailsIntf;
 import com.ecrops.entity.Rep_phy_ack_rbk;
 import com.ecrops.entity.RofrBookedExtent;
@@ -59,6 +60,7 @@ import com.ecrops.repo.MaoAuthVaaVroekycRepo;
 import com.ecrops.repo.NormalAreasMwiseMaoRepo;
 import com.ecrops.repo.RbkSurveyNoMappingPartition;
 import com.ecrops.repo.RbkSurveyNoMappingRepo;
+import com.ecrops.repo.RepLandDataDetailsRepo;
 import com.ecrops.repo.RofrBookedExtentRepo;
 import com.ecrops.repo.RofrBookedExtentRepo.EfishDetailsC;
 import com.ecrops.repo.RofrBookedExtentRepo.EfishDetailsR;
@@ -646,6 +648,24 @@ List<SuperChk_rejReport> supkrej = superChk_rejReportPartition.getSupchkRej(
 					System.out.println("details===================>" + dwnlddet.size());
 						return dwnlddet;
 					}
+//=====================RepLandDataDetails=========================//
+						@Autowired
+						RepLandDataDetailsRepo repLandDataDetailsRepo;
+						@PostMapping("/landatam")
+							List<RepLandDataDetails> getDwnloadedDet(@RequestBody RequestModel requestModel
+									 ) throws SQLException {
+							System.out.println("requestModel=>"+requestModel.toString());
+
+						List<RepLandDataDetails> landata = repLandDataDetailsRepo.getLandDet( 
+							Integer.parseInt(requestModel.getDcode()),
+							Integer.parseInt(requestModel.getMcode()));
+						System.out.println("details===================>" + landata.size());
+							return landata;
+						}
+						
+						
+						
+						
 }
 
 

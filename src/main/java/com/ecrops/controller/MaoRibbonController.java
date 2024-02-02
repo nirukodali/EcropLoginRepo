@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -174,4 +175,17 @@ public String getDwnldDetIntf(Model model) {
 	return "Rep_DownloadedDetailsIntf";
 	
 }
+@GetMapping("/landdatadet")
+public String getLandData(Model model) {
+	return "RepLandDataDetails";
+	
+}
+
+
+@RequestMapping("villLandData")
+public String getVillLandData(Model model) {
+	
+	return "Rep_VillLandDataDetails";
+}
+ 
 }
