@@ -20,7 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/cultivator/save", "/cultivator/update", "/cultivator/delete", "cultivator/extent",
 				"/normal","/crv","/util/**","/crop","/farmerdetails" ,"/rofr" ,"/ekycmao","/rbksnomapping" ,
 				"/allocatedSnoMap","/datasrc","/efishRofr","/farmdet","/allcrops","/efblkext","/objunobj","/empL",
-				"/repvaadet","/devregdett","/cropins","/supchkra","/supchkappr","/supchk","/supchkrejreport","/cropbmao").permitAll().anyRequest()
+				"/repvaadet","/devregdett","/cropins","/supchkra","/supchkappr","/supchk","/supchkrejreport",
+				"/cropbmao","/phyackvwise","/phyackrbk","/dwnlddetintf").permitAll().anyRequest()
 				.permitAll()).formLogin(login -> login.loginPage("/login").permitAll().defaultSuccessUrl("/", true))
 				.logout(logout -> {
 					try {

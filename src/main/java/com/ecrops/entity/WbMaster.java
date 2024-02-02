@@ -30,6 +30,8 @@ public class WbMaster {
 	
 	@Column(name = "mcode")
 	private Integer mcode;
+	
+
 
 	public WbMaster() {
 		super();
@@ -46,6 +48,7 @@ public class WbMaster {
 		this.wbmcode = wbmcode;
 		this.wbvcode = wbvcode;
 		this.mcode = mcode;
+	
 	}
 
 	public String getWbedname() {
@@ -104,13 +107,14 @@ public class WbMaster {
 		this.mcode = mcode;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "WbMaster [wbedname=" + wbedname + ", wbemname=" + wbemname + ", wbevname=" + wbevname + ", wbdcode="
-				+ wbdcode + ", wbmcode=" + wbmcode + ", wbvcode=" + wbvcode + ", mcode=" + mcode + "]";
+				+ wbdcode + ", wbmcode=" + wbmcode + ", wbvcode=" + wbvcode + ", mcode=" + mcode +  "]";
 	}
-	
-	
 
+	
 	
 }

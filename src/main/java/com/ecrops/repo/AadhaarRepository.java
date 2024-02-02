@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.ecrops.entity.Aadhaar;
 
 @Repository
-public interface AadhaarRepository extends JpaRepository<Aadhaar, Long> {
+public interface AadhaarRepository extends JpaRepository<Aadhaar, String> {
 
 	@Query(value = "SELECT district, count(*) FILTER(WHERE LENGTH(CAST(aadhaar_id AS text))=12) AS updatedcount,count(*) \r\n"
 			+ "			 FILTER(WHERE aadhaar_id='' ) AS notupdatedcount from user_registration where status='A'  and type_user='25' \r\n"

@@ -25,8 +25,11 @@ import com.ecrops.entity.DataSourceWiseBookingReport;
 import com.ecrops.entity.FarmerBookingDetails;
 import com.ecrops.entity.MaoAuthVaaVroekyc;
 import com.ecrops.entity.NormalAreasMwiseMao;
+import com.ecrops.entity.PhyAckVwise;
 import com.ecrops.entity.RbkSurveyNoMapping;
 import com.ecrops.entity.RbkSurveyNoMappingDrpdwn;
+import com.ecrops.entity.Rep_DownloadedDetailsIntf;
+import com.ecrops.entity.Rep_phy_ack_rbk;
 import com.ecrops.entity.RofrBookedExtent;
 import com.ecrops.entity.RofrBookedExtentPartitions;
 import com.ecrops.entity.SeasonCropBookedExtent;
@@ -38,7 +41,10 @@ import com.ecrops.model.RequestModel;
 import com.ecrops.partitions.AllocatedSurveyNoMappingPartition;
 import com.ecrops.partitions.CropBookingDetailsMaoIntfPartition;
 import com.ecrops.partitions.DataSourceWiseBookingReportPartitions;
+import com.ecrops.partitions.PhyAckVwisePartition;
 import com.ecrops.partitions.RbkSurveyNoMappingDrpdwnPartitions;
+import com.ecrops.partitions.Rep_DownloadedDetailsIntfPartition;
+import com.ecrops.partitions.Rep_phy_ack_rbkPartition;
 import com.ecrops.partitions.SeasonCropBookedExtentPartition;
 import com.ecrops.partitions.SpuperChkApprPartition;
 import com.ecrops.partitions.SuperCheckRecordsAllotedPartition;
@@ -593,6 +599,53 @@ List<SuperChk_rejReport> supkrej = superChk_rejReportPartition.getSupchkRej(
 		System.out.println("details===================>" + crdbmao.size());
 		return crdbmao;
 	}
+	//================PhyAckVwise====================//
+		@Autowired
+		PhyAckVwisePartition phyAckVwisePartition;
+		@PostMapping("/phyack")
+			List<PhyAckVwise> getPhyAckVwise(@RequestBody RequestModel requestModel ) throws SQLException {
+			System.out.println("requestModel=>"+requestModel.toString());
+
+		List<PhyAckVwise> phyack = phyAckVwisePartition.getPhyAck( 
+				requestModel.getWbdcode(),
+				requestModel.getWbmcode(),
+				requestModel.getCropyear(),
+				requestModel.getUserid());
+			return phyack;
+		}
+		
+		//================ Rep_phy_ack_rbk====================//
+				@Autowired
+				Rep_phy_ack_rbkPartition rep_phy_ack_rbkPartition;
+				@PostMapping("/phyrbk")
+					List<Rep_phy_ack_rbk> getPhyAckRBK(@RequestBody RequestModel requestModel ) throws SQLException {
+					System.out.println("requestModel=>"+requestModel.toString());
+
+				List<Rep_phy_ack_rbk> phyrbk = rep_phy_ack_rbkPartition.getPhyRbk( 
+						requestModel.getWbdcode(),
+						requestModel.getWbmcode(),
+						requestModel.getCropyear(),
+						requestModel.getUserid());
+				System.out.println("details===================>" + phyrbk.size());
+					return phyrbk;
+				}
+//==========================Rep_DownloadedDetailsIntf===========================//
+					@Autowired
+					Rep_DownloadedDetailsIntfPartition rep_DownloadedDetailsIntfPartition;
+					@PostMapping("/dwnlddet")
+						List<Rep_DownloadedDetailsIntf> getDwnloadedDet(@RequestBody RequestModel requestModel,
+								HttpSession httpSession ) throws SQLException {
+						System.out.println("requestModel=>"+requestModel.toString());
+						System.out.println(httpSession.getAttribute("wbdname"));
+
+					List<Rep_DownloadedDetailsIntf> dwnlddet = rep_DownloadedDetailsIntfPartition.getDwnLdDet( 
+							requestModel.getWbdcode(),
+							requestModel.getWbmcode(),
+							requestModel.getCropyear(),
+							requestModel.getUserid());
+					System.out.println("details===================>" + dwnlddet.size());
+						return dwnlddet;
+					}
 }
 
 

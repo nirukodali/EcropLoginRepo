@@ -159,4 +159,19 @@ public String getcrpMao(Model model) {
 	return "CropBookingDetailsMaoIntf";
 	
 }
+@GetMapping("/phyackvwise")
+public String getPhyAckVwise(Model model) {
+	return "PhyAckVwise";
+	
+}
+@GetMapping("/phyackrbk")
+public String getPhyAckRbk(Model model) {
+	return "Rep_phy_ack_rbk";
+	
+}
+@GetMapping("/dwnlddetintf")
+public String getDwnldDetIntf(Model model) {
+	return "Rep_DownloadedDetailsIntf";
+	
+}
 }

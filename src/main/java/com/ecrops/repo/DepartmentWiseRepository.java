@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.ecrops.entity.DepartmentWise;
 
-public interface DepartmentWiseRepository extends JpaRepository<DepartmentWise, Integer> {
+public interface DepartmentWiseRepository extends JpaRepository<DepartmentWise, String> {
 	@Query(value = "select distinct dist.dname, a.dcode, a.cr_year, a.cr_season, a.normalarea as agri_normalarea, a.cultivable_land as agri_cultivable_land, \r\n"
 			+ "h.hnormalarea as hnormalarea, h.cultivable_land as hcultivable_land, s.cultivable_land as seri_cultivable_land, sf.normalarea as \r\n"
 			+ "soc_forestry_normalarea, sf.cultivable_land as soc_forestry_cultivable_land, f.cultivable_land as fodder_cultivable_land, \r\n"

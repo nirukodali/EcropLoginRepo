@@ -21,6 +21,8 @@ import com.ecrops.service.AuthenticationService;
 import com.ecrops.service.UserRegService;
 import com.ecrops.service.WbMasterService;
 
+import antlr.collections.List;
+
 @Controller
 public class MainController {
 
@@ -62,7 +64,9 @@ public class MainController {
 			String password = encrypt.setSha256Password(userDetails.getPassword());
 			if (encpassword.equals(password)) {
 				UserRegEntity userRegEntity = userRegService.getSessionValues(authenticationRequest.getUsername());
+				System.out.println(userRegEntity.getWbDcode());
 				setSessionValues(session, userRegEntity);
+				
 				return "home";
 			} else {
 				model.addAttribute("msg", "Invalid Credentials");
@@ -78,36 +82,49 @@ public class MainController {
 
 	public void setSessionValues(HttpSession httpSession, UserRegEntity userRegEntity) {
 		String userType = userRegEntity.getType_user();
+//		List<WbMaster>  wbMaster = null;
 		WbMaster wbMaster = null;
 
 		if (userType != null && "17".equalsIgnoreCase(userType)) {
 			
 		} else if (userType != null && "5".equalsIgnoreCase(userType)) {
-			wbMaster = wbMasterService.getWbMasterDetailsForMandal(userRegEntity.getWbMcode(),
+			System.out.println(userRegEntity.getWbDcode());
+			System.out.println(userRegEntity.getWbMcode());
+			System.out.println(userRegEntity.getWbvcode());
+				wbMaster = wbMasterService.getWbMasterDetailsForMandal(userRegEntity.getWbMcode(),
 					userRegEntity.getWbDcode());
 			System.out.println("wbMaster====>"+wbMaster.toString());
 			
-			httpSession.setAttribute("wbedname", wbMaster.getWbedname());
-			httpSession.setAttribute("wbemname", wbMaster.getWbemname());
-			httpSession.setAttribute("wbevname", wbMaster.getWbevname());
 			httpSession.setAttribute("dcode", userRegEntity.getDistCode());
 			httpSession.setAttribute("mcode", userRegEntity.getMandCode());
 			httpSession.setAttribute("wbdcode", userRegEntity.getWbDcode());
 			httpSession.setAttribute("wbmcode", userRegEntity.getWbMcode());
 			httpSession.setAttribute("wbvcode", userRegEntity.getWbvcode());
+			httpSession.setAttribute("wbedname", wbMaster.getWbedname());
+			httpSession.setAttribute("wbemname", wbMaster.getWbemname());
+			httpSession.setAttribute("wbevname", wbMaster.getWbevname());
+			
+			
+			
+			
 			//httpSession.setAttribute("mcodee", wbMaster.getMcode());
 			
 		} else if (userType != null && "25".equalsIgnoreCase(userType)) {
 			wbMaster = wbMasterService.getWbMasterDetailsForVillage(userRegEntity.getWbvcode(),
 					userRegEntity.getWbMcode(), userRegEntity.getWbDcode());
-			httpSession.setAttribute("wbedname", wbMaster.getWbedname());
-			httpSession.setAttribute("wbemname", wbMaster.getWbemname());
-			httpSession.setAttribute("wbevname", wbMaster.getWbevname());
-			httpSession.setAttribute("dcode", userRegEntity.getDistCode());
 			httpSession.setAttribute("wbdcode", userRegEntity.getWbDcode());
 			httpSession.setAttribute("mcode", userRegEntity.getMandCode());
 			httpSession.setAttribute("wbmcode", userRegEntity.getWbMcode());
 			httpSession.setAttribute("wbvcode", userRegEntity.getWbvcode());
+			System.out.println(userRegEntity.getWbDcode());
+			System.out.println(userRegEntity.getWbMcode());
+			System.out.println(userRegEntity.getWbvcode());
+			httpSession.setAttribute("wbedname", wbMaster.getWbedname());
+			httpSession.setAttribute("wbemname", wbMaster.getWbemname());
+			httpSession.setAttribute("wbevname", wbMaster.getWbevname());
+			httpSession.setAttribute("dcode", userRegEntity.getDistCode());
+			
+			
 		}
 
 		httpSession.setAttribute("role", userRegEntity.getType_user());

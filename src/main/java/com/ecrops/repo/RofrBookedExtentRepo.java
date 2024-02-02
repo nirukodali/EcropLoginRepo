@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import com.ecrops.entity.RofrBookedExtent;
 import com.ecrops.projections.MasterProjections;
 
-public interface RofrBookedExtentRepo extends JpaRepository<RofrBookedExtent, String> {
+public interface RofrBookedExtentRepo extends JpaRepository<RofrBookedExtent, Integer> {
 
 	@Query(value = "select distinct on (a.cropyear,a.season) concat(a.season,'@',cropyear) as col1,concat(b.seasonname,' ',cropyear) as col2 \r\n"
 			+ " from activeseason a,season b  where   a.season=b.season and a.active='A' order by a.cropyear,a.season", nativeQuery = true)
