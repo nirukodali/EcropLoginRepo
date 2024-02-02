@@ -1,6 +1,7 @@
 package com.ecrops.controller;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -15,13 +16,15 @@ import com.ecrops.repo.ActiveSeasonRepository;
 import com.ecrops.repo.FarmerBookingDetailsPartitions;
 import com.ecrops.repo.FarmerBookingDetailsRepo;
 import com.ecrops.repo.NormalAreasMwiseMaoRepo;
+import com.ecrops.repo.RepLandDataDetailsRepo;
+import com.ecrops.repo.RepLandDataDetailsRepo.Rep_VillLandDataDetails;
 
 
 
 @Controller
 public class MaoRibbonController {
 	
-	@Autowired NormalAreasMwiseMaoRepo normalAreasMwiseMaoRepo;	
+	@Autowired RepLandDataDetailsRepo repLandDataDetailsRepo;	
 	@Autowired FarmerBookingDetailsRepo farmerBookingDetailsRepo;
 	
 	@Autowired FarmerBookingDetailsPartitions  partion;
@@ -176,16 +179,23 @@ public String getDwnldDetIntf(Model model) {
 	
 }
 @GetMapping("/landdatadet")
-public String getLandData(Model model) {
-	return "RepLandDataDetails";
+public String getLandData() {
 	
-}
-
-
-@RequestMapping("villLandData")
-public String getVillLandData(Model model) {
 	
+	 return "RepLandDataDetails";
+	
+}//repLandDataDetailsRepo
+
+@RequestMapping("/villLandData")
+public String getVillLandData(HttpServletRequest httpServletRequest,Model model) {
+	System.out.println("villLandData");
+	 String dcode=httpServletRequest.getParameter("dcode");
+	 String mcode=httpServletRequest.getParameter("mcode");
+	
+	 List<Rep_VillLandDataDetails> list =repLandDataDetailsRepo.getVillData(Integer.parseInt(dcode), Integer.parseInt(mcode));
+	 model.addAttribute("data", list);
 	return "Rep_VillLandDataDetails";
 }
+
  
 }

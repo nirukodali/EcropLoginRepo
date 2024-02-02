@@ -142,7 +142,7 @@
 		$("#dcode").val(dcode);
 		$("#mcode").val(mcode);
 		
-		
+		document.forms['landdata'].submit();
 	}
 </script>
 
@@ -177,6 +177,7 @@
 	</div>
 	<div class="container">
 		<form id="landdata" name="landdata" method="post" action="./villLandData">
+		
 		<input type="hidden" name="dcode" id="dcode" />
 		<input type="hidden" name="mcode" id="mcode" />
 		
