@@ -135,8 +135,8 @@
 <body>
 	<div class="heading" colspan="20" style="text-align:center;"><b>Device Registration Details</b> </div>
 	<p th:text="${msg}"></p>
-	<input type="text" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />
-	<input type="text" id="inputmcode" th:value="${#session.getAttribute('mcode')}" />
+	<input type="hidden" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />
+	<input type="hidden" id="inputmcode" th:value="${#session.getAttribute('mcode')}" />
 	<div align="center">
 		<form>
 			<table id="ObjEntryTable">

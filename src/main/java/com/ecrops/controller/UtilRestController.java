@@ -3,8 +3,6 @@ package com.ecrops.controller;
 import java.sql.SQLException;
 import java.util.List;
 
-
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -70,6 +68,7 @@ import com.ecrops.repo.SeasonCropBookedExtentRepo.BlockedEfishExtent;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.CropInsGrievance;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.DeviceRegDetails;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.EmployeeList;
+import com.ecrops.repo.SeasonCropBookedExtentRepo.NonWebView;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.ObjUnobj;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.RepVaaDetails;
 import com.ecrops.util.MasterFunctions;
@@ -78,9 +77,9 @@ import com.ecrops.util.MasterFunctions;
 
 @RequestMapping("/util")
 public class UtilRestController {
-	@Autowired 
+	@Autowired
 	SeasonCropBookedExtentRepo seasonCropBookedExtentRepo;
-	
+
 	@Autowired
 	private NormalAreasMwiseMaoRepo normalAreasMwiseMaoRepo;
 	@Autowired
@@ -113,40 +112,41 @@ public class UtilRestController {
 		List<MasterProjections> list = maoAuthVaaVroekycRepo.getAllCrops();
 		return list;
 	}
-	
+
 	@GetMapping("/getAllMandals")
-	public List<MasterProjections> getMandals( Integer dcode) {
+	public List<MasterProjections> getMandals(Integer dcode) {
 		List<MasterProjections> list = seasonCropBookedExtentRepo.getAllMandals(dcode);
 		return list;
 	}
+
 //**************************************************//Villages//*************************************************
 	@GetMapping("/getAllVillages")
-	public List<MasterProjections> getVillages(Integer dcode,Integer mcode){
-		System.out.println("dcode=>"+dcode);
-		System.out.println("mcode=>"+mcode);
-	List<MasterProjections>	list= seasonCropBookedExtentRepo.getAllVillages(dcode,mcode);
-	return list;
+	public List<MasterProjections> getVillages(Integer dcode, Integer mcode) {
+		System.out.println("dcode=>" + dcode);
+		System.out.println("mcode=>" + mcode);
+		List<MasterProjections> list = seasonCropBookedExtentRepo.getAllVillages(dcode, mcode);
+		return list;
 	}
+
 	@GetMapping("/getNormarlAreaReport")
 	List<NormalAreasMwiseMao> getList(String dcode, String mcode, String cropyear) {
-		
 
 		String[] season = cropyear.split("@");
 		String seasonType = season[0];
 		Integer seasonYear = Integer.parseInt(season[1]);
-		 System.out.println("seasonType=>"+seasonType);
-		 System.out.println("seasonYear=>"+seasonYear);
+		System.out.println("seasonType=>" + seasonType);
+		System.out.println("seasonYear=>" + seasonYear);
 
 		Integer ddcode = Integer.parseInt(dcode);
 		Integer mmcode = Integer.parseInt(mcode);
-		
-		 System.out.println("dcode=>"+dcode);
-			System.out.println("mcode=>"+mcode);
-		  System.out.println("cropyear=>"+cropyear);
+
+		System.out.println("dcode=>" + dcode);
+		System.out.println("mcode=>" + mcode);
+		System.out.println("cropyear=>" + cropyear);
 
 		List<NormalAreasMwiseMao> listt = normalAreasMwiseMaoRepo.getListt(ddcode, mmcode, seasonType, seasonYear);
-		 System.out.println("list size=>"+listt.size());
-		 System.out.println("list =>"+listt.toString());
+		System.out.println("list size=>" + listt.size());
+		System.out.println("list =>" + listt.toString());
 		return listt;
 	}
 
@@ -183,8 +183,7 @@ public class UtilRestController {
 	}
 
 	// <------------------ROFR BOOKED EXTENT----------------->//
-	
-	
+
 	@GetMapping("/getRofr")
 	List<RofrBookedExtent> getRbExt(String wbcode, String wbmcode, String cropyear, HttpSession session,
 			String userid) {
@@ -254,7 +253,6 @@ public class UtilRestController {
 		String[] season = cropyear.split("@");
 		String seasonType = season[0];
 		String year = season[1];
-		
 
 		// Integer ddcode = Integer.parseInt(dcode);
 		// Integer mmcode = Integer.parseInt(mcode);
@@ -273,7 +271,6 @@ public class UtilRestController {
 		System.out.println("mcode===================>" + mcode);
 		System.out.println("cropyear===================>" + cropyear);
 		System.out.println("userid===================>" + userid);
-		
 
 		List<RbkSurveyNoMapping> sno = rbkSurveyNoMappingPartition.rbkSno(wbdcode, mcode, cropyear, userid, userid);
 		System.out.println("details===================>" + sno.size());
@@ -286,32 +283,31 @@ public class UtilRestController {
 	private AllocatedSurveyNoMappingPartition allocatedSurveyNoMappingPartition;
 	@Autowired
 	private RbkSurveyNoMappingDrpdwnPartitions rbkSurveyNoMappingDrpdwnPartitions;
-	
 
 	@GetMapping("/drpd")
-	List<RbkSurveyNoMappingDrpdwn> getRbkdrpd(String mcode,String cropyear,String wbdcode,String rbkcode,
-			HttpSession session,HttpServletRequest request) {
-		System.out.println("mcode==========>"+mcode);
-		System.out.println("cropyear==========>"+cropyear);
-		System.out.println("wbdcode==========>"+wbdcode);
-		System.out.println("rbkcode==========>"+rbkcode);
-		
+	List<RbkSurveyNoMappingDrpdwn> getRbkdrpd(String mcode, String cropyear, String wbdcode, String rbkcode,
+			HttpSession session, HttpServletRequest request) {
+		System.out.println("mcode==========>" + mcode);
+		System.out.println("cropyear==========>" + cropyear);
+		System.out.println("wbdcode==========>" + wbdcode);
+		System.out.println("rbkcode==========>" + rbkcode);
+
 //		String[] season = cropyear.split("@");
 //		String seasonType = season[0];
 //		String year = season[1];
 //		Integer seasonYear = Integer.parseInt(season[1]);
-	  cropyear=	request.getParameter("cropyear");
-	  //mcode= (String) session.getAttribute("mcode");
-	  //wbdcode=  (String) session.getAttribute("wbdcode");
-	 // rbkcode=  (String) session.getAttribute("rbkcode");
+		cropyear = request.getParameter("cropyear");
+		// mcode= (String) session.getAttribute("mcode");
+		// wbdcode= (String) session.getAttribute("wbdcode");
+		// rbkcode= (String) session.getAttribute("rbkcode");
 
-
-		List<RbkSurveyNoMappingDrpdwn> aldw = rbkSurveyNoMappingDrpdwnPartitions.getRBK(mcode,cropyear,wbdcode,rbkcode);
-		System.out.println("details------>"+aldw.size());
+		List<RbkSurveyNoMappingDrpdwn> aldw = rbkSurveyNoMappingDrpdwnPartitions.getRBK(mcode, cropyear, wbdcode,
+				rbkcode);
+		System.out.println("details------>" + aldw.size());
 
 		return aldw;
 	}
-	
+
 	@GetMapping("/asnom")
 	List<AllocatedSurveyNoMapping> getAlcSurveyNo(String wbdcode, String cropyear, HttpSession session, String mcode,
 			String userid) {
@@ -324,7 +320,8 @@ public class UtilRestController {
 	}
 
 	@GetMapping("/asnom1")
-	List<AllocatedSurveyNoMapping> getAllocSnoMapping(String wbdcode, String cropyear, String mcode, String userid,String rbkid) {
+	List<AllocatedSurveyNoMapping> getAllocSnoMapping(String wbdcode, String cropyear, String mcode, String userid,
+			String rbkid) {
 
 		System.out.println("/asnom1");
 		System.out.println("wbdcode===================>" + wbdcode);
@@ -332,15 +329,17 @@ public class UtilRestController {
 		System.out.println("cropyear===================>" + cropyear);
 		System.out.println("userid===================>" + userid);
 		System.out.println("rbkid===================>" + rbkid);
-		
 
-List<AllocatedSurveyNoMapping> asno = allocatedSurveyNoMappingPartition.allocatedSnoDetails(wbdcode,  cropyear,  mcode,  userid, rbkid);
+		List<AllocatedSurveyNoMapping> asno = allocatedSurveyNoMappingPartition.allocatedSnoDetails(wbdcode, cropyear,
+				mcode, userid, rbkid);
 		System.out.println("details===================>" + asno.size());
 		return asno;
 	}
-	//*******// DataSourceWiseBookingExtent//*******//
+
+	// *******// DataSourceWiseBookingExtent//*******//
 	@Autowired
 	DataSourceWiseBookingReportPartitions dataSourceWiseBookingReportPartitions;
+
 	@GetMapping("/dtsrcb")
 	List<DataSourceWiseBookingReport> dataSrcDet(String wbdcode, String cropyear, HttpSession session, String wbmcode,
 			String userid) {
@@ -354,322 +353,329 @@ List<AllocatedSurveyNoMapping> asno = allocatedSurveyNoMappingPartition.allocate
 
 	@GetMapping("/dtsrcb1")
 	List<DataSourceWiseBookingReport> dataSrcDet(String wbdcode, String cropyear, String wbmcode, String userid) {
-		
+
 		System.out.println("wbdcode===================>" + wbdcode);
 		System.out.println("cropyear===================>" + cropyear);
 		System.out.println("userid===================>" + userid);
 
-List<DataSourceWiseBookingReport> dsb = dataSourceWiseBookingReportPartitions.dataSrcDet( wbdcode,  cropyear,  wbmcode,  userid);
+		List<DataSourceWiseBookingReport> dsb = dataSourceWiseBookingReportPartitions.dataSrcDet(wbdcode, cropyear,
+				wbmcode, userid);
 		System.out.println("details===================>" + dsb.get(0));
 		return dsb;
 	}
-	//**********************efishDetails***************************
-	@Autowired  private RofrBookedExtentRepo rofrBookedExtentRepo;
+
+	// **********************efishDetails***************************
+	@Autowired
+	private RofrBookedExtentRepo rofrBookedExtentRepo;
+
 	@GetMapping("/efishDetails")
 	public ResponseEntity<?> efishDetails(@RequestParam("dataSrc") String dataSrc,
-			
-			@RequestParam("dcode") String dcode,
-			@RequestParam("mcode") String mcode){
-		if(dataSrc.equalsIgnoreCase("R")) {
-			List<EfishDetailsR> efishDetailsR=rofrBookedExtentRepo.efishDetailsR(dataSrc, Integer.parseInt(dcode), Integer.parseInt(mcode));
+
+			@RequestParam("dcode") String dcode, @RequestParam("mcode") String mcode) {
+		if (dataSrc.equalsIgnoreCase("R")) {
+			List<EfishDetailsR> efishDetailsR = rofrBookedExtentRepo.efishDetailsR(dataSrc, Integer.parseInt(dcode),
+					Integer.parseInt(mcode));
 			return new ResponseEntity<List<EfishDetailsR>>(efishDetailsR, HttpStatus.OK);
 		}
-		if(dataSrc.equalsIgnoreCase("C")) {
-			List<EfishDetailsC> efishDetailsC=rofrBookedExtentRepo.efishDetailsC(Integer.parseInt(dcode), Integer.parseInt(mcode));
+		if (dataSrc.equalsIgnoreCase("C")) {
+			List<EfishDetailsC> efishDetailsC = rofrBookedExtentRepo.efishDetailsC(Integer.parseInt(dcode),
+					Integer.parseInt(mcode));
 			return new ResponseEntity<List<EfishDetailsC>>(efishDetailsC, HttpStatus.OK);
 		}
-	return null;
+		return null;
 	}
-	//**************** Farmer Details****************
-@GetMapping("/farmerdet")
-public ResponseEntity<?> farmerdet(@RequestParam("mcode") String mcode,@RequestParam("date")String date){
-	List<FarmerDetails> farmerDetails=rofrBookedExtentRepo.farmerDetails(Integer.parseInt(mcode),date);
-	return new ResponseEntity<List<FarmerDetails>>(farmerDetails,HttpStatus.OK);
+
+	// **************** Farmer Details****************
+	@GetMapping("/farmerdet")
+	public ResponseEntity<?> farmerdet(@RequestParam("mcode") String mcode, @RequestParam("date") String date) {
+		List<FarmerDetails> farmerDetails = rofrBookedExtentRepo.farmerDetails(Integer.parseInt(mcode), date);
+		return new ResponseEntity<List<FarmerDetails>>(farmerDetails, HttpStatus.OK);
 	}
-	//**************************************************************************//
-@Autowired 
-SeasonCropBookedExtentPartition seasonCropBookedExtentPartition;
 
+	// **************************************************************************//
+	@Autowired
+	SeasonCropBookedExtentPartition seasonCropBookedExtentPartition;
 
-@GetMapping("/allcrp1")
-List<SeasonCropBookedExtent> getAllCrop(String wbmcode,String cropyear,String userid,String wbdcode) {
-	
-	System.out.println("wbmcode===================>" + wbmcode);
-	System.out.println("cropyear===================>" + cropyear);
-	System.out.println("userid===================>" + userid);
+	@GetMapping("/allcrp1")
+	List<SeasonCropBookedExtent> getAllCrop(String wbmcode, String cropyear, String userid, String wbdcode) {
 
-List<SeasonCropBookedExtent> scp = seasonCropBookedExtentPartition.getAllCrops(wbmcode,cropyear,userid,wbdcode);
-	System.out.println("details===================>" + scp.get(0));
-	return scp;
-}
+		System.out.println("wbmcode===================>" + wbmcode);
+		System.out.println("cropyear===================>" + cropyear);
+		System.out.println("userid===================>" + userid);
+
+		List<SeasonCropBookedExtent> scp = seasonCropBookedExtentPartition.getAllCrops(wbmcode, cropyear, userid,
+				wbdcode);
+		System.out.println("details===================>" + scp.get(0));
+		return scp;
+	}
 //=============================BLOCKED e-fish EXTENT============================//
 
-@GetMapping("/blockedext")
-public ResponseEntity<?> blockedext(
-        @RequestParam("dcode") String dcode,
-        @RequestParam("mcode") String mcode,
-        @RequestParam("vcode") String wbvcode
-        ) {
-System.out.println("blockedext");
-System.out.println("dcode=>"+dcode);
-System.out.println("mcode=>"+mcode);
-System.out.println("wbvcode=>"+wbvcode);
+	@GetMapping("/blockedext")
+	public ResponseEntity<?> blockedext(@RequestParam("dcode") String dcode, @RequestParam("mcode") String mcode,
+			@RequestParam("vcode") String wbvcode) {
+		System.out.println("blockedext");
+		System.out.println("dcode=>" + dcode);
+		System.out.println("mcode=>" + mcode);
+		System.out.println("wbvcode=>" + wbvcode);
 
-    Integer parsedDcode = Integer.parseInt(dcode);
-    Integer parsedMcode = Integer.parseInt(mcode);
-    Integer parsedWbvcode = Integer.parseInt(wbvcode);
+		Integer parsedDcode = Integer.parseInt(dcode);
+		Integer parsedMcode = Integer.parseInt(mcode);
+		Integer parsedWbvcode = Integer.parseInt(wbvcode);
 
-  
-    @SuppressWarnings("unchecked")
-	List<BlockedEfishExtent> blockedExtent = seasonCropBookedExtentRepo.findByExtent(parsedDcode, parsedMcode, parsedWbvcode);
-    
-    return new ResponseEntity<>(blockedExtent, HttpStatus.OK);
-}
+		@SuppressWarnings("unchecked")
+		List<BlockedEfishExtent> blockedExtent = seasonCropBookedExtentRepo.findByExtent(parsedDcode, parsedMcode,
+				parsedWbvcode);
+
+		return new ResponseEntity<>(blockedExtent, HttpStatus.OK);
+	}
 
 //===========OBJ-UNOBJ//
 
-@GetMapping("/objunobj1")
-public ResponseEntity<?> getObj(){
-	List<ObjUnobj> Objunobj= seasonCropBookedExtentRepo.getObjObj();
-	 
-	return new ResponseEntity<List<ObjUnobj>>(Objunobj,HttpStatus.OK);
+	@GetMapping("/objunobj1")
+	public ResponseEntity<?> getObj() {
+		List<ObjUnobj> Objunobj = seasonCropBookedExtentRepo.getObjObj();
+
+		return new ResponseEntity<List<ObjUnobj>>(Objunobj, HttpStatus.OK);
 	}
+
 ///======================EMP LIST=======================///
-@GetMapping("/emplist")
-public ResponseEntity<?> getEmp(@RequestParam("dcode") String dcode,
-		@RequestParam("mcode")String mcode){
-	List<EmployeeList> emplist=seasonCropBookedExtentRepo.getEmpList(
-			Integer.parseInt(dcode),Integer.parseInt(mcode));
-	return new ResponseEntity<List<EmployeeList>>(emplist,HttpStatus.OK);
+	@GetMapping("/emplist")
+	public ResponseEntity<?> getEmp(@RequestParam("dcode") String dcode, @RequestParam("mcode") String mcode) {
+		List<EmployeeList> emplist = seasonCropBookedExtentRepo.getEmpList(Integer.parseInt(dcode),
+				Integer.parseInt(mcode));
+		return new ResponseEntity<List<EmployeeList>>(emplist, HttpStatus.OK);
 	}
 
-@GetMapping("/vaadet")
-public ResponseEntity<?> getVAADet(@RequestParam("mcode") String mcode,String userid){
-	List<RepVaaDetails> vaadet=seasonCropBookedExtentRepo.getVaaDet(mcode);
-	return new ResponseEntity<List<RepVaaDetails>>(vaadet,HttpStatus.OK);
+	@GetMapping("/vaadet")
+	public ResponseEntity<?> getVAADet(@RequestParam("mcode") String mcode, String userid) {
+		List<RepVaaDetails> vaadet = seasonCropBookedExtentRepo.getVaaDet(mcode);
+		return new ResponseEntity<List<RepVaaDetails>>(vaadet, HttpStatus.OK);
 	}
 
-@GetMapping("/devregdet1")
-List<DeviceRegDetails> getCropyear(  HttpSession session,String cropyear) {
-	String[] season = cropyear.split("@");
-	String seasonType = season[0];
-	String year = season[1];
-	Integer seasonYear = Integer.parseInt(season[1]);
-
-	return null;
-}
-//--------------------------------- Device Reg Details-----------------------------------------------//
-@PostMapping("/devregdet")
-public ResponseEntity<?> getDevRegDetails(@RequestBody RequestModel requestModel){
-	System.out.println("requestModel=>"+requestModel.toString());
-	
-	List<DeviceRegDetails> devregdet;
-	try {
-		String[] season = requestModel.getCropyear().split("@");
-		//System.out.println("season========="+season);
+	@GetMapping("/devregdet1")
+	List<DeviceRegDetails> getCropyear(HttpSession session, String cropyear) {
+		String[] season = cropyear.split("@");
 		String seasonType = season[0];
-		//System.out.println("seasonType========="+seasonType);
+		String year = season[1];
 		Integer seasonYear = Integer.parseInt(season[1]);
-		//System.out.println("seasonYear========="+seasonYear);
-		
-		devregdet = seasonCropBookedExtentRepo.getDevRegDet(requestModel.getMcode(), 
-				seasonYear, seasonType);
-		System.out.println("devregdet size=>"+devregdet.size());
-		return new ResponseEntity<List<DeviceRegDetails>>(devregdet,HttpStatus.OK);
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		 
-		System.out.println("getStackTrace =>"+e.getStackTrace());
-	}
-	return null;
-	
-	}
 
-
-//---------------------------------- Crop Insurence Grievance---------------------------------------------//
-@PostMapping("/crpinsgri")
-public ResponseEntity<?> getCropInsGri(@RequestBody RequestModel requestModel){
-	System.out.println("requestModel=>"+requestModel.toString());
-	
-	try {
-		String[] season = requestModel.getCropyear().split("@");
-		System.out.println("season=========" + season);
-		String cseason = season[0];
-		System.out.println("seasonType=========" + cseason);
-		Integer Year = Integer.parseInt(season[1]);
-		System.out.println("seasonYear=========" + Year);
-
-		List<CropInsGrievance> crpins = seasonCropBookedExtentRepo.getCropIns(Integer.parseInt(requestModel.getDcode()),
-				Integer.parseInt(requestModel.getMcode()), Year, cseason);
-		System.out.println("crpins size=>" + crpins.size());
-		return new ResponseEntity<List<CropInsGrievance>>(crpins, HttpStatus.OK);
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-
-		System.out.println("getStackTrace =>" + e.getStackTrace());
 		return null;
 	}
+
+//--------------------------------- Device Reg Details-----------------------------------------------//
+	@PostMapping("/devregdet")
+	public ResponseEntity<?> getDevRegDetails(@RequestBody RequestModel requestModel) {
+		System.out.println("requestModel=>" + requestModel.toString());
+
+		List<DeviceRegDetails> devregdet;
+		try {
+			String[] season = requestModel.getCropyear().split("@");
+			// System.out.println("season========="+season);
+			String seasonType = season[0];
+			// System.out.println("seasonType========="+seasonType);
+			Integer seasonYear = Integer.parseInt(season[1]);
+			// System.out.println("seasonYear========="+seasonYear);
+
+			devregdet = seasonCropBookedExtentRepo.getDevRegDet(requestModel.getMcode(), seasonYear, seasonType);
+			System.out.println("devregdet size=>" + devregdet.size());
+			return new ResponseEntity<List<DeviceRegDetails>>(devregdet, HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+
+			System.out.println("getStackTrace =>" + e.getStackTrace());
+		}
+		return null;
+
 	}
+
+//---------------------------------- Crop Insurence Grievance---------------------------------------------//
+	@PostMapping("/crpinsgri")
+	public ResponseEntity<?> getCropInsGri(@RequestBody RequestModel requestModel) {
+		System.out.println("requestModel=>" + requestModel.toString());
+
+		try {
+			String[] season = requestModel.getCropyear().split("@");
+			System.out.println("season=========" + season);
+			String cseason = season[0];
+			System.out.println("seasonType=========" + cseason);
+			Integer Year = Integer.parseInt(season[1]);
+			System.out.println("seasonYear=========" + Year);
+
+			List<CropInsGrievance> crpins = seasonCropBookedExtentRepo.getCropIns(
+					Integer.parseInt(requestModel.getDcode()), Integer.parseInt(requestModel.getMcode()), Year,
+					cseason);
+			System.out.println("crpins size=>" + crpins.size());
+			return new ResponseEntity<List<CropInsGrievance>>(crpins, HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+
+			System.out.println("getStackTrace =>" + e.getStackTrace());
+			return null;
+		}
+	}
+
 //================================ SperCheck Allotment Records==========================================//
-@Autowired	
- private SuperCheckRecordsAllotedPartition superCheckRecordsAllotedPartition;
-@PostMapping("/supchkalltrecrds")
-	List<SuperCheckRecordsAlloted> getSupChkR(@RequestBody RequestModel requestModel ) {
-	System.out.println("requestModel=>"+requestModel.toString());
+	@Autowired
+	private SuperCheckRecordsAllotedPartition superCheckRecordsAllotedPartition;
 
-List<SuperCheckRecordsAlloted> spckr = superCheckRecordsAllotedPartition.getSupchkRds( 
-		requestModel.getWbdcode(),
-		requestModel.getWbmcode(),
-		requestModel.getUserid(),
-		requestModel.getCropyear());
-	System.out.println("details===================>" + spckr.size());
-	return spckr;
-}
+	@PostMapping("/supchkalltrecrds")
+	List<SuperCheckRecordsAlloted> getSupChkR(@RequestBody RequestModel requestModel) {
+		System.out.println("requestModel=>" + requestModel.toString());
+
+		List<SuperCheckRecordsAlloted> spckr = superCheckRecordsAllotedPartition.getSupchkRds(requestModel.getWbdcode(),
+				requestModel.getWbmcode(), requestModel.getUserid(), requestModel.getCropyear());
+		System.out.println("details===================>" + spckr.size());
+		return spckr;
+	}
+
 //================SpuperCheck APPR Report==================//
-@Autowired
-SpuperChkApprPartition spuperChkApprPartition;
+	@Autowired
+	SpuperChkApprPartition spuperChkApprPartition;
 
-@PostMapping("/supchapprintf")
-	List<SpuperChkAppr> getSupChkAppr(@RequestBody RequestModel requestModel ) {
-	System.out.println("requestModel=>"+requestModel.toString());
+	@PostMapping("/supchapprintf")
+	List<SpuperChkAppr> getSupChkAppr(@RequestBody RequestModel requestModel) {
+		System.out.println("requestModel=>" + requestModel.toString());
 
-List<SpuperChkAppr> spcapr = spuperChkApprPartition.getSupchkAppr( 
-		requestModel.getWbdcode(),
-		requestModel.getWbmcode(),
-		requestModel.getUserid(),
-		requestModel.getCropyear());
-	System.out.println("details===================>" + spcapr.size());
-	return spcapr;
-}
+		List<SpuperChkAppr> spcapr = spuperChkApprPartition.getSupchkAppr(requestModel.getWbdcode(),
+				requestModel.getWbmcode(), requestModel.getUserid(), requestModel.getCropyear());
+		System.out.println("details===================>" + spcapr.size());
+		return spcapr;
+	}
 //=========================SuperCheck Report===============================//
 
-@Autowired
-SuperChkReportPartition superChkReportPartition;
+	@Autowired
+	SuperChkReportPartition superChkReportPartition;
 
-@PostMapping("/supcheckReport")
-	List<SuperChkReport> getSupChk(@RequestBody RequestModel requestModel ) {
-	System.out.println("requestModel=>"+requestModel.toString());
+	@PostMapping("/supcheckReport")
+	List<SuperChkReport> getSupChk(@RequestBody RequestModel requestModel) {
+		System.out.println("requestModel=>" + requestModel.toString());
 
-List<SuperChkReport> supkr = superChkReportPartition.getSupchkRep( 
-		requestModel.getWbdcode(),
-		requestModel.getWbmcode(),
-		requestModel.getUserid(),
-		requestModel.getCropyear());
-	System.out.println("details===================>" + supkr.size());
-	return supkr;
-}
+		List<SuperChkReport> supkr = superChkReportPartition.getSupchkRep(requestModel.getWbdcode(),
+				requestModel.getWbmcode(), requestModel.getUserid(), requestModel.getCropyear());
+		System.out.println("details===================>" + supkr.size());
+		return supkr;
+	}
 //========================== SuperCheck Rejected===============================//
 
-
-@Autowired
-SuperChk_rejReportPartition superChk_rejReportPartition;
+	@Autowired
+	SuperChk_rejReportPartition superChk_rejReportPartition;
 
 //@Autowired MasterFunctions masterFunctions;
 
-@PostMapping("/supchkrej")
-	List<SuperChk_rejReport> getSupChkRejrReport(@RequestBody RequestModel requestModel ) {
-	System.out.println("requestModel=>"+requestModel.toString());
-	
-	//masterFunctions.getCropImageMao(null, null, null, null, null, null)
+	@PostMapping("/supchkrej")
+	List<SuperChk_rejReport> getSupChkRejrReport(@RequestBody RequestModel requestModel) {
+		System.out.println("requestModel=>" + requestModel.toString());
 
-List<SuperChk_rejReport> supkrej = superChk_rejReportPartition.getSupchkRej( 
-		requestModel.getWbdcode(),
-		requestModel.getWbmcode(),
-		//requestModel.getUserid(),
-		requestModel.getCropyear());
-	System.out.println("details===================>" + supkrej.size());
-	return supkrej;
-}
-	//================CropBookingDetailsMaoIntf====================//
-	
+		// masterFunctions.getCropImageMao(null, null, null, null, null, null)
+
+		List<SuperChk_rejReport> supkrej = superChk_rejReportPartition.getSupchkRej(requestModel.getWbdcode(),
+				requestModel.getWbmcode(),
+				// requestModel.getUserid(),
+				requestModel.getCropyear());
+		System.out.println("details===================>" + supkrej.size());
+		return supkrej;
+	}
+	// ================CropBookingDetailsMaoIntf====================//
+
 	@Autowired
 	CropBookingDetailsMaoIntfPartition cropBookingDetailsMaoIntfPartition;
 
-	@Autowired MasterFunctions masterFunctions;
+	@Autowired
+	MasterFunctions masterFunctions;
 
 	@PostMapping("/crpmao")
-		List<CropBookingDetailsMaoIntf> getCropdetMao(@RequestBody RequestModel requestModel ) throws SQLException {
-		System.out.println("requestModel=>"+requestModel.toString());
+	List<CropBookingDetailsMaoIntf> getCropdetMao(@RequestBody RequestModel requestModel) throws SQLException {
+		System.out.println("requestModel=>" + requestModel.toString());
 
-	List<CropBookingDetailsMaoIntf> crdbmao = cropBookingDetailsMaoIntfPartition.getCropDetailsMao( 
-			requestModel.getWbdcode(),
-			requestModel.getDcode(),
-			requestModel.getWbmcode(),
-			requestModel.getVcode(),
-			requestModel.getCropyear(),
-		   requestModel.getCrop());		
+		List<CropBookingDetailsMaoIntf> crdbmao = cropBookingDetailsMaoIntfPartition.getCropDetailsMao(
+				requestModel.getWbdcode(), requestModel.getDcode(), requestModel.getWbmcode(), requestModel.getVcode(),
+				requestModel.getCropyear(), requestModel.getCrop());
 		System.out.println("details===================>" + crdbmao.size());
 		return crdbmao;
 	}
-	//================PhyAckVwise====================//
-		@Autowired
-		PhyAckVwisePartition phyAckVwisePartition;
-		@PostMapping("/phyack")
-			List<PhyAckVwise> getPhyAckVwise(@RequestBody RequestModel requestModel ) throws SQLException {
-			System.out.println("requestModel=>"+requestModel.toString());
 
-		List<PhyAckVwise> phyack = phyAckVwisePartition.getPhyAck( 
-				requestModel.getWbdcode(),
-				requestModel.getWbmcode(),
-				requestModel.getCropyear(),
-				requestModel.getUserid());
-			return phyack;
-		}
-		
-		//================ Rep_phy_ack_rbk====================//
-				@Autowired
-				Rep_phy_ack_rbkPartition rep_phy_ack_rbkPartition;
-				@PostMapping("/phyrbk")
-					List<Rep_phy_ack_rbk> getPhyAckRBK(@RequestBody RequestModel requestModel ) throws SQLException {
-					System.out.println("requestModel=>"+requestModel.toString());
+	// ================PhyAckVwise====================//
+	@Autowired
+	PhyAckVwisePartition phyAckVwisePartition;
 
-				List<Rep_phy_ack_rbk> phyrbk = rep_phy_ack_rbkPartition.getPhyRbk( 
-						requestModel.getWbdcode(),
-						requestModel.getWbmcode(),
-						requestModel.getCropyear(),
-						requestModel.getUserid());
-				System.out.println("details===================>" + phyrbk.size());
-					return phyrbk;
-				}
+	@PostMapping("/phyack")
+	List<PhyAckVwise> getPhyAckVwise(@RequestBody RequestModel requestModel) throws SQLException {
+		System.out.println("requestModel=>" + requestModel.toString());
+
+		List<PhyAckVwise> phyack = phyAckVwisePartition.getPhyAck(requestModel.getWbdcode(), requestModel.getWbmcode(),
+				requestModel.getCropyear(), requestModel.getUserid());
+		return phyack;
+	}
+
+	// ================ Rep_phy_ack_rbk====================//
+	@Autowired
+	Rep_phy_ack_rbkPartition rep_phy_ack_rbkPartition;
+
+	@PostMapping("/phyrbk")
+	List<Rep_phy_ack_rbk> getPhyAckRBK(@RequestBody RequestModel requestModel) throws SQLException {
+		System.out.println("requestModel=>" + requestModel.toString());
+
+		List<Rep_phy_ack_rbk> phyrbk = rep_phy_ack_rbkPartition.getPhyRbk(requestModel.getWbdcode(),
+				requestModel.getWbmcode(), requestModel.getCropyear(), requestModel.getUserid());
+		System.out.println("details===================>" + phyrbk.size());
+		return phyrbk;
+	}
+
 //==========================Rep_DownloadedDetailsIntf===========================//
-					@Autowired
-					Rep_DownloadedDetailsIntfPartition rep_DownloadedDetailsIntfPartition;
-					@PostMapping("/dwnlddet")
-						List<Rep_DownloadedDetailsIntf> getDwnloadedDet(@RequestBody RequestModel requestModel,
-								HttpSession httpSession ) throws SQLException {
-						System.out.println("requestModel=>"+requestModel.toString());
-						System.out.println(httpSession.getAttribute("wbdname"));
+	@Autowired
+	Rep_DownloadedDetailsIntfPartition rep_DownloadedDetailsIntfPartition;
 
-					List<Rep_DownloadedDetailsIntf> dwnlddet = rep_DownloadedDetailsIntfPartition.getDwnLdDet( 
-							requestModel.getWbdcode(),
-							requestModel.getWbmcode(),
-							requestModel.getCropyear(),
-							requestModel.getUserid());
-					System.out.println("details===================>" + dwnlddet.size());
-						return dwnlddet;
-					}
+	@PostMapping("/dwnlddet")
+	List<Rep_DownloadedDetailsIntf> getDwnloadedDet(@RequestBody RequestModel requestModel, HttpSession httpSession)
+			throws SQLException {
+		System.out.println("requestModel=>" + requestModel.toString());
+		System.out.println(httpSession.getAttribute("wbdname"));
+
+		List<Rep_DownloadedDetailsIntf> dwnlddet = rep_DownloadedDetailsIntfPartition.getDwnLdDet(
+				requestModel.getWbdcode(), requestModel.getWbmcode(), requestModel.getCropyear(),
+				requestModel.getUserid());
+		System.out.println("details===================>" + dwnlddet.size());
+		return dwnlddet;
+	}
+
 //=====================RepLandDataDetails=========================//
-						@Autowired
-						RepLandDataDetailsRepo repLandDataDetailsRepo;
-						@PostMapping("/landatam")
-							List<RepLandDataDetails> getDwnloadedDet(@RequestBody RequestModel requestModel
-									 ) throws SQLException {
-							System.out.println("requestModel=>"+requestModel.toString());
+	@Autowired
+	RepLandDataDetailsRepo repLandDataDetailsRepo;
 
-						List<RepLandDataDetails> landata = repLandDataDetailsRepo.getLandDet( 
-							Integer.parseInt(requestModel.getDcode()),
-							Integer.parseInt(requestModel.getMcode()));
-						System.out.println("details===================>" + landata.size());
-							return landata;
-						}
-						
-						
-						
-						
+	@PostMapping("/landatam")
+	List<RepLandDataDetails> getDwnloadedDet(@RequestBody RequestModel requestModel) throws SQLException {
+		System.out.println("requestModel=>" + requestModel.toString());
+
+		List<RepLandDataDetails> landata = repLandDataDetailsRepo.getLandDet(Integer.parseInt(requestModel.getDcode()),
+				Integer.parseInt(requestModel.getMcode()));
+		System.out.println("details===================>" + landata.size());
+		return landata;
+	}
+
+	//---------------------------------- NonWebView---------------------------------------//
+		@PostMapping("/nonwebv")
+		public ResponseEntity<?> getNonWebV(@RequestBody RequestModel requestModel) {
+			System.out.println("requestModel=>" + requestModel.toString());
+
+			try {
+				String[] season = requestModel.getCropyear().split("@");
+				System.out.println("season=========" + season);
+				String cseason = season[0];
+				System.out.println("seasonType=========" + cseason);
+				Integer Year = Integer.parseInt(season[1]);
+				System.out.println("seasonYear=========" + Year);
+
+				List<NonWebView> nonwebv  = seasonCropBookedExtentRepo.getNonwebView(
+						Integer.parseInt(requestModel.getDcode()),
+						Integer.parseInt(requestModel.getMcode()),
+						cseason,
+						Year);
+				System.out.println("crpins size=>" + nonwebv.size());
+				return new ResponseEntity<List<NonWebView>>(nonwebv, HttpStatus.OK);
+			} catch (Exception e) {
+
+				System.out.println("getStackTrace =>" + e.getStackTrace());
+				return null;
+			}
+		}
 }
-
-
-
-
-
-

@@ -21,7 +21,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/normal","/crv","/util/**","/crop","/farmerdetails" ,"/rofr" ,"/ekycmao","/rbksnomapping" ,
 				"/allocatedSnoMap","/datasrc","/efishRofr","/farmdet","/allcrops","/efblkext","/objunobj","/empL",
 				"/repvaadet","/devregdett","/cropins","/supchkra","/supchkappr","/supchk","/supchkrejreport",
-				"/cropbmao","/phyackvwise","/phyackrbk","/dwnlddetintf","/landdatadet","/villLandData").permitAll().anyRequest()
+				"/cropbmao","/phyackvwise","/phyackrbk","/dwnlddetintf","/landdatadet",
+				"/villLandData","/nonwebview").permitAll().anyRequest()
 				.permitAll()).formLogin(login -> login.loginPage("/login").permitAll().defaultSuccessUrl("/", true))
 				.logout(logout -> {
 					try {

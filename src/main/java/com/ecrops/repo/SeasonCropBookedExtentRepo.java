@@ -96,9 +96,9 @@ interface RepVaaDetails{
  String getStatus();	
  
 }
-@Query(value="select distinct blockortehsil,wm.wbmname,wm.wbvname,village,userid,mobile_phone,emailid,dt.status,dt.dt_crt, imei1,imei2 from user_registration ur, "
-		+ " devicedet dt ,wbvillage_mst wm where ur.village=cast(dt.vcode as varchar) and cast(blockortehsil as text)=:mcode and type_user='25' "
-		+ " and cropyear =:cropyear and season =:season order by village limit 1000 ",nativeQuery=true)
+@Query(value="select distinct blockortehsil,village,userid,mobile_phone,emailid,dt.status,dt.dt_crt, imei1,imei2 from user_registration ur, "
+		+ " devicedet dt  where ur.village=cast(dt.vcode as varchar) and cast(blockortehsil as text)=:mcode and type_user='25' "
+		+ " and cropyear =:cropyear and season =:season order by village  ",nativeQuery=true)
 List<DeviceRegDetails> getDevRegDet(@Param("mcode") String mcode,
 		@Param("cropyear") Integer cropyear,
 		@Param("season") String season);
@@ -145,8 +145,29 @@ interface DeviceRegDetails{
 	String getRemarks();
 	}
 	
+	@Query(value="select cast(kh_no as character varying) as kh_no,cr_sno,oc_name,oc_fname,occupname,occupfname,cast(tot_extent as character varying)\r\n"
+			+ "as tot_extent, cast(occupant_extent as character varying) ,cr_farmeruid, cast(mobileno as varchar), cast(gender as varchar),\r\n"
+			+ "wbdname,wbmname,wbvname from pattmast_nonwebland a,wbvillage_mst b where a.cr_dist_code=b.wbdcode and a.cr_mand_code=b.wbmcode\r\n"
+			+ "and a.cr_vcode=b.wbvcode  and a.dcode=:dcode and a.mcode=:mcode  and cr_season=:season and cr_year=:cropyear"
+			+ " order by wbdname,wbmname,wbvname",nativeQuery=true)
+	List<NonWebView> getNonwebView(
+			@Param("dcode") Integer dcode,
+			@Param("mcode") Integer mcode,
+    		@Param("season") String season,
+    		@Param("cropyear") Integer cropyear);
 	
-		
+	interface NonWebView{
+		String getKh_no();
+		String getCr_sno();
+		String getOc_name();
+		String getOc_fname();
+		String getOccupname();
+		String getOccupfname();
+		String getTot_extent();
+		String getOccupant_extent();
+		String getCr_farmeruid();
+		String getMobileno();
+		String getGender();
+		}
 	
-
 }

@@ -3,7 +3,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>FarmerBkDet</title>
+	<title>DevRegDet</title>
 	<!--	<link rel="stylesheet" href="./styles/reportstylesheet.css" />-->
 
 	<head th:insert="header"></head>
@@ -73,7 +73,7 @@
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
-				alert(JSON.stringify(resp));
+				//alert(JSON.stringify(resp));
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
 					$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
@@ -83,37 +83,67 @@
 	});
 
 	function getData() {
-		var cropYear = $("#cropyear").val();
-		var inputdcode = $("#inputdcode").val();
-		var inputmcode = $("#inputmcode").val();
-		var inputwbdcode = $("#inputwbdcode").val();
-		var inputuserid = $("#inputuserid").val();
-		alert("inputwbdcode=============>"+inputwbdcode);
-		$.ajax({
-			type: "get",
-			url: "./util/getFbDetails1?dcode=" + inputdcode + "&mcode=" + inputmcode + "&cropyear=" + cropYear+ "&wbdcode=" + inputwbdcode,
-			cache: false,
-			timeout: 600000,
-			success: function (resp) {
-				alert(JSON.stringify(resp));
-				for (var j = 0; j < resp.length; j++) {
-					var bean = resp[j];
-					$("#databody").append('<tr><td>' + bean.bookingid + '</td><td>' + bean.oc_name + '</td><td>' + bean.oc_fname + '</td><td>' + bean.cr_sno + '</td><td>' + bean.kh_no + '</td><td>' + bean.tot_extent + '</td><td>' + bean.occupant_extent + '</td><td>' + bean.mobileno + '</td></tr>');
-				}
-			}
-		});
+	    alert("getData=========>");
+	    var cropyear = $("#cropyear").val();
+	    var inputdcode = $("#inputdcode").val();
+	    var inputmcode = $("#inputmcode").val();
+	    alert("cropyear=========>" + cropyear);
+
+	    var data = {};
+	    data['dcode'] = inputdcode;
+	    data['mcode'] = inputmcode;
+	    data['cropyear'] = cropyear;
+	    
+	    $.ajax({
+	        type: "post",
+	        url: "./util/nonwebv",
+	        contentType: 'application/json',
+	        data: JSON.stringify(data),
+	        cache: false,
+	        timeout: 600000,
+	        success: function (resp) {
+	            alert(JSON.stringify(resp));
+	            var sno = 0;
+
+	            for (var j = 0; j < resp.length; j++) {
+	                var bean = resp[j];
+	                sno = sno + 1;
+	                var gender = '';
+
+	                if (bean.gender === 'F') {
+	                    gender = 'Female';
+	                } else if (bean.gender === 'M') {
+	                    gender = 'Male';
+	                } else {
+	                    gender = 'Transgender';
+	                }
+
+	                $("#databody").append('<tr style="fontsize:200px; font-weight: bold;">'
+	                    + '<td>' + sno + '</td>'
+	                    + '<td>' + bean.kh_no + '</td>'
+	                    + '<td>' + bean.cr_sno + '</td>'
+	                    + '<td>' + bean.oc_name + '</td>'
+	                    + '<td>' + bean.oc_fname + '</td>'
+	                    + '<td>' + bean.occupname + '</td>'
+	                    + '<td>' + bean.occupfname + '</td>'
+	                    + '<td>' + bean.tot_extent + '</td>'
+	                    + '<td>' + bean.occupant_extent + '</td>'
+	                    + '<td>' + bean.cr_farmeruid + '</td>'
+	                    + '<td>' + bean.mobileno + '</td>'
+	                    + '<td>' + gender + '</td>'
+	                    + '</tr>');
+	            }
+	        }
+	    });
 	}
+
 </script>
 
 <body>
-	
-	<div class="heading" colspan="20" style="text-align:center;"><b> Report Farmer Booking Details</b> </div>
+	<div class="heading" colspan="20" style="text-align:center;"><b>Device Registration Details</b> </div>
 	<p th:text="${msg}"></p>
-
 	<input type="hidden" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />
 	<input type="hidden" id="inputmcode" th:value="${#session.getAttribute('mcode')}" />
-	<input type="hidden" id="inputwbdcode" th:value="${#session.getAttribute('wbdcode')}" />
-	<input type="hidden" id="inputuserid" th:value="${#session.getAttribute('userid')}" />
 	<div align="center">
 		<form>
 			<table id="ObjEntryTable">
@@ -122,13 +152,13 @@
 				</tr>
 				<tr>
 					<td align="right" width="30%"><b>Crop Year</b></td>
-					
 					<td align="left">
-						<select id="cropyear" name="cropyear" style="width: 200px"></select>
+						<select id="cropyear" name="cropyear" style="width: 200px">
+						</select>
 					</td>
 				</tr>
 			</table>
-			<div colspan="3" align="center" style="padding-top:10px;padding-bottom:10px;">
+			<div colspan="3" align="center" style="padding-top:10px;padding-bottom:50px;">
 				<button type="button" id="btnSubmit" class="btn btn-primary" value="Submit"
 					onclick="return getData();">Submit</button>
 			</div>
@@ -137,30 +167,25 @@
 	<div class="container">
 		<form id="unlockreport" name="unlockreport" method="post">
 			<div align="center" id="divPrint">
-				<table id="tableStkId" align="center" class="table table-striped border border-secondary">
+				<table id="databody" align="center" class="table table-striped border border-secondary">
 					<thead>
 						<tr>
-							<th>BookingId</th>
-							<th>Occupant Name</th>
-							<th>OccupantFather Name</th>
-							<th>SurveyNo</th>
-							<th>KhataNo</th>
-							<th>TotalExtent</th>
-							<th>OccupantExtent</th>
-							<th>MobileNo</th>
+							 <th> <b> S.No. </b> </th>
+                        <th> <b> Khata No  </b> </th>
+                        <th> <b> Survey NO   </b> </th>  
+                        <th> <b> Enjoyer Name  </b> </th>
+                        <th> <b> Enjoyer Father Name    </b> </th>
+                        <th> <b> Cultivator Name    </b> </th>
+                        <th> <b> Cultivator Father Name   </b> </th>                      
+                        <th> <b> Total Extent </b> </th>
+                        <th> <b> Cultivator Extent    </b> </th>
+                        <th> <b> Aadhaar No   </b> </th>
+                        <th> <b> Mobile No   </b> </th> 
+                        <th> <b> Gender  </b> </th> 
 						</tr>
 					</thead>
 					<tbody id="databody">
-						<tr th:each="bean : ${Farmerlist}">
-							<td th:text="${bean.bookingid}"></td>
-							<td th:text="${bean.oc_name}"></td>
-							<td th:text="${bean.oc_fname}"></td>
-							<td th:text="${bean.cr_sno}"></td>
-							<td th:text="${bean.kh_no}"></td>
-							<td th:text="${bean.tot_extent}"></td>
-							<td th:text="${bean.occupant_extent}"></td>
-							<td th:text="${bean.mobileno}"></td>
-						</tr>
+
 					</tbody>
 				</table>
 			</div>

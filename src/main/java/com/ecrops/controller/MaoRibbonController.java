@@ -71,20 +71,7 @@ public class MaoRibbonController {
 	return "maovaaVroEkyc"	;
 	}
 	@GetMapping("/rbksnomapping")
-	public String rSnoMap(Model model , HttpSession session) {
-		
-		 String userid=(String)session.getAttribute("userid");
-		 int wbdcode=(int)session.getAttribute("wbdcode");
-		  int mcode=(int)session.getAttribute("mcodee");
-		 
-		 System.out.println("userid---->"+userid);
-		 System.out.println("wbdcode---->"+wbdcode);
-		 System.out.println("mcode---->"+mcode);
-		 
-			model.addAttribute("userid", userid);
-			model.addAttribute("wbdcode",wbdcode );
-			model.addAttribute("mcode",mcode );
-			
+	public String rSnoMap() {
 	return "RbkSurveyNoMapping"	;
 	}
 	@GetMapping("/allocatedSnoMap")
@@ -197,5 +184,9 @@ public String getVillLandData(HttpServletRequest httpServletRequest,Model model)
 	return "Rep_VillLandDataDetails";
 }
 
+ @GetMapping("/nonwebview")
+ public String getNonwebV(Model model) {
+	return "nonWebView";
+	}
  
 }

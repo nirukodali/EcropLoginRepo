@@ -129,9 +129,9 @@
 	<div class="heading" colspan="20" style="text-align:center;"><b> Report On Authentication By Vaa Vro Ekyc</b> </div>
 	<p th:text="${msg}"></p>
 	
-	<input type="text" id="userid" th:value="${userid}" />
-	<input type="text" id="wbdcode" th:value="${wbdcode}" />
-	<input type="text" id="mcode" th:value="${mcode}" />
+	<input type="text" id="userid" th:value="${#session.getAttribute('userid')}"/>
+	<input type="text" id="wbdcode" th:value="${#session.getAttribute('wbdcode')}" />
+	<input type="text" id="mcode" th:value="${#session.getAttribute('mcode')}" />
 	
 	<div align="center">
 		<form>

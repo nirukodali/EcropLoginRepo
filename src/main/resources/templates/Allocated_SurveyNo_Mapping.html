@@ -79,7 +79,7 @@
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
-				alert(JSON.stringify(resp));
+				//alert(JSON.stringify(resp));
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
 					$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
@@ -96,6 +96,7 @@ function getRbk() {
 		var inputuserid = $("#inputuserid").val();
 		var mcodee = $("#mcodee").val();
 		var rbkid = $("#rbkid").val();
+		alert("cropYear==========>"+cropYear);
 	
 	
 	$.ajax({
@@ -105,7 +106,7 @@ function getRbk() {
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
-				alert(JSON.stringify(resp));
+				//alert(JSON.stringify(resp));
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
 					$("#rbkid").append('<option value="' + bean.vcode + '">' + bean.vname + '</option>');
@@ -191,7 +192,7 @@ function getRbk() {
 					<td align="right" width="30%"><b>Crop Year <font color="red">*</font></b></td>
 
 					<td align="left">
-						<select id="cropyear" name="cropyear" style="width: 200px" onclick="return getRbk();">
+						<select id="cropyear" name="cropyear" style="width: 200px" onchange="return getRbk();">
 							 <option value="">---------Select---------</option>
 						</select>
 					</td>

@@ -71,7 +71,7 @@
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
-				alert(JSON.stringify(resp));
+				//alert(JSON.stringify(resp));
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
 					$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
@@ -88,7 +88,7 @@
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
-				alert(JSON.stringify(resp));
+				//alert(JSON.stringify(resp));
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
 					$("#mandal").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
@@ -111,7 +111,7 @@
 			timeout: 600000,
 			success: function (resp) {
 				$("#databody").empty();
-				alert(JSON.stringify(resp));
+				//alert(JSON.stringify(resp));
 				var sno = 0;
 				for (var j = 0; j < resp.length; j++) {
 					sno = sno + 1;
@@ -135,8 +135,7 @@
 </style>
 
 <body>
-	<img src="images/Header.jpg" alt="ghg"
-		style="width:85%; box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);margin-left:120px">
+	
 	<div class="heading" colspan="20" style="text-align:center;"><b> Report Season Wise AllCrops BookedExtent</b> </div>
 	<p th:text="${msg}"></p>
 
