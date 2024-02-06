@@ -26,6 +26,13 @@ public interface SeasonCropBookedExtentRepo  extends JpaRepository<SeasonCropBoo
 			+ "where dcode=:dcode and mcode=:mcode order by wbvname",nativeQuery=true)
 	public List<MasterProjections> getAllVillages(@Param("dcode") Integer dcode ,@Param("mcode") Integer mcode);
 	
+	@Query(value=" select cropgrpid as col1,grpname as col2 from cropgroups where active='A' ",nativeQuery=true)
+	public List<MasterProjections> getAllCropGrp();
+	
+	@Query(value="select cropid  as col1,cropname as col2 from cropnames  "
+			+ "where grpcode=:grpcode order by cropname ",nativeQuery=true)
+	public List<MasterProjections> getAllCrpGrpid(@Param("grpcode") Integer grpcode);
+	
 	
 	@Query(value="select mapped_extent,( cast(occupant_extent as numeric)-cast(mapped_extent as numeric) ) as avail_ext, b.dcode,b.mcode,\r\n"
 			+ "b.wbvcode,village_name as wbvname,pattadar_name as ocname,pattadar_father_name as ocfname,booking_available,allowable_ext,\r\n"

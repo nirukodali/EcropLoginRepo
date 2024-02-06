@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ecrops.entity.AllocatedSurveyNoMapping;
 import com.ecrops.entity.CropBookingDetailsMaoIntf;
+import com.ecrops.entity.CropwiseExtBookedRBKwise;
 import com.ecrops.entity.DataSourceWiseBookingReport;
 import com.ecrops.entity.FarmerBookingDetails;
 import com.ecrops.entity.MaoAuthVaaVroekyc;
@@ -39,6 +40,7 @@ import com.ecrops.entity.SuperChk_rejReport;
 import com.ecrops.model.RequestModel;
 import com.ecrops.partitions.AllocatedSurveyNoMappingPartition;
 import com.ecrops.partitions.CropBookingDetailsMaoIntfPartition;
+import com.ecrops.partitions.CropwiseExtBookedRBKwisePartition;
 import com.ecrops.partitions.DataSourceWiseBookingReportPartitions;
 import com.ecrops.partitions.PhyAckVwisePartition;
 import com.ecrops.partitions.RbkSurveyNoMappingDrpdwnPartitions;
@@ -127,7 +129,25 @@ public class UtilRestController {
 		List<MasterProjections> list = seasonCropBookedExtentRepo.getAllVillages(dcode, mcode);
 		return list;
 	}
+//===========================CropGroups=================================//
 
+	@GetMapping("/getCropGroup")
+	public List<MasterProjections> getCropGroup() {
+		System.out.println("=======getCropGroup==========");
+		List<MasterProjections> list = seasonCropBookedExtentRepo.getAllCropGrp();
+		System.out.println("=======list==========" + list.size());
+		return list;
+	}
+
+	// ===============getAllCrpGrp=====================//
+	@GetMapping("/getCropGroupid")
+	public List<MasterProjections> getCropGoupidd(String grpcode) {
+		List<MasterProjections> list = seasonCropBookedExtentRepo.getAllCrpGrpid(Integer.parseInt(grpcode));
+		System.out.println("=======list==========" + list.size());
+		return list;
+	}
+
+	// ==================Normal Area Report====================//
 	@GetMapping("/getNormarlAreaReport")
 	List<NormalAreasMwiseMao> getList(String dcode, String mcode, String cropyear) {
 
@@ -652,30 +672,51 @@ public class UtilRestController {
 		return landata;
 	}
 
-	//---------------------------------- NonWebView---------------------------------------//
-		@PostMapping("/nonwebv")
-		public ResponseEntity<?> getNonWebV(@RequestBody RequestModel requestModel) {
-			System.out.println("requestModel=>" + requestModel.toString());
+	// ----------------------------------
+	// NonWebView---------------------------------------//
+	@PostMapping("/nonwebv")
+	public ResponseEntity<?> getNonWebV(@RequestBody RequestModel requestModel) {
+		System.out.println("requestModel=>" + requestModel.toString());
 
-			try {
-				String[] season = requestModel.getCropyear().split("@");
-				System.out.println("season=========" + season);
-				String cseason = season[0];
-				System.out.println("seasonType=========" + cseason);
-				Integer Year = Integer.parseInt(season[1]);
-				System.out.println("seasonYear=========" + Year);
+		try {
+			String[] season = requestModel.getCropyear().split("@");
+			System.out.println("season=========" + season);
+			String cseason = season[0];
+			System.out.println("seasonType=========" + cseason);
+			Integer Year = Integer.parseInt(season[1]);
+			System.out.println("seasonYear=========" + Year);
 
-				List<NonWebView> nonwebv  = seasonCropBookedExtentRepo.getNonwebView(
-						Integer.parseInt(requestModel.getDcode()),
-						Integer.parseInt(requestModel.getMcode()),
-						cseason,
-						Year);
-				System.out.println("crpins size=>" + nonwebv.size());
-				return new ResponseEntity<List<NonWebView>>(nonwebv, HttpStatus.OK);
-			} catch (Exception e) {
+			List<NonWebView> nonwebv = seasonCropBookedExtentRepo.getNonwebView(
+					Integer.parseInt(requestModel.getDcode()), Integer.parseInt(requestModel.getMcode()), cseason,
+					Year);
+			System.out.println("crpins size=>" + nonwebv.size());
+			return new ResponseEntity<List<NonWebView>>(nonwebv, HttpStatus.OK);
+		} catch (Exception e) {
 
-				System.out.println("getStackTrace =>" + e.getStackTrace());
-				return null;
-			}
+			System.out.println("getStackTrace =>" + e.getStackTrace());
+			return null;
 		}
+	}
+
+	// =====================CropwiseExtBookedRBKwise=======================//
+	@Autowired
+	CropwiseExtBookedRBKwisePartition cropwiseExtBookedRBKwisePartition;
+
+	@PostMapping("/rbkext")
+	public ResponseEntity<?> getRbkWise(@RequestBody RequestModel requestModel) {
+		System.out.println("requestModel=>" + requestModel.toString());
+
+		try {
+
+			List<CropwiseExtBookedRBKwise> rbkext = cropwiseExtBookedRBKwisePartition.getBkExtRbk(
+					requestModel.getDcode(), requestModel.getMcode(), requestModel.getCrop(),
+					requestModel.getCropyear());
+			System.out.println("crpins size=>" + rbkext.size());
+			return new ResponseEntity<List<CropwiseExtBookedRBKwise>>(rbkext, HttpStatus.OK);
+		} catch (Exception e) {
+
+			System.out.println("getStackTrace =>" + e.getStackTrace());
+			return null;
+		}
+	}
 }

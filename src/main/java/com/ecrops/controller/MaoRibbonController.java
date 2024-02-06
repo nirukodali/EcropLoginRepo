@@ -188,5 +188,9 @@ public String getVillLandData(HttpServletRequest httpServletRequest,Model model)
  public String getNonwebV(Model model) {
 	return "nonWebView";
 	}
+ @GetMapping("/crpwrbkext")
+ public String getcrpWiseRbkExt(Model model) {
+	return "CropwiseExtBooked_RBKwise";
+	}
  
 }
