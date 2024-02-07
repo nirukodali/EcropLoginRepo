@@ -61,7 +61,7 @@ try {
 
 		for (Object[] row : detailsEntities1) {
 			CropwiseExtBookedRBKwise entity = new CropwiseExtBookedRBKwise();
-			System.out.println("row[0]===========>"+row[0].toString());
+			//System.out.println("row[0]===========>"+row[0].toString());
 			entity.setWbvname((String) row[0]);
 			entity.setVscode((String) row[1]);
 			entity.setTotext((String) row[2]);

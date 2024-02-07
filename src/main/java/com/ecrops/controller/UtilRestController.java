@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecrops.entity.AllocatedSurveyNoMapping;
+import com.ecrops.entity.AuthMAOvaaVroEkyc;
 import com.ecrops.entity.CropBookingDetailsMaoIntf;
 import com.ecrops.entity.CropwiseExtBookedRBKwise;
 import com.ecrops.entity.DataSourceWiseBookingReport;
@@ -37,8 +38,10 @@ import com.ecrops.entity.SpuperChkAppr;
 import com.ecrops.entity.SuperCheckRecordsAlloted;
 import com.ecrops.entity.SuperChkReport;
 import com.ecrops.entity.SuperChk_rejReport;
+import com.ecrops.entity.Superchekupdstatus;
 import com.ecrops.model.RequestModel;
 import com.ecrops.partitions.AllocatedSurveyNoMappingPartition;
+import com.ecrops.partitions.AuthMAOvaaVroEkycPartition;
 import com.ecrops.partitions.CropBookingDetailsMaoIntfPartition;
 import com.ecrops.partitions.CropwiseExtBookedRBKwisePartition;
 import com.ecrops.partitions.DataSourceWiseBookingReportPartitions;
@@ -51,6 +54,7 @@ import com.ecrops.partitions.SpuperChkApprPartition;
 import com.ecrops.partitions.SuperCheckRecordsAllotedPartition;
 import com.ecrops.partitions.SuperChkReportPartition;
 import com.ecrops.partitions.SuperChk_rejReportPartition;
+import com.ecrops.partitions.SuperchekupdstatusPartition;
 import com.ecrops.projections.MasterProjections;
 import com.ecrops.repo.AllocataedSurveyNoMappingRepo;
 import com.ecrops.repo.FarmerBookingDetailsPartitions;
@@ -719,4 +723,49 @@ public class UtilRestController {
 			return null;
 		}
 	}
+	
+	
+	// =====================AuthMAOvaaVroEkyc=======================//
+		@Autowired
+		AuthMAOvaaVroEkycPartition authMAOvaaVroEkycPartition;
+
+		@PostMapping("/authMaoVaaVroEkyc")
+		public ResponseEntity<?> getAuthEkyc(@RequestBody RequestModel requestModel) {
+			System.out.println("requestModel=>" + requestModel.toString());
+
+			try {
+
+				List<AuthMAOvaaVroEkyc> maoauth = authMAOvaaVroEkycPartition.getAuthMaoVaaVroEkyc(
+						 requestModel.getMcode(),
+						requestModel.getCropyear());
+				System.out.println("crpins size=>" + maoauth.size());
+				return new ResponseEntity<List<AuthMAOvaaVroEkyc>>(maoauth, HttpStatus.OK);
+			} catch (Exception e) {
+
+				System.out.println("getStackTrace =>" + e.getStackTrace());
+				return null;
+			}
+		}
+		// =====================Superchekupdstatus=======================//
+				@Autowired
+				SuperchekupdstatusPartition superchekupdstatusPartition;
+
+				@PostMapping("/supchkupdstatus")
+				public ResponseEntity<?> getSupChkUpdSts(@RequestBody RequestModel requestModel) {
+					System.out.println("requestModel=>" + requestModel.toString());
+
+					try {
+System.out.println("ASASDSADFSAFSD");
+						List<Superchekupdstatus> supupds = superchekupdstatusPartition.getSupChkUpdSts(
+								 requestModel.getWbdcode(),
+								 requestModel.getWbmcode(),
+								requestModel.getCropyear());
+						System.out.println("crpins size=>" + supupds.size());
+						return new ResponseEntity<List<Superchekupdstatus>>(supupds, HttpStatus.OK);
+					} catch (Exception e) {
+
+						System.out.println("getStackTrace =>" + e.getStackTrace());
+						return null;
+					}
+				}
 }

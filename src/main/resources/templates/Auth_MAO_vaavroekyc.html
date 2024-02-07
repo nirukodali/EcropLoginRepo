@@ -74,9 +74,7 @@
 </head>
 <script>
 	$(document).ready(function() {
-				//alert("get crop year");
 				$("#loadingsign").hide();
-
 				$.ajax({
 					type : "get",
 					url : "./util/getAllSeason",
@@ -93,66 +91,18 @@
 					}
 				});
 			});
-
-	function getCropGroup() {
-		$.ajax({
-			type : "get",
-			url : "./util/getCropGroup",
-			cache : false,
-			timeout : 600000,
-			success : function(resp) {
-				alert("sucess=>"+JSON.stringify(resp));
-				for (var j = 0; j < resp.length; j++) {
-					var bean = resp[j];
-					$("#crpgrpId").append(
-							'<option value="' + bean.col1 + '">' + bean.col2
-									+ '</option>');
-				}
-			}
-		});
-	}
-
-	function getCrop() {
-		
-		var crpgrpId = $("#crpgrpId").val();
-		alert("crpgrpId==>"+crpgrpId);
-		$.ajax({
-			type : "get",
-			url : "./util/getCropGroupid?grpcode=" + crpgrpId,
-			cache : false,
-			timeout : 600000,
-			success : function(resp) {
-				alert(JSON.stringify(resp));
-				for (var j = 0; j < resp.length; j++) {
-					var bean = resp[j];
-					$("#cropid").append(
-							'<option value="' + bean.col1 + '">' + bean.col2
-									+ '</option>');
-				}
-			}
-		});
-
-	}
-
 	function getData() {
 		$("#loadingsign").show();
-		var dcode = $("#dcodee").val();
+		
 		var mcode = $("#mcodee").val();
 		var cropYear = $("#cropyear").val();
-		var cropid = $("#cropid").val();
-		var crpgrpId = $("#crpgrpId").val();
-
 		var data = {};
-		
-		data['dcode'] = dcode;
 		data['mcode'] = mcode;
 		data['cropyear'] = cropYear;
-		data['crop'] = cropid;
-		data['cropgrpid'] = crpgrpId;
 		
 		$.ajax({
 			type : "post",
-			url : "./util/rbkext",
+			url : "./util/authMaoVaaVroEkyc",
 			contentType : 'application/json',
 			data : JSON.stringify(data),
 			cache : false,
@@ -161,17 +111,54 @@
 				$("#loadingsign").hide();
 				$("#databody").empty();
 				alert(JSON.stringify(resp));
+				
 				var sno = 0;
+				var totfarmercount = 0,totalbookings=0,totextent=0,
+				vaaauthcount=0,vaaauthextent=0,vroauthcount=0,vroauthextent=0,
+				totekycbookings=0,ekycfarmercount=0,ekycbookedext=0;
 				for (var j = 0; j < resp.length; j++) {
 					sno = sno + 1;
 					var bean = resp[j];
+					totfarmercount = totfarmercount + parseInt(bean.totfarmercount);
+					totalbookings = totalbookings + parseInt(bean.totalbookings);
+					totextent = totextent + parseInt(bean.totextent);
+					vaaauthcount = vaaauthcount + parseInt(bean.vaaauthcount);
+					vaaauthextent = vaaauthextent + parseInt(bean.vaaauthextent);
+					vroauthcount = vroauthcount + parseInt(bean.vroauthcount);
+					vroauthextent = vroauthextent + parseInt(bean.vroauthextent);
+					totekycbookings = totekycbookings + parseInt(bean.totekycbookings);
+					ekycfarmercount = ekycfarmercount + parseInt(bean.ekycfarmercount);
+					ekycbookedext = ekycbookedext + parseInt(bean.ekycbookedext);
+
 					$("#databody").append('<tr style="fontsize:200px; font-weight: bold;">'
-									+ '<td>' + sno + '</td>'
-									+ '<td align="left">'+ bean.wbvname + '</td>'
-									+ '<td>'+ bean.vscode + '</td>' 
-									+ '<td align="right">'+ bean.totext + '</td>'
+									+ '<td align="center">' + sno + '</td>'
+									+ '<td align="left">'+ bean.rbk + '</td>'
+									+ '<td align="right">'+ bean.totfarmercount + '</td>' 
+									+ '<td align="right">'+ bean.totalbookings + '</td>'
+									+ '<td align="right">'+ bean.totextent + '</td>'
+									+ '<td align="right">'+ bean.vaaauthcount + '</td>'
+									+ '<td align="right">'+ bean.vaaauthextent + '</td>'
+									+ '<td align="right">'+ bean.vroauthcount + '</td>'
+									+ '<td align="right">'+ bean.vroauthextent + '</td>'
+									+ '<td align="right">'+ bean.totekycbookings + '</td>'
+									+ '<td align="right">'+ bean.ekycfarmercount + '</td>'
+									+ '<td align="right">'+ bean.ekycbookedext + '</td>'
 									+ '</tr>');
 				}
+				$("#databody").append('<tr style="fontsize:200px; font-weight: bold;">'
+						+'<td colspan = "2">TOTAL<b></b></td>'
+						+'<td>'+totfarmercount +'</td>'
+						+'<td>'+totalbookings +'</td>'
+						+'<td>'+totextent +'</td>'
+						+'<td>'+vaaauthcount +'</td>'
+						+'<td>'+vaaauthextent +'</td>'
+						+'<td>'+vroauthcount +'</td>'
+						+'<td>'+vroauthextent +'</td>'
+						+'<td>'+totekycbookings +'</td>'
+						+'<td>'+ekycfarmercount +'</td>'
+						+'<td>'+ekycbookedext +'</td>'
+					+'</tr>')
+				
 			}
 		});
 	}
@@ -182,10 +169,8 @@
       
         border-collapse: separate;
 	border-spacing: 0 0.5em;
-	margin-right: -18%
     }
 
-   
 </style>
 <body>
 
@@ -205,34 +190,14 @@
 	<div align="center">
 		<form>
 			<table id="ObjEntryTable" style="font-size: inherit !important; border-radius: 10px;">
-				<tr style="padding-left:450px;">
-					<td  align="right" width="30%"><b>Crop Year <font
+				<tr >
+					<td align="right" width="30%"><b>Crop Year <font
 							color="red">*</font></b></td>
 
 					<td align="left"><select id="cropyear" name="cropyear"
-						style="width: 200px" onchange="getCropGroup()">
+						style="width: 200px" >
 							<option value="">-------Select-------</option>
 					</select></td>
-				</tr>
-				<tr style="padding-left:450px;" >
-					<td  align="right" width="30%"><b>Crop Group (Chose All if
-							not selected ):<font color="red">*</font>
-					</b></td>
-					<td align="left"><Select id="crpgrpId" name="crpgrpId"
-						style="width: 200px" onchange="getCrop()">
-							<option value="">----Select----</option>
-					</select></td>
-
-				</tr>
-				<tr style="padding-left:150px;">
-					<td  align="right" width="30%"><b>Crop Name (Chose All if
-							not selected ):<font color="red">*</font>
-					</b></td>
-					<td align="left"><Select id="cropid" name="cropid"
-						style="width: 200px">
-							<option value="">----Select----</option>
-					</select></td>
-
 				</tr>
 				
 			</table>
@@ -248,13 +213,28 @@
 			<div align="center" id="divPrint" class="table table-hover table table-striped">
 				<table id="tableStkId" align="center" style="text-align: center;width:1000px">
 					<thead>
-						<tr>
-							<th><b> S.No. </b></th>
-							<th><b> Village </b></th>
-							<th><b> RBK CODE </b></th>
-							<th><b>Extent </br>Booked
-							</b></th>
-						</tr>
+						 <tr>
+                        <th rowspan="2"> <b> Sl.No </b> </th>
+                       
+                        <th rowspan="2"><b> RBK Code </b> </th>
+                        <th rowspan="2"> <b> No.of Farmers </b> </th>
+                        <th rowspan="2"> <b> Total Bookings </b> </th>
+                        <th rowspan="2"> <b> Total Extent (acres) </b> </th>
+                        <th colspan="2"> <b> VAA Authentication Completed</b> </th>
+                        <th colspan="2"> <b> VRO Authentication Completed </b> </th>
+                        <th colspan="3"> <b> e-KYC Done </b> </th>
+
+
+                    </tr>
+                    <tr>
+                        <th> <b> Bookings </b> </th>
+                        <th> <b> Acres </b> </th>
+                        <th> <b> Bookings </b> </th>
+                        <th> <b> Acres </b> </th>
+                        <th> <b> Bookings </b> </th>
+                        <th> <b> Farmers</b> </th>
+                        <th> <b> Acres </b> </th>
+                    </tr>
 					</thead>
 					<tbody id="databody">
 					</tbody>

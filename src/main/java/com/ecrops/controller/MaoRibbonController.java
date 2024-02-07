@@ -192,5 +192,13 @@ public String getVillLandData(HttpServletRequest httpServletRequest,Model model)
  public String getcrpWiseRbkExt(Model model) {
 	return "CropwiseExtBooked_RBKwise";
 	}
+ @GetMapping("/authmaoekycvaavaro")
+ public String getAuthMaoEkyc() {
+	return "Auth_MAO_vaavroekyc";
+	}
+ @GetMapping("/supupdsts")
+ public String getSupUpdsts() {
+	return "Superchekupdstatus";
+	}
  
 }

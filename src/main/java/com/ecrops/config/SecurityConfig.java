@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				"/allocatedSnoMap","/datasrc","/efishRofr","/farmdet","/allcrops","/efblkext","/objunobj","/empL",
 				"/repvaadet","/devregdett","/cropins","/supchkra","/supchkappr","/supchk","/supchkrejreport",
 				"/cropbmao","/phyackvwise","/phyackrbk","/dwnlddetintf","/landdatadet",
-				"/villLandData","/nonwebview","/crpwrbkext").permitAll().anyRequest()
+				"/villLandData","/nonwebview","/crpwrbkext","/authmaoekycvaavaro","/supupdsts").permitAll().anyRequest()
 				.permitAll()).formLogin(login -> login.loginPage("/login").permitAll().defaultSuccessUrl("/", true))
 				.logout(logout -> {
 					try {
