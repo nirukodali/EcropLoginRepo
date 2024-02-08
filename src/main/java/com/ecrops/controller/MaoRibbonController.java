@@ -200,5 +200,9 @@ public String getVillLandData(HttpServletRequest httpServletRequest,Model model)
  public String getSupUpdsts() {
 	return "Superchekupdstatus";
 	}
+ @GetMapping("/maosocialauditR")
+ public String getMaoSocialAuditCorrectionR() {
+	return "MaoSocialAuditcorrection";
+	}
  
 }

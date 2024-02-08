@@ -24,6 +24,7 @@ import com.ecrops.entity.CropwiseExtBookedRBKwise;
 import com.ecrops.entity.DataSourceWiseBookingReport;
 import com.ecrops.entity.FarmerBookingDetails;
 import com.ecrops.entity.MaoAuthVaaVroekyc;
+import com.ecrops.entity.MaoSocialAuditcorrection;
 import com.ecrops.entity.NormalAreasMwiseMao;
 import com.ecrops.entity.PhyAckVwise;
 import com.ecrops.entity.RbkSurveyNoMapping;
@@ -61,6 +62,7 @@ import com.ecrops.repo.FarmerBookingDetailsPartitions;
 import com.ecrops.repo.FarmerBookingDetailsRepo;
 import com.ecrops.repo.MaoAuthVaaVroekycPartition;
 import com.ecrops.repo.MaoAuthVaaVroekycRepo;
+import com.ecrops.repo.MaoSocialAuditcorrectionRepo;
 import com.ecrops.repo.NormalAreasMwiseMaoRepo;
 import com.ecrops.repo.RbkSurveyNoMappingPartition;
 import com.ecrops.repo.RbkSurveyNoMappingRepo;
@@ -767,5 +769,28 @@ System.out.println("ASASDSADFSAFSD");
 						System.out.println("getStackTrace =>" + e.getStackTrace());
 						return null;
 					}
+				}
+				
+//===========================//MaoSocialAuditcorrectionRepo//================//
+				@Autowired private MaoSocialAuditcorrectionRepo maoSocialAuditcorrectionRepo;
+				
+				@PostMapping("/maoSocialAudit")
+				List<MaoSocialAuditcorrection> getSocialAuditCoorection(@RequestBody RequestModel requestModel) {
+					System.out.println("requestModel=>" + requestModel.toString());
+					
+					String[] season = requestModel.getCropyear().split("@");
+					String seasonType = season[0];
+					Integer seasonYear = Integer.parseInt(season[1]);
+					System.out.println("seasonType=>" + seasonType);
+					System.out.println("seasonYear=>" + seasonYear);
+					List<MaoSocialAuditcorrection> socialaudit = maoSocialAuditcorrectionRepo.getSocialAudit(
+							Integer.parseInt(requestModel.getDcode()),
+							Integer.parseInt( requestModel.getMcode()),
+							seasonYear,
+							seasonType);
+					
+					System.out.println("list size=>" + socialaudit.size());
+					System.out.println("list =>" + socialaudit.toString());
+					return socialaudit;
 				}
 }

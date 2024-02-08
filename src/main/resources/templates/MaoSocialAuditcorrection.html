@@ -74,7 +74,6 @@
 </head>
 <script>
 	$(document).ready(function() {
-				//alert("get crop year");
 				$("#loadingsign").hide();
 				$.ajax({
 					type : "get",
@@ -95,20 +94,20 @@
 	
 	function getData() {
 		$("#loadingsign").show();
-		var wbdcode = $("#inputwbdcode").val();
-		var wbmcode = $("#inputwbmcode").val();
+		var dcode = $("#inputdcode").val();
+		var mcode = $("#inputmcode").val();
 		var cropYear = $("#cropyear").val();
 		
 		var data = {};
 		
-		data['wbdcode'] = wbdcode;
-		data['wbmcode'] = wbmcode;
+		data['dcode'] = dcode;
+		data['mcode'] = mcode;
 		data['cropyear'] = cropYear;
 		
 		
 		$.ajax({
 			type : "post",
-			url : "./util/supchkupdstatus",
+			url : "./util/maoSocialAudit",
 			contentType : 'application/json',
 			data : JSON.stringify(data),
 			cache : false,
@@ -117,67 +116,31 @@
 				$("#loadingsign").hide();
 				$("#databody").empty();
 				alert(JSON.stringify(resp));
-				var sno = 0; var remarks='', vaasuprem='', maoremarks='',mroremarks='';
+				var sno = 0; 
 				for (var j = 0; j < resp.length; j++) {
 					sno = sno + 1;
 					var bean = resp[j];
-					 if(bean.remarks == 'A'){
-						 remarks='<span style="color:black;" >'+bean.remarks+'</span>';
-						 
-					 } else if(bean.remarks == 'R'){
-						 remarks='<span style="color:red;" >'+bean.remarks+'</span>' ;
-					 }
-					 else{
-						 remarks='<span>'+bean.remarks+'</span>' ; 
-					 }	
-					 
-					 if(bean.vaa_sup_rem == 'M'){
-						 vaasuprem='<b><font color="blue" >Forwarded</font></b>';
-						 
-					 } else{
-						 vaasuprem='<b><font color="red" >Pending</font></b>';
-					 }
-					 
-					 if(bean.mao_remarks == 'D'){
-						 maoremarks='<b><font color="red" >Rejected</font></b>';
-						 
-					 } else if (bean.mao_remarks == 'A'){
-						 maoremarks='<b><font color="green">Accepted</font></b>';
-					 }
-					 else{
-						 maoremarks='<b><font color="orange">Pending</font></b>';	 
-					 }
-					 
-					 if(bean.mro_remarks == 'D'){
-						 mroremarks='<b><font color="red" >Rejected</font></b>';
-						 
-					 } else if (bean.mro_remarks == 'A'){
-						 mroremarks='<b><font color="green">Accepted</font></b>';
-					 }
-					 else{
-						 mroremarks='<b><font color="orange">Pending</font></b>';	 
-					 }
-					 
+					
 					$("#databody").append('<tr style="fontsize:200px; font-weight: bold;">'
 									+ '<td align="center">' + sno + '</td>'
-									+ '<td align="left">'+ bean.wbdname + '</td>'
-									+ '<td align="left">'+ bean.wbmname + '</td>' 
 									+ '<td align="left">'+ bean.wbvname + '</td>'
-									+ '<td align="left">'+ bean.bookingid + '</td>'
-									+ '<td align="left">'+ bean.occup_name + '</td>'
-									+ '<td align="left">'+ bean.occup_fname + '</td>'
-									+ '<td align="left">'+ bean.cropname + '</td>'
-									+ '<td align="left">'+ bean.varietyname + '</td>'
-									+ '<td align="left">'+ bean.cr_sow_date + '</td>'
-									+ '<td align="center">'+ bean.kh_no + '</td>'
-									+ '<td align="center">'+ bean.cr_sno + '</td>'
-									+ '<td align="center">'+ bean.supercheck_userid + '</td>'
-									
-									+ '<td align="center">'+ remarks + '</td>'
-									+ '<td align="left" style="background-color: #829356; border: 1px solid black;color:white">'+ bean.reason + '</td>'
-									+ '<td align="center">'+ vaasuprem + '</td>'
-									+ '<td align="center">'+ maoremarks + '</td>'
-									+ '<td align="center">'+ mroremarks + '</td>'
+									+ '<td align="left">'+ bean.farmername + '</td>' 
+									+ '<td align="left">'+ bean.crop + '</td>'
+									+ '<td align="left">'+ bean.variety + '</td>'
+									+ '<td align="left">'+ bean.extent + '</td>'
+									+ '<td align="left">'+ bean.src_irr + '</td>'
+									+ '<td align="left">'+ bean.cr_pattern + '</td>'
+									+ '<td align="left">'+ bean.sow_date + '</td>'
+									+ '<td align="left">'+ bean.farming_type + '</td>'
+									+ '<td align="center">'+ bean.vaadeleted + '</td>'
+									+ '<td align="center">'+ bean.tot_corrections + '</td>'
+									+ '<td align="center">'+ bean.totbookings + '</td>'
+									+ '<td align="center">'+ bean.maoapproved + '</td>'
+									+ '<td align="center">'+ bean.maorejected + '</td>'
+									+ '<td align="center">'+ bean.maoprocessed + '</td>'
+									+ '<td align="center">'+ bean.tahrejected + '</td>'
+									+ '<td align="center">'+ bean.tahapproved + '</td>'
+									+ '<td align="center">'+ bean.tahprocessed + '</td>'
 									+ '</tr>');
 				}
 			}
@@ -203,8 +166,8 @@
 	<div class="heading" colspan="20" style="text-align: center;"><b>Supervisory Records Updation Status</b></div>
 	<p th:text="${msg}"></p>
 
-<input type="hidden" id="inputwbdcode" th:value="${#session.getAttribute('wbdcode')}" />
-<input type="hidden" id="inputwbmcode" th:value="${#session.getAttribute('wbmcode')}" />
+<input type="hidden" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />
+<input type="hidden" id="inputmcode" th:value="${#session.getAttribute('mcode')}" />
 <input type="hidden" id="inputuserid" th:value="${#session.getAttribute('userid')}" />
 	<div id="loadingsign">
 		<div class="d-flex justify-content-center">
@@ -241,24 +204,25 @@
 			<div align="center" id="divPrint" class="table table-hover table table-striped">
 				<table id="tableStkId" align="center" style="text-align: center;width:1000px">
 					<thead>
-						<th> <b> S.No. </b> </th>
-                        <th> <b> District Name  </b> </th>
-                        <th> <b> Mandal  Name    </b> </th>                        
+					    <th> <b> S.No. </b> </th>
                         <th> <b>Village Name   </b> </th>                      
-                        <th> <b>Booking Id </b> </th>
-                        <th> <b>Occupant Name </b> </th>
-                        <th> <b>Occupant Father</b> </th>
+                        <th> <b>Farmer Name </b> </th>
                         <th> <b> Crop Name   </b> </th>
                         <th> <b>Variety Name  </b> </th> 
+                        <th> <b> Area Sown   </b> </th>
+                        <th> <b> Irrigation Source   </b> </th>
+                        <th> <b> Crop Pattern  </b> </th>
                         <th> <b> Sown Date </b> </th>
-                        <th> <b> Khata No  </b> </th>
-                        <th> <b>Survey NO   </b> </th>  
-                        <th> <b>Supervisory Officer Id  </b> </th>  
-                        <th> <b>Observations  </b> </th>
-                        <th> <b> Reason for Entry Found Incorrect  </b> </th>
-                        <th> <b> VAA/VHA/VSA Remarks  </b> </th>
-                        <th> <b>MAO Remarks </b> </th>
-                        <th> <b> MRO Remarks  </b> </th>
+                        <th> <b> Farming Type  </b> </th>
+                        <th> <b> VAA Deleted  </b> </th>
+                        <th> <b>Total Corrected Bookings  </b> </th>  
+                        <th> <b> Total Bookings </b> </th>
+                        <th> <b> No.of Bookings MAO Approved </b> </th>
+                        <th> <b> No.of Bookings MAO Rejected </b> </th>
+                        <th> <b> Total No.of Bookings MAO Processed </b> </th>
+                        <th> <b> Total No.of Bookings Tahsildar Approved </b> </th>
+                        <th> <b> Total No.of Bookings Tahsildar Rejected </b> </th>
+                        <th> <b> Total No.of Bookings  Tahsildar Processed </b> </th>
 					</thead>
 					<tbody id="databody">
 					</tbody>

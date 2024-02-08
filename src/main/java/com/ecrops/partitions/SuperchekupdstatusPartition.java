@@ -78,20 +78,20 @@ public class SuperchekupdstatusPartition {
 		for (Object[] row : detailsEntities1) {
 			Superchekupdstatus entity = new Superchekupdstatus();
 			
-			entity.setWbdname((String) row[0]); System.out.println("row[0]===========>"+row[0].toString());
-			entity.setWbmname((String) row[1]); System.out.println("row[1]===========>"+row[1].toString());
-			entity.setWbvname((String) row[2]); System.out.println("row[2]===========>"+row[2].toString());
-			entity.setBookingid((Integer) row[3]); System.out.println("row[3]===========>"+row[3].toString());
-			entity.setOccup_name((String) row[4]); System.out.println("row[4]===========>"+row[4].toString());
-			entity.setOccup_fname((String) row[5]); System.out.println("row[5]===========>"+row[5].toString());
-			entity.setCropname((String) row[6]); System.out.println("row[6]===========>"+row[6].toString());
-			entity.setVarietyname((String) row[7]); System.out.println("row[7]===========>"+row[7].toString());
-			entity.setCr_sow_date((String) row[8].toString()); System.out.println("row[8]===========>"+row[8].toString());
-			entity.setKh_no(((BigDecimal) row[9]).intValue());System.out.println("row[9]===========>"+row[9].toString());
-			entity.setCr_sno((String) row[10]);System.out.println("row[10]===========>"+row[10].toString());
-			entity.setSupercheck_userid((String) row[11]);System.out.println("row[11]===========>"+row[11].toString());
-			entity.setRemarks((String) row[12]);System.out.println("row[12]===========>"+row[12].toString());
-			entity.setReason((String) row[13].toString());System.out.println("row[13]===========>"+row[13].toString());
+			entity.setWbdname((String) row[0]);
+			entity.setWbmname((String) row[1]); 
+			entity.setWbvname((String) row[2]); 
+			entity.setBookingid((Integer) row[3]); 
+			entity.setOccup_name((String) row[4]); 
+			entity.setOccup_fname((String) row[5]); 
+			entity.setCropname((String) row[6]); 
+			entity.setVarietyname((String) row[7]); 
+			entity.setCr_sow_date((String) row[8].toString());
+			entity.setKh_no(((BigDecimal) row[9]).intValue());
+			entity.setCr_sno((String) row[10]);
+			entity.setSupercheck_userid((String) row[11]);
+			entity.setRemarks((String) row[12]);
+			entity.setReason((String) row[13].toString());
 			
 			String vaasuprem=(String) row[14];
 			if(vaasuprem == null) {
@@ -100,7 +100,7 @@ public class SuperchekupdstatusPartition {
 				entity.setVaa_sup_rem((String) row[14]);
 				
 			}
-			System.out.println("row[14]===========>"+vaasuprem);
+			
 			
 		String maoremarks=(String) row[15];
 			if(maoremarks == null) {
