@@ -204,5 +204,17 @@ public String getVillLandData(HttpServletRequest httpServletRequest,Model model)
  public String getMaoSocialAuditCorrectionR() {
 	return "MaoSocialAuditcorrection";
 	}
+ @GetMapping("/repsupchkvill")
+ public String getSupCheckVill(Model model) {
+	return "Rep_supchk_vill";
+	}
+ @GetMapping("/cropinsabs")
+ public String getCropInsAbs(Model model) {
+	return "Rep_cropIns_abtract";
+	}
+ @GetMapping("/pernnialmand")
+ public String getPernnialMand(Model model) {
+	return "Rep_Pernnial_Mand";
+	}
  
 }

@@ -87,7 +87,9 @@
 		var inputdcode = $("#dcodee").val()
 		var inputmcode = $("#mcodee").val()
 		var vcode = $("#vcode").val()
-		
+		//alert("inputdcode======"+inputdcode)
+		//alert("inputmcode======"+inputmcode)
+		//alert("vcode======"+vcode)
 		$.ajax({
 			type: "get",
 			url: "./util/getAllVillages?dcode=" + inputdcode + "&mcode=" + inputmcode ,
@@ -145,7 +147,7 @@ $("#loadingsign").show();
 
 			$.ajax({
 				type: "post",
-				url: "./util/crpmao",
+				url: "./util/pernnialMand",
 				contentType: 'application/json',
 				data: JSON.stringify(data),
 				cache: false,
@@ -156,41 +158,43 @@ $("#loadingsign").show();
 					//alert(JSON.stringify(resp));
 					
 					var sno = 0;
-					var image = '';
+					var tsno = '',tkhno='';
+					
 					for (var j = 0; j < resp.length; j++) {
 						sno = sno + 1;
 						var bean = resp[j];
-						var ph = bean.photo;
 						 if(bean.owner_tenant == 'O'){
 							 ownertenent='<b>Pattadar</b>';
 							 
 						 } else{
 							 ownertenent='<b>Cultivator</b>';
 						 }
-						
+						 /**
+						  if (!(tsno == bean.cr_sno && tkhno == bean.kh_no)) {
+						**/
 						$("#databody").append('<tr style="fontsize:200px; font-weight: bold;">'
 							+ '<td>' + sno + '</td>'
-							+ '<td>' + bean.bookingid + '</td>'
-							+ '<td>  </td>'
-							+ '<td>  </td>'
-							+ '<td>' + bean.oc_name + '</td>'
-							+ '<td>' + bean.cr_farmeruid + '</td>'
-							+ '<td>' + bean.oc_fname + '</td>'
-							+ '<td>' + ownertenent + '</td>'
-							+ '<td>' + bean.kh_no + '</td>'
-							+ '<td>' + bean.cr_sno + '</td>'
-							+ '<td>' + bean.cropname + '</td>'
-							+ '<td>' + bean.varietyname + '</td>'
-							+ '<td>' + bean.cr_mix_unmix_ext + '</td>'
-							+ '<td>' + bean.cr_sow_type + '</td>'
-							+ '<td>' + bean.cropnature + '</td>'
-							+ '<td>' + bean.watersource + '</td>'
-							+ '<td>' + bean.irrmethoddesc + '</td>'
-							+ '<td>' + bean.seed_production + '</td>'
-							+ '<td>' + bean.farmingtype + '</td>'
-							+ '<td><img src="data:image/jpg;base64,' + bean.photo + '" ></td>'
-
+							+ '<td align="left">  </td>'
+							+ '<td align="left">  </td>'
+							+ '<td align="left">' + bean.oc_name + '</td>'
+							+ '<td align="left">' + bean.oc_fname + '</td>'
+							+ '<td align="center">' + ownertenent + '</td>'
+							+ '<td align="center">' + bean.kh_no + '</td>'
+							+ '<td align="center">' + bean.cr_sno + '</td>'
+							+ '<td align="left">' + bean.cropname + '</td>'+
+							(tsno !== bean.cr_sno && tkhno !== bean.kh_no ? '<td colspan="8"></td><td >' + bean.cropname + '</td>' : '<td align="right">' + bean.cr_mix_unmix_ext + '</td><td align="center">' + bean.age + '</td><td align="center">' + bean.mobileno + '</td>')+
+							'</tr>');
+						/**	
+						);
+						  }else{
+							  $("#databody").append('<td colspan="8"></td>'
+		                       +'<td >' + bean.cropname + '</td>');
+						  }
+						  $("#databody").append('<td align="right">' + bean.cr_mix_unmix_ext + '</td>'
+							+ '<td align="center">' + bean.age + '</td>'
+							+ '<td align="center">' + bean.mobileno + '</td>'
 							+ '</tr>');
+						  **/
 					}
 				}
 			});
@@ -252,21 +256,6 @@ $("#loadingsign").show();
 						</select>
 					</td>
 				</tr>
-				<tr>
-					<td align="right" width="30%"> <b>With Photo </b> </td>
-					<td align="left"> <input type="checkbox" id="chkbox" name="chkbox" /> </td>
-				</tr>
-				<tr>
-
-					<td align="right" width="30%"> <b>Farmer Type </b> </td>
-					<td align="left">
-						<select id="display" name="display" style="width: 200px">
-							<option value="0">----Select ALL----</option>
-							<option value="3">To Be Authenticated</option>
-						</select>
-					</td>
-				</tr>
-
 			</table>
 			<div colspan="3" align="center" style="padding-top:10px;padding-bottom:10px;">
 				<button type="button" id="btnSubmit" class="btn btn-primary" value="Submit"
@@ -280,26 +269,18 @@ $("#loadingsign").show();
 				<table id="tableStkId" align="center" style=" text-align: center;">
 					<thead>
 						<tr>
-							<th> <b> Sl.No </b> </th>
-							<th> <b> Booking-id </b> </th>
-							<th> <b> Mandal </b> </th>
-							<th> <b> Village </b> </th>
-							<th> <b> Farmer Name </b> </th>
-							<th> <b> Aadhaar Number </b> </th>
-							<th> <b>Father Name </b> </th>
-							<th> <b> Pattadar / Cultivator </b> </th>
-							<th> <b> Khatha Number</b> </th>
-							<th> <b>Survey Number </b> </th>
-							<th> <b>Crop Name </b> </th>
-							<th> <b>Variety </b> </th>
-							<th> <b>Area Sown </b> </th>
-							<th> <b>Date of Sowing </b> </th>
-							<th> <b>Crop Nature </b> </th>
-							<th> <b>Water Source </b> </th>
-							<th> <b>Method of Irrigation </b> </th>
-							<th> <b>Seed Production </b> </th>
-							<th> <b>Farming Type</b> </th>
-							<th> <b> Photo</b> </th>
+						<th> <b> Sl.No </b> </th>
+                        <th> <b> Mandal </b> </th>
+                        <th> <b> Village </b> </th>    
+                        <th> <b> Farmer Name </b> </th>
+                        <th> <b>Father Name </b> </th>
+                        <th> <b> Pattadar / Cultivator </b> </th>
+                        <th> <b> Khatha Number</b> </th>
+                        <th> <b>Survey Number </b> </th>
+                        <th> <b>Crop Name </b> </th>
+                        <th> <b>Area Sown </b> </th>
+                        <th> <b> Mobile</b> </th>
+                        <th> <b> Age</b> </th>
 						</tr>
 					</thead>
 					<tbody id="databody">

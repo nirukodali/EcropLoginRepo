@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecrops.entity.AllocatedSurveyNoMapping;
 import com.ecrops.entity.AuthMAOvaaVroEkyc;
 import com.ecrops.entity.CropBookingDetailsMaoIntf;
+import com.ecrops.entity.CropInsAbstract;
 import com.ecrops.entity.CropwiseExtBookedRBKwise;
 import com.ecrops.entity.DataSourceWiseBookingReport;
 import com.ecrops.entity.FarmerBookingDetails;
@@ -30,6 +31,7 @@ import com.ecrops.entity.PhyAckVwise;
 import com.ecrops.entity.RbkSurveyNoMapping;
 import com.ecrops.entity.RbkSurveyNoMappingDrpdwn;
 import com.ecrops.entity.RepLandDataDetails;
+import com.ecrops.entity.RepPernnialMand;
 import com.ecrops.entity.Rep_DownloadedDetailsIntf;
 import com.ecrops.entity.Rep_phy_ack_rbk;
 import com.ecrops.entity.RofrBookedExtent;
@@ -39,6 +41,7 @@ import com.ecrops.entity.SpuperChkAppr;
 import com.ecrops.entity.SuperCheckRecordsAlloted;
 import com.ecrops.entity.SuperChkReport;
 import com.ecrops.entity.SuperChk_rejReport;
+import com.ecrops.entity.SupercheckVill;
 import com.ecrops.entity.Superchekupdstatus;
 import com.ecrops.model.RequestModel;
 import com.ecrops.partitions.AllocatedSurveyNoMappingPartition;
@@ -48,6 +51,7 @@ import com.ecrops.partitions.CropwiseExtBookedRBKwisePartition;
 import com.ecrops.partitions.DataSourceWiseBookingReportPartitions;
 import com.ecrops.partitions.PhyAckVwisePartition;
 import com.ecrops.partitions.RbkSurveyNoMappingDrpdwnPartitions;
+import com.ecrops.partitions.RepPernnialMandPartition;
 import com.ecrops.partitions.Rep_DownloadedDetailsIntfPartition;
 import com.ecrops.partitions.Rep_phy_ack_rbkPartition;
 import com.ecrops.partitions.SeasonCropBookedExtentPartition;
@@ -58,6 +62,7 @@ import com.ecrops.partitions.SuperChk_rejReportPartition;
 import com.ecrops.partitions.SuperchekupdstatusPartition;
 import com.ecrops.projections.MasterProjections;
 import com.ecrops.repo.AllocataedSurveyNoMappingRepo;
+import com.ecrops.repo.CropInsAbstractRepo;
 import com.ecrops.repo.FarmerBookingDetailsPartitions;
 import com.ecrops.repo.FarmerBookingDetailsRepo;
 import com.ecrops.repo.MaoAuthVaaVroekycPartition;
@@ -79,6 +84,7 @@ import com.ecrops.repo.SeasonCropBookedExtentRepo.EmployeeList;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.NonWebView;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.ObjUnobj;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.RepVaaDetails;
+import com.ecrops.repo.SupercheckVillRepo;
 import com.ecrops.util.MasterFunctions;
 
 @RestController
@@ -757,7 +763,7 @@ public class UtilRestController {
 					System.out.println("requestModel=>" + requestModel.toString());
 
 					try {
-System.out.println("ASASDSADFSAFSD");
+
 						List<Superchekupdstatus> supupds = superchekupdstatusPartition.getSupChkUpdSts(
 								 requestModel.getWbdcode(),
 								 requestModel.getWbmcode(),
@@ -792,5 +798,56 @@ System.out.println("ASASDSADFSAFSD");
 					System.out.println("list size=>" + socialaudit.size());
 					System.out.println("list =>" + socialaudit.toString());
 					return socialaudit;
+				}
+				
+				//===========================//Rep_Suprcheck_Vill//================//
+				@Autowired private SupercheckVillRepo supercheckVillRepo;
+				
+				@PostMapping("/supvill")
+				List<SupercheckVill> getSupchkVill(@RequestBody RequestModel requestModel) {
+					System.out.println("requestModel=>" + requestModel.toString());
+//					
+//					String[] season = requestModel.getCropyear().split("@");
+//					String seasonType = season[0];
+//					Integer seasonYear = Integer.parseInt(season[1]);
+//					System.out.println("seasonType=>" + seasonType);
+//					System.out.println("seasonYear=>" + seasonYear);
+					List<SupercheckVill> supvil = supercheckVillRepo.getSupVill(
+							requestModel.getWbdcode(),
+						     requestModel.getWbmcode());
+					System.out.println("list size=>" + supvil.size());
+					System.out.println("list =>" + supvil.toString());
+					return supvil;
+				}
+				//===========================//Rep_cropIns_abtract//================//
+				@Autowired private CropInsAbstractRepo cropInsAbstractRepo;
+				
+				@PostMapping("/cropinsab")
+				List<CropInsAbstract> getCropInsAbstract(@RequestBody RequestModel requestModel) {
+					System.out.println("requestModel=>" + requestModel.toString());
+
+					List<CropInsAbstract> cropinsab = cropInsAbstractRepo.getCropIns(
+							Integer.parseInt(requestModel.getDcode()));
+					System.out.println("list size=>" + cropinsab.size());
+					System.out.println("list =>" + cropinsab.toString());
+					return cropinsab;
+				}
+				
+				//===========================//Rep_Pernnial_Mand//================//
+				@Autowired private RepPernnialMandPartition repPernnialMandPartition;
+				
+				@PostMapping("/pernnialMand")
+				List<RepPernnialMand> getPernnialMand(@RequestBody RequestModel requestModel) {
+					System.out.println("requestModel=>" + requestModel.toString());
+
+					List<RepPernnialMand> pernnial = repPernnialMandPartition.getPerrnniaDet(
+							requestModel.getDcode(),
+							requestModel.getWbmcode(),
+							requestModel.getVcode(),
+							requestModel.getCropyear(),
+							requestModel.getWbdcode());
+					System.out.println("list size=>" + pernnial.size());
+					System.out.println("list =>" + pernnial.toString());
+					return pernnial;
 				}
 }
