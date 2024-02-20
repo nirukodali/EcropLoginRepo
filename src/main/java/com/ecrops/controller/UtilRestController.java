@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecrops.config.RegularExpressionclassMethod;
 import com.ecrops.entity.AllocatedSurveyNoMapping;
 import com.ecrops.entity.AuthMAOvaaVroEkyc;
 import com.ecrops.entity.CropBookingDetailsMaoIntf;
@@ -86,6 +87,7 @@ import com.ecrops.repo.SeasonCropBookedExtentRepo.ObjUnobj;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.RepVaaDetails;
 import com.ecrops.repo.SupercheckVillRepo;
 import com.ecrops.util.MasterFunctions;
+import com.ecrops.util.MasterFunctions1;
 
 @RestController
 
@@ -166,8 +168,8 @@ public class UtilRestController {
 		String[] season = cropyear.split("@");
 		String seasonType = season[0];
 		Integer seasonYear = Integer.parseInt(season[1]);
-		System.out.println("seasonType=>" + seasonType);
-		System.out.println("seasonYear=>" + seasonYear);
+		//System.out.println("seasonType=>" + seasonType);
+		//System.out.println("seasonYear=>" + seasonYear);
 
 		Integer ddcode = Integer.parseInt(dcode);
 		Integer mmcode = Integer.parseInt(mcode);
@@ -176,11 +178,32 @@ public class UtilRestController {
 		System.out.println("mcode=>" + mcode);
 		System.out.println("cropyear=>" + cropyear);
 
+		RegularExpressionclassMethod  regexpressionmethod=new RegularExpressionclassMethod();
+
+		System.out.println("dcode------------->"+ddcode);
+		System.out.println("seasonYear------------->"+seasonYear);
+		System.out.println("season------------->"+seasonType);
+
+
+	    boolean val= regexpressionmethod.districtCode(ddcode.toString());
+		boolean year= regexpressionmethod.year(seasonYear.toString());
+		boolean season1= regexpressionmethod.season(seasonType.toString());
+		System.out.println("year------------->"+year);
+
+	System.out.println("val-------------->"+val);
+	System.out.println("season1-------------->"+season1);
+
+	
+	if(val && year && season1) {
 		List<NormalAreasMwiseMao> listt = normalAreasMwiseMaoRepo.getListt(ddcode, mmcode, seasonType, seasonYear);
+		
+		
+		
 		System.out.println("list size=>" + listt.size());
 		System.out.println("list =>" + listt.toString());
 		return listt;
 	}
+	return null;  }
 
 // <-------------FARMER BOOKING DETAILS----------->
 	@GetMapping("/getFbDetails")
@@ -620,8 +643,12 @@ public class UtilRestController {
 		System.out.println("requestModel=>" + requestModel.toString());
 
 		List<CropBookingDetailsMaoIntf> crdbmao = cropBookingDetailsMaoIntfPartition.getCropDetailsMao(
-				requestModel.getWbdcode(), requestModel.getDcode(), requestModel.getWbmcode(), requestModel.getVcode(),
-				requestModel.getCropyear(), requestModel.getCrop());
+				requestModel.getWbdcode(), 
+				requestModel.getDcode(), 
+				requestModel.getWbmcode(), 
+				requestModel.getVcode(),
+				requestModel.getCropyear(),
+				requestModel.getCrop());
 		System.out.println("details===================>" + crdbmao.size());
 		return crdbmao;
 	}

@@ -33,8 +33,10 @@ public class RepPernnialMandPartition {
 		
 		String[] season = cropyear.split("@");
 		System.out.println("season========="+season);
+		
 		String cseason = season[0];
 		System.out.println("cseason========="+cseason);
+		
 		Integer Year = Integer.parseInt(season[1]);
 		System.out.println("Year========="+Year);
 

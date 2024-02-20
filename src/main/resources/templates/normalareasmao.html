@@ -107,6 +107,11 @@
 		});
 	}
 </script>
+<style>
+ #tableStkId {
+        width:60%;
+    }
+</style>
 
 <body>
 	<div class="heading" colspan="20" style="text-align:center;"><b> Report on Mandal Wise Normal Areas</b> </div>
@@ -145,7 +150,7 @@
 	<div class="container">
 		<form id="unlockreport" name="unlockreport" method="post">
 			<div align="center" id="divPrint">
-				<table id="databody" align="center" class="table table-striped border border-secondary">
+				<table id="tableStkId" align="center" class="table table-striped border border-secondary">
 					<thead>
 						<tr>
 							<th>MandalName</th>
@@ -154,12 +159,12 @@
 						</tr>
 					</thead>
 					<tbody id="databody">
-						<!--						<tr th:each="bean : ${list}">-->
-						<!--							<td th:text="${bean.mname}"></td>-->
-						<!--							<td th:text="${bean.wbvname}"></td>-->
-						<!--							<td th:text="${bean.normalarea}"></td>-->
+												<tr th:each="bean : ${list}">
+													<td th:text="${bean.mname}"></td>
+													<td th:text="${bean.wbvname}"></td>
+													<td th:text="${bean.normalarea}"></td>
 
-						<!--						</tr>-->
+											</tr>
 					</tbody>
 				</table>
 			</div>

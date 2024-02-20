@@ -26,7 +26,7 @@ public class SqlDBUtil implements Serializable {
         // con = DriverManager.getConnection("jdbc:postgresql://10.72.4.33:5433/ekarshak", "postgres", "admin");
         //con = DriverManager.getConnection("jdbc:postgresql://192.168.148.149:5432/ekarshak", "postgres", "eKarshak@2012");
         //con = DriverManager.getConnection("jdbc:postgresql://localhost:5433/ecroplocal", "postgres", "root");
-        con = DriverManager.getConnection("jdbc:postgresql://10.72.5.166:5432/ecrop_new", "postgres", "admin");
+        con = DriverManager.getConnection("jdbc:postgresql://10.72.5.187:5432/ecrop_new", "postgres", "admin");
         //con = DriverManager.getConnection("jdbc:postgresql://10.72.5.166:5432/ecrop_local", "postgres", "admin");
         return con;
 

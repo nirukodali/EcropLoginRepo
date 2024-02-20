@@ -41,6 +41,7 @@ public interface SeasonCropBookedExtentRepo  extends JpaRepository<SeasonCropBoo
 			+ "a.cr_vcode=cast(b.wbvcode as character varying)  and  b.dcode=:dcode and b.mcode=:mcode \r\n"
 			+ "and b.wbvcode=:wbvcode order by wbvname",nativeQuery=true)
 	public List<BlockedEfishExtent> findByExtent(@Param("dcode")Integer dcode,
+			
 			@Param("mcode")Integer mcode,@Param("wbvcode") Integer wbvcode);
 	
 	interface BlockedEfishExtent{

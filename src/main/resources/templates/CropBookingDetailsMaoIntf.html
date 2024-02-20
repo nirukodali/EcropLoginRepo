@@ -122,8 +122,20 @@
 		}
 	 
 		function getData() {
+			
+			var wbedname = $("#wbedname").val();
+			var wbemname = $("#wbemname").val();
+			
+			var chkbox = document.getElementById("chkbox");
+			var withPhoto = false;
+			if (chkbox.checked) {
+					withPhoto = true;
+			    } else {
+			    	withPhoto = false;
+			    }
+			
 
-$("#loadingsign").show();
+			$("#loadingsign").show();
 			var wbdcode = $("#inputwbdcode").val();
 			var dcode = $("#dcodee").val();
 			var mcode = $("#inputwbmcode").val();
@@ -161,18 +173,28 @@ $("#loadingsign").show();
 						sno = sno + 1;
 						var bean = resp[j];
 						var ph = bean.photo;
-						 if(bean.owner_tenant == 'O'){
-							 ownertenent='<b>Pattadar</b>';
-							 
-						 } else{
-							 ownertenent='<b>Cultivator</b>';
-						 }
+						var photoValue = '';
+						 
+						if(bean.owner_tenant == 'O'){ ownertenent='<b>Pattadar</b>';
+						} else{ ownertenent='<b>Cultivator</b>'; }
+						if(bean.seed_production ==='1'){
+							seedproduction='<b>Yes</b>'
+						}
+						else{
+							seedproduction='<b>No</b>'
+							}
+						
+						if(withPhoto){
+							photoValue = '<img src="data:image/jpg;base64,' + bean.photo + '" >';
+						}else{
+							photoValue = '';
+						}
 						
 						$("#databody").append('<tr style="fontsize:200px; font-weight: bold;">'
 							+ '<td>' + sno + '</td>'
 							+ '<td>' + bean.bookingid + '</td>'
-							+ '<td>  </td>'
-							+ '<td>  </td>'
+							+ '<td> '+wbedname+' </td>'
+							+ '<td> '+wbemname+' </td>'
 							+ '<td>' + bean.oc_name + '</td>'
 							+ '<td>' + bean.cr_farmeruid + '</td>'
 							+ '<td>' + bean.oc_fname + '</td>'
@@ -186,9 +208,9 @@ $("#loadingsign").show();
 							+ '<td>' + bean.cropnature + '</td>'
 							+ '<td>' + bean.watersource + '</td>'
 							+ '<td>' + bean.irrmethoddesc + '</td>'
-							+ '<td>' + bean.seed_production + '</td>'
+							+ '<td>' + seedproduction + '</td>'
 							+ '<td>' + bean.farmingtype + '</td>'
-							+ '<td><img src="data:image/jpg;base64,' + bean.photo + '" ></td>'
+							+ '<td>'+photoValue+'</td>'
 
 							+ '</tr>');
 					}
@@ -207,11 +229,15 @@ $("#loadingsign").show();
 	
 	<div class="heading" colspan="20" style="text-align:center;"><b> Report On Farmer Booking Details</b> </div>
 	<p th:text="${msg}"></p>
-	<input type="hidden" id="inputwbdcode" th:value="${#session.getAttribute('wbdcode')}" />
-	<input type="hidden" id="inputwbmcode" th:value="${#session.getAttribute('wbmcode')}" />
-	<input type="hidden" id="dcodee" th:value="${#session.getAttribute('dcode')}" />
-	<input type="hidden" id="mcodee" th:value="${#session.getAttribute('mcode')}" />
-	<input type="hidden" id="inputuserid" th:value="${#session.getAttribute('userid')}" />
+	
+	<input type="hidden" id="wbedname" name="wbedname" th:value="${#session.getAttribute('wbedname')}" />
+	<input type="hidden" id="wbemname" name="wbemname" th:value="${#session.getAttribute('wbemname')}" />
+	
+	<input type="hidden" id="inputwbdcode" name="inputwbdcode" th:value="${#session.getAttribute('wbdcode')}" />
+	<input type="hidden" id="inputwbmcode" name="inputwbmcode"th:value="${#session.getAttribute('wbmcode')}" />
+	<input type="hidden" id="dcodee" name="dcodee"th:value="${#session.getAttribute('dcode')}" />
+	<input type="hidden" id="mcodee" name="mcodee"th:value="${#session.getAttribute('mcode')}" />
+	<input type="hidden" id="inputuserid"  name="inputuserid"th:value="${#session.getAttribute('userid')}" />
 	<div id="loadingsign">
 	<div class="d-flex justify-content-center" >
   <div class="spinner-border" role="status">
