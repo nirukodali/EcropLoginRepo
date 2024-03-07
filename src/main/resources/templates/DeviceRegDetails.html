@@ -74,20 +74,28 @@
 			timeout: 600000,
 			success: function (resp) {
 				//alert(JSON.stringify(resp));
+				$("#cropyear").append('<option value="">-----Select------</option>');
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
 					$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
 				}
+				
 			}
 		});
 	});
 
 	function getData() {
-		alert("getData=========>");
+		
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
+		
 		var cropyear = $("#cropyear").val();
 		var inputdcode = $("#inputdcode").val();
 		var inputmcode = $("#inputmcode").val();
-		alert("cropyear=========>"+cropyear);
+		//alert("cropyear=========>"+cropyear);
 		
 		var data = {};
 		data['mcode'] = inputmcode;
@@ -102,8 +110,14 @@
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
-				alert(JSON.stringify(resp));
+				//alert(JSON.stringify(resp));
 				var sno = 0;
+				
+				
+				if(resp.length == 0){
+					 alert(" No Records Found");
+				}
+				
 				for (var j = 0; j < resp.length; j++) {
 					sno = sno + 1;
 					var bean = resp[j];
@@ -112,7 +126,7 @@
 						+ '<td>' + bean.imei1 + '</td>'
 						+ '<td>' + bean.imei2 + '</td>'
 						+ '<td>' + bean.mobile_phone + '</td>'
-					+ '<td>' + bean.emailid + '</td>'
+					    + '<td>' + bean.emailid + '</td>'
 						+ '<td>' + bean.status + '</td>'
 						+ '<td>' + bean.dt_crt + '</td>'
 						+ '</tr>');
@@ -128,7 +142,7 @@
 	<input type="hidden" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />
 	<input type="hidden" id="inputmcode" th:value="${#session.getAttribute('mcode')}" />
 	<div align="center">
-		<form>
+		<form >
 			<table id="ObjEntryTable">
 				<tr>
 					<td colspan="3"></td>
@@ -155,8 +169,8 @@
 					<thead>
 						<tr>
 							<th> <b> S.No. </b> </th>
-<!-- 							<th> <b> Mandal </b> </th> -->
-<!-- 							<th> <b> Village Secretariat </b> </th> -->
+<!-- 						<th> <b> Mandal </b> </th> -->
+<!-- 						<th> <b> Village Secretariat </b> </th> -->
 							<th> <b> IMEI 1 </b> </th>
 							<th> <b> IMEI 2 </b> </th>
 							<th> <b> Phone </b> </th>
@@ -166,7 +180,6 @@
 						</tr>
 					</thead>
 					<tbody id="databody">
-
 					</tbody>
 				</table>
 			</div>
@@ -175,7 +188,7 @@
 			<input class="btn btn-primary" name="ctl00$ContentPlaceHolder1$btnPrint" type="button"
 				id="ctl00_ContentPlaceHolder1_btnPrint" onClick="javascript:CallPrint('divPrint')" value="Print">
 			<input class="btn btn-primary" type="button" onclick="tableToExcel('tableStkId', 'Abstract')" value="Excel">
-			<!--			<input  class="btn btn-primary" type="button" value="Back" onclick="goBack()" />-->
+			<!--	<input  class="btn btn-primary" type="button" value="Back" onclick="goBack()" />-->
 		</div>
 	</div>
 	</div>

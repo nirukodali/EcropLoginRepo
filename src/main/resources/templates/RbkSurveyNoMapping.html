@@ -81,7 +81,11 @@
 
 
 	function getData() {
-
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
 		var cropYear = $("#cropyear").val();
 		var mcode = $("#mcode").val();
 		var wbdcode = $("#wbdcode").val();
@@ -124,14 +128,13 @@
 </style>
 
 <body>
-	<img src="images/Header.jpg" alt="ghg"
-		style="width:85%; box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);margin-left:120px">
-	<div class="heading" colspan="20" style="text-align:center;"><b> Report On Authentication By Vaa Vro Ekyc</b> </div>
+	
+	<div class="heading" colspan="20" style="text-align:center;"><b> Detailed Report on VAA/VHA/VSA selected Survey Nos for Crop Booking </b> </div>
 	<p th:text="${msg}"></p>
 	
-	<input type="text" id="userid" th:value="${#session.getAttribute('userid')}"/>
-	<input type="text" id="wbdcode" th:value="${#session.getAttribute('wbdcode')}" />
-	<input type="text" id="mcode" th:value="${#session.getAttribute('mcode')}" />
+	<input type="hidden" id="userid" th:value="${#session.getAttribute('userid')}"/>
+	<input type="hidden" id="wbdcode" th:value="${#session.getAttribute('wbdcode')}" />
+	<input type="hidden" id="mcode" th:value="${#session.getAttribute('mcode')}" />
 	
 	<div align="center">
 		<form>

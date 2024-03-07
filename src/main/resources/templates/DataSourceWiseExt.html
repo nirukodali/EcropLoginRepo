@@ -94,6 +94,12 @@ alert("jdsjdwsf");
 		var inputmcode = $("#inputmcode").val();
 		var inputuserid = $("#inputuserid").val();
 		//alert("inputdcode=============>" + inputdcode +"  , "+"mcodee=======>"+ mcodee);
+		
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
 
 		$.ajax({
 			type: "get",

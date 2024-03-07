@@ -3,7 +3,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>DevRegDet</title>
+	<title>blockedefish</title>
 	<!--	<link rel="stylesheet" href="./styles/reportstylesheet.css" />-->
 
 	<head th:insert="header"></head>
@@ -87,7 +87,12 @@
 		});
 });
 	function getData() {
-//alert("getdata");
+		var village = $("#vcode").val();
+		if(village == "" || village == null){
+			alert("Please Select Village");
+			return false;
+		}
+		
 		var inputdcode = $("#inputdcode").val()
 		var inputmcode = $("#inputmcode").val()
 		var vcode = $("#vcode").val()

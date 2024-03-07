@@ -82,7 +82,7 @@ public class MainController {
 
 	public void setSessionValues(HttpSession httpSession, UserRegEntity userRegEntity) {
 		String userType = userRegEntity.getType_user();
-//		List<WbMaster>  wbMaster = null;
+
 		WbMaster wbMaster = null;
 
 		if (userType != null && "17".equalsIgnoreCase(userType)) {
@@ -105,10 +105,6 @@ public class MainController {
 			httpSession.setAttribute("wbevname", wbMaster.getWbevname());
 			
 			
-			
-			
-			//httpSession.setAttribute("mcodee", wbMaster.getMcode());
-			
 		} else if (userType != null && "25".equalsIgnoreCase(userType)) {
 			wbMaster = wbMasterService.getWbMasterDetailsForVillage(userRegEntity.getWbvcode(),
 					userRegEntity.getWbMcode(), userRegEntity.getWbDcode());
@@ -126,6 +122,7 @@ public class MainController {
 			
 			
 		}
+		
 
 		httpSession.setAttribute("role", userRegEntity.getType_user());
 		httpSession.setAttribute("name", userRegEntity.getName());

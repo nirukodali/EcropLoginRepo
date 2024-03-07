@@ -60,22 +60,22 @@ public class AllocatedSurveyNoMappingPartition {
 			entity.setData_src(String.valueOf(row[1]));
 			
 			String df = (String)row[2].toString();
-			//System.out.println("baby=>"+df);
+			
 	        BigDecimal bigDecimalValue = new BigDecimal(df);
 	        bigDecimalValue = bigDecimalValue.stripTrailingZeros();
 	        String resultString = bigDecimalValue.toString();
-	       // System.out.println("Trimmed String: " + resultString);
+	      
 			entity.setOccup_extent((long)Double.parseDouble(resultString));
 			
 			entity.setKh_no(((BigDecimal) row[3]).intValue());
 			entity.setCr_sno((String) row[4]);
 			
 			String df2 = (String)row[5].toString();
-			//System.out.println("baby2=>"+df2);
+			
 	        BigDecimal bigDecimalValue2 = new BigDecimal(df);
 	        bigDecimalValue2 = bigDecimalValue2.stripTrailingZeros();
 	        String resultString2 = bigDecimalValue2.toString();
-	       // System.out.println("Trimmed String2: " + resultString2);
+	       
 			entity.setTot_extent((long)Double.parseDouble(resultString2));
 			
 			detailsEntities.add(entity);

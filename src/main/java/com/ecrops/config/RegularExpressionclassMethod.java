@@ -39,10 +39,6 @@ public class RegularExpressionclassMethod {
 
     }
     
-    
-  
-    
-    
     public boolean villageCode(String doubleValue) {
         return doubleValue != null && doubleValue.matches( "^\\d{6,7}$") && !doubleValue.isEmpty();
 
@@ -63,6 +59,8 @@ public class RegularExpressionclassMethod {
 
     }
    
-    
+    public boolean cropyear(String doubleValue) {
+        return doubleValue != null && doubleValue.matches("^[a-zA-Z]@?\\d{4}$") && !doubleValue.isEmpty();
+    }
     
 }

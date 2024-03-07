@@ -28,6 +28,8 @@ public class DataSourceWiseBookingReportPartitions {
 		Integer seasonYear = Integer.parseInt(season[1]);
 		
 		String part_key = "";
+		part_key = seasonType  + seasonYear;
+		String tableName = "ecrop" + seasonYear + "." + "cr_data_src_det_mv_" + part_key;
 //		if (Integer.parseInt(wbdcode) > 9) {
 //			part_key = seasonType + Integer.parseInt(wbdcode) + seasonYear;
 //		} else {
@@ -35,9 +37,9 @@ public class DataSourceWiseBookingReportPartitions {
 //		}
 		
 		
-		part_key = seasonType  + seasonYear;
-		String tableName = "ecrop" + seasonYear + "." + "cr_data_src_det_mv_" + part_key;
-
+		
+		//String tableName = "ecrop"+seasonYear +"." +"cr_data_src_det_mv_" + part_key;
+		
 		System.out.println("tableName---------------->" + tableName);
 
 		String Sql = " SELECT wbevname, sum(web_farmers) as web_farmers, sum(web_ext) as web_ext, \r\n"

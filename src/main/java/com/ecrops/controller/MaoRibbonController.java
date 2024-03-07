@@ -247,6 +247,12 @@ public class MaoRibbonController {
 	public String getCropInsAbs(Model model) {
 		return "Rep_cropIns_abtract";
 	}
+	
+	@GetMapping("/rbksnomaping")
+	public String getRbkSurveyNoMapping(Model model) {
+		return "RbkSurveyNoMapping";
+	}
+	
 
 	@GetMapping("/pernnialmand")
 	public String getPernnialMand(Model model) {

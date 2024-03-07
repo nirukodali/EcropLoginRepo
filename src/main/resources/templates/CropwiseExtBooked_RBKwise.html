@@ -135,6 +135,26 @@
 	}
 
 	function getData() {
+		
+
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
+		
+		var crpgrpId = $("#crpgrpId").val();
+		if(crpgrpId == "" || crpgrpId == null){
+			alert("Please Select CropGroup");
+			return false;
+		}
+		
+// 		var cropname = $("#cropid").val();
+// 		if(cropname == "" || cropname == null){
+// 			alert("Please Select cropName");
+// 			return false;
+// 		}
+		
 		$("#loadingsign").show();
 		var dcode = $("#dcodee").val();
 		var mcode = $("#mcodee").val();

@@ -123,6 +123,26 @@
 	 
 		function getData() {
 			
+			var cropyear = $("#cropyear").val();
+			if(cropyear == "" || cropyear == null){
+				alert("Please Select Cropyear");
+				return false;
+			}
+			
+			var village = $("#vcode").val();
+			if(village == "" || village == null){
+				alert("Please Select Village");
+				return false;
+			}
+			
+			var cropname = $("#cropid").val();
+			if(cropname == "" || cropname == null){
+				alert("Please Select cropName");
+				return false;
+			}
+			
+			
+			
 			var wbedname = $("#wbedname").val();
 			var wbemname = $("#wbemname").val();
 			
@@ -185,7 +205,7 @@
 							}
 						
 						if(withPhoto){
-							photoValue = '<img src="data:image/jpg;base64,' + bean.photo + '" >';
+							photoValue = '<img src="data:image/jpeg;base64,' + bean.photo + '" >';
 						}else{
 							photoValue = '';
 						}

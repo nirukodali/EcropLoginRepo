@@ -88,6 +88,7 @@
 		var inputmcode = $("#inputmcode").val();
 		var inputwbdcode = $("#inputwbdcode").val();
 		var inputuserid = $("#inputuserid").val();
+		var wbemname = $("#wbemname").val();
 		alert("inputwbdcode=============>"+inputwbdcode);
 		$.ajax({
 			type: "get",
@@ -96,9 +97,11 @@
 			timeout: 600000,
 			success: function (resp) {
 				alert(JSON.stringify(resp));
+				var sno=0;
 				for (var j = 0; j < resp.length; j++) {
+					sno = sno +1;
 					var bean = resp[j];
-					$("#databody").append('<tr><td>' + bean.bookingid + '</td><td>' + bean.oc_name + '</td><td>' + bean.oc_fname + '</td><td>' + bean.cr_sno + '</td><td>' + bean.kh_no + '</td><td>' + bean.tot_extent + '</td><td>' + bean.occupant_extent + '</td><td>' + bean.mobileno + '</td></tr>');
+					$("#databody").append('<tr><td>' +sno+ '</td><td>' +wbemname + '</td><td>' + bean.bookingid + '</td><td>' + bean.oc_name + '</td><td>' + bean.oc_fname + '</td><td>' + bean.cr_sno + '</td><td>' + bean.kh_no + '</td><td>' + bean.tot_extent + '</td><td>' + bean.occupant_extent + '</td><td>' + bean.mobileno + '</td></tr>');
 				}
 			}
 		});
@@ -110,6 +113,7 @@
 	<div class="heading" colspan="20" style="text-align:center;"><b> Report Farmer Booking Details</b> </div>
 	<p th:text="${msg}"></p>
 
+	<input type="hidden" id="wbemname" th:value="${#session.getAttribute('wbemname')}" />
 	<input type="hidden" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />
 	<input type="hidden" id="inputmcode" th:value="${#session.getAttribute('mcode')}" />
 	<input type="hidden" id="inputwbdcode" th:value="${#session.getAttribute('wbdcode')}" />
@@ -140,6 +144,8 @@
 				<table id="tableStkId" align="center" class="table table-striped border border-secondary">
 					<thead>
 						<tr>
+							<th>SNo</th>
+							<th>Mandal</th>
 							<th>BookingId</th>
 							<th>Occupant Name</th>
 							<th>OccupantFather Name</th>

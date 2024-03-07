@@ -95,7 +95,17 @@ function getCrop() {
 		
 	}
 	function getData() {
+		var cropid = $("#cropid").val();
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
 		
+		if(cropid == "" || cropid == null){
+			alert("Please Select CropName");
+			return false;
+		}
 		var cropYear = $("#cropyear").val();
 		var inputdcode = $("#inputdcode").val();
 		var inputmcode = $("#inputmcode").val();

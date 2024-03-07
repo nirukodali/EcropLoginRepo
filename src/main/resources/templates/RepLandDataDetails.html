@@ -82,7 +82,7 @@
 					cache : false,
 					timeout : 600000,
 					success : function(resp) {
-						alert(JSON.stringify(resp));
+						//alert(JSON.stringify(resp));
 						for (var j = 0; j < resp.length; j++) {
 							var bean = resp[j];
 							$("#cropyear").append(
@@ -94,12 +94,18 @@
 			});
 
 	function getData() {
-		alert("getData=========>");
+		
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
+	
 		var inputdcode = $("#inputdcode").val();
 		var inputmcode = $("#inputmcode").val();
 		var userid = $("#inputuserid").val();
 		var cropyear = $("#cropyear").val();
-		alert("cropyear=========>" + cropyear);
+		//alert("cropyear=========>" + cropyear);
 
 		var data = {};
 		data['dcode'] = inputdcode;
@@ -138,7 +144,7 @@
 	}
 	
 	function getVillData(dcode,mcode){
-		alert("dcode===========>"+dcode+",mcode=========>"+mcode);
+		//alert("dcode===========>"+dcode+",mcode=========>"+mcode);
 		$("#dcode").val(dcode);
 		$("#mcode").val(mcode);
 		
@@ -163,8 +169,9 @@
 				</tr>
 				<tr>
 					<td align="right" width="30%"><b>Crop Year</b></td>
-					<td align="left"><select id="cropyear" name="cropyear"
-						style="width: 200px">
+					<td align="left">
+					<select id="cropyear" name="cropyear"
+						style="width: 200px"><option>------Select-----</option>
 					</select></td>
 				</tr>
 			</table>

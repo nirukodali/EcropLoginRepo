@@ -67,14 +67,14 @@
 </head>
 <script>
 	$(document).ready(function () {
-		alert("get crop year");
+		
 		$.ajax({
 			type: "get",
 			url: "./util/getAllSeason",
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
-				alert(JSON.stringify(resp));
+				//alert(JSON.stringify(resp));
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
 					$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
@@ -92,6 +92,12 @@
 		var userid = $("#userid").val();
 		var date = $("#date").val();
 		
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
+		
 		$.ajax({
 			type: "get",
 			url: "./util/farmerdet?cropyear=" + cropYear + "&mcode=" + inputmcode + "&date=" + date,
@@ -100,6 +106,10 @@
 			success: function (resp) {
 				$("#databody").empty();
 				alert(JSON.stringify(resp));
+				
+				if(resp.length == 0){
+					 alert(" No Records Found");
+				}
 				var sno = 0;
 				for (var j = 0; j < resp.length; j++) {
 					sno = sno + 1;
@@ -131,7 +141,7 @@
 
 <body>
 	
-	<div class="heading" colspan="20" style="text-align:center;"><b> Report On Farmer Details</b> </div>
+	<div class="heading" colspan="20" style="text-align:center;"><b> Daily Report On Crop Booking</b> </div>
 	<p th:text="${msg}"></p>
 
 	<input type="hidden" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />

@@ -75,14 +75,15 @@
 <script>
 	$(document).ready(
 			function() {
-				//alert("get crop year");
+				
 				$.ajax({
 					type : "get",
 					url : "./util/getAllSeason",
 					cache : false,
 					timeout : 600000,
 					success : function(resp) {
-						alert(JSON.stringify(resp));
+						//alert(JSON.stringify(resp));
+						$("#cropyear").append('<option value="">-----Select------</option>');
 						for (var j = 0; j < resp.length; j++) {
 							var bean = resp[j];
 							$("#cropyear").append(
@@ -94,12 +95,20 @@
 			});
 
 	function getData() {
-		alert("getData=========>");
+		
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
+		
+		var wbemname = $("#wbemname").val();
+		var wbevname = $("#wbevname").val();
 		var inputwbdcode = $("#inputwbdcode").val();
 		var inputwbmcode = $("#inputwbmcode").val();
 		var userid = $("#inputuserid").val();
 		var cropyear = $("#cropyear").val();
-		alert("cropyear=========>" + cropyear);
+		//alert("cropyear=========>" + cropyear);
 
 		var data = {};
 		data['wbdcode'] = inputwbdcode;
@@ -125,8 +134,8 @@
 							$("#databody").append(
 									'<tr style="fontsize:200px; font-weight: bold;">'
 											+ '<td>' + sno + '</td>'
-											+ '<td></td>'
-											+ '<td></td>'
+											+ '<td>'+wbemname+'</td>'
+											+ '<td>'+wbevname+'</td>'
 											+ '<td>'+ bean.weblandcnt + '</td>' 
 											+ '<td>'+ bean.ccrccnt + '</td>'
 											+ '<td>' + bean.totalcnt + '</td>'
@@ -143,6 +152,8 @@
 		<b>Data Downloaded Details For Crop Booking</b>
 	</div>
 	<p th:text="${msg}"></p>
+	<input type="hidden" id="wbemname" th:value="${#session.getAttribute('wbemname')}" />
+	<input type="hidden" id="wbevname" th:value="${#session.getAttribute('wbevname')}" />
 	<input type="hidden" id="inputwbdcode" th:value="${#session.getAttribute('wbdcode')}" />
 	<input type="hidden" id="inputwbmcode" th:value="${#session.getAttribute('wbmcode')}" />
 	<input type="hidden" id="inputuserid" th:value="${#session.getAttribute('userid')}" />
@@ -155,7 +166,8 @@
 				</tr>
 				<tr>
 					<td align="right" width="30%"><b>Crop Year</b></td>
-					<td align="left"><select id="cropyear" name="cropyear"
+					<td align="left">
+					<select id="cropyear" name="cropyear"
 						style="width: 200px">
 					</select></td>
 				</tr>

@@ -139,6 +139,24 @@
 	}
 
 	function getData() {
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
+		
+		var village = $("#vcode").val();
+		if(village == "" || village == null){
+			alert("Please Select Village");
+			return false;
+		}
+		
+		var cropname = $("#cropid").val();
+		if(cropname == "" || cropname == null){
+			alert("Please Select cropName");
+			return false;
+		}
+		
 
 		$("#loadingsign").show();
 		var wbdcode = $("#inputwbdcode").val();
@@ -187,69 +205,29 @@
 					if (tsno !== bean.cr_sno && tkhno !== bean.kh_no) {
 						$("#databody").append(
 								'<tr style="fontsize:200px; font-weight:bold;">'
-										+ '<td>'
-										+ sno
-										+ '</td>'
+										+ '<td>'+ sno+ '</td>'
 										+ '<td align="left">  </td>'
 										+ '<td align="left">  </td>'
-										+ '<td align="left">'
-										+ bean.oc_name
-										+ '</td>'
-										+ '<td align="left">'
-										+ bean.oc_fname
-										+ '</td>'
-										+ '<td align="center">'
-										+ ownertenent
-										+ '</td>'
-										+ '<td align="center">'
-										+ bean.kh_no
-										+ '</td>'
-										+ '<td align="center">'
-										+ bean.cr_sno
-										+ '</td>'
-										+ '<td align="left">'
-										+ bean.cropname
-										+ '</td>'
-										+ '<td align="right">'
-										+ bean.cr_mix_unmix_ext
-										+ '</td>'
-										+ '<td align="center">'
-										+ bean.age
-										+ '</td>'
-										+ '<td align="center">'
-										+ bean.mobileno + '</td>' + '</tr>');
+										+ '<td align="left">'+ bean.oc_name+ '</td>'
+										+ '<td align="left">'+ bean.oc_fname+ '</td>'
+										+ '<td align="center">'+ ownertenent+ '</td>'
+										+ '<td align="center">'+ bean.kh_no+ '</td>'
+										+ '<td align="center">'+ bean.cr_sno+ '</td>'
+										+ '<td align="left">'+ bean.cropname+ '</td>'
+										+ '<td align="right">'+ bean.cr_mix_unmix_ext+ '</td>'
+										+ '<td align="center">'+ bean.age+ '</td>'
+										+ '<td align="center">'+ bean.mobileno + '</td>' + '</tr>');
+					                   } 
+											  else{
 
-					} else {
-						$("#databody").append(
-								'<tr style="fontsize:200px; font-weight:bold;">'
-										+ '<td>' + sno + '</td>'
-										+ '<td colspan="8"></td>' + '<td>'
-										+ bean.cropname + '</td>'
-										+ '<td align="right">'
-										+ bean.cr_mix_unmix_ext + '</td>'
-										+ '<td align="center">' + bean.age
-										+ '</td>' + '<td align="center">'
-										+ bean.mobileno + '</td>' + '</tr>');
+					 							  $("#databody").append('<tr style="fontsize:200px; font-weight:bold;">'
+					 							  +'<td colspan="8"></td>'
+					 		                      +'<td align="left">' + bean.cropname + '</td>'
+					 		                      +' <td align="right">' + bean.cr_mix_unmix_ext + '</td>'
+					 		                      + '<td align="center">' + bean.age + '</td>'
+					 	 						  + '<td align="center">' + bean.mobileno + '</td>'
+					 		                      +'</tr>');
 					}
-
-					// 						  else{
-
-					//  							  $("#databody").append('<tr style="fontsize:200px; font-weight:bold;">'
-					//  							  +'<td colspan="8"></td>'
-					//  		                      +'<td align="left">' + bean.cropname + '</td>'
-					//  		                      +' <td align="right">' + bean.cr_mix_unmix_ext + '</td>'
-					//  		                      + '<td align="center">' + bean.age + '</td>'
-					//  	 						  + '<td align="center">' + bean.mobileno + '</td>'
-					//  		                      +'</tr>');
-
-					// }
-					//  						  $("#databody").append( '<tr style="fontsize:200px; font-weight:bold;">'
-					//  							+'<td colspan="8"></td>'
-					//  						    +'<td align="left" >' + bean.cropname + '</td>'
-					//  						    +'<td align="right">' + bean.cr_mix_unmix_ext + '</td>'
-					//  							+ '<td align="center">' + bean.age + '</td>'
-					//   							+ '<td align="center">' + bean.mobileno + '</td>'
-					//   							+ '</tr>');
 
 				}
 			}
@@ -346,7 +324,6 @@
 						</tr>
 					</thead>
 					<tbody id="databody">
-
 					<tr th:each="obj  : ${list}">
 						 <td th:text="${obj.count}"></td>
 						 <td th:text="${obj.wbemname}"></td>
@@ -354,18 +331,13 @@
 						 <td th:text="${obj.oc_name}"></td>
 						 <td th:text="${obj.oc_fname}"></td>
 						 <td th:text="${obj.owner_tenant}"></td>
-						 
 						 <td th:text="${obj.kh_no}"></td>
 						 <td th:text="${obj.cr_sno}"></td>
 						 <td th:text="${obj.cropname}"></td>
-						 
 						 <td th:text="${obj.cr_mix_unmix_ext}"></td>
 						 <td th:text="${obj.age}"></td>
 						 <td th:text="${obj.mobileno}"></td>
 					</tr>	 
-
-
-
 					</tbody>
 				</table>
 			</div>
