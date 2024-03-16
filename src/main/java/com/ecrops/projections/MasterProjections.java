@@ -5,3 +5,4 @@ public interface MasterProjections {
 	String getCol2();
 
 }
+

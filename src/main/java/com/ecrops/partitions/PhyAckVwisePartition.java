@@ -28,15 +28,9 @@ public class PhyAckVwisePartition {
 		System.out.println("seasonType========="+seasonType);
 		Integer seasonYear = Integer.parseInt(season[1]);
 		System.out.println("seasonYear========="+seasonYear);
-	
-		
 
 		String part_key = "";
-//		if (Integer.parseInt(wbdcode) > 9) {
-//			part_key = seasonType + wbdcode + seasonYear;	 System.out.println("part_key==========>"+part_key);
-//		} else {
-//			part_key = seasonType + "0" + wbdcode + seasonYear; System.out.println("part_key==========>"+part_key);
-//		}
+
 		part_key = seasonType  + seasonYear; System.out.println("part_key==========>"+part_key);
 		
 		String tableName = "ecrop" + seasonYear + "." + "ekycgenerated_vill_mv_" + part_key; 

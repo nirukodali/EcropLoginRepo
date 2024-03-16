@@ -64,7 +64,7 @@
 </head>
 <script>
 	$(document).ready(function () {
-		alert("get crop year");
+		
 		$.ajax({
 			type: "get",
 			url: "./util/getAllSeason",
@@ -98,6 +98,19 @@
 	}
 
 	function getData() {
+		
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
+		
+		var mandal = $("#mandal").val();
+		if(mandal == "" || mandal == null){
+			alert("Please Select MandalName");
+			return false;
+		}
+		
 
 		var cropYear = $("#cropyear").val();
 		var inputwbmcode = $("#inputwbmcode").val();

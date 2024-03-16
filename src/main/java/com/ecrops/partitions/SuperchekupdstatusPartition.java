@@ -36,7 +36,8 @@ public class SuperchekupdstatusPartition {
 
 		System.out.println("tableName---------------->" + tableName);
 
-		String Sql = " select wbdname,wbmname,wbvname,x.bookingid,occup_name,occup_fname, cropname,varietyname, cast(x.cr_sow_date as varchar) ,kh_no, cr_sno,\r\n"
+		String Sql = " select wbdname,wbmname,wbvname,x.bookingid,occup_name,occup_fname, cropname,"
+				+ "varietyname, cast(x.cr_sow_date as varchar) ,kh_no, cr_sno,\r\n"
 				+ " cast(supercheck_userid as varchar),cast(case when oremarks='A' then 'Entry Found Correct'\r\n"
 				+ " when  oremarks='R' then 'Entry Found Incorrect'  end as varchar) as remarks,reason,vaa_sup_rem,mao_remarks,mro_remarks,\r\n"
 				+ " oremarks , cr_no from  ((select  DISTINCT cr_crop,variety,cr_year,cr_season,\r\n"
@@ -102,19 +103,19 @@ public class SuperchekupdstatusPartition {
 			}
 			
 			
-		String maoremarks=(String) row[15];
+		String maoremarks=(String) row[15].toString();
 			if(maoremarks == null) {
 				entity.setMao_remarks("");
 			}else {
-				entity.setMao_remarks((String) row[15]);
+				entity.setMao_remarks((String) row[15].toString());
 			}
 			
-			String mroremarks=(String) row[16];
+			String mroremarks=(String) row[16].toString();
 			if(mroremarks == null) {
 				entity.setMro_remarks("");
 				
 			}else {
-				entity.setMro_remarks((String) row[16]);	
+				entity.setMro_remarks((String) row[16].toString());	
 			}
 			
 			detailsEntities.add(entity);

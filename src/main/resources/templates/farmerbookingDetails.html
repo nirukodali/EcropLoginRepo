@@ -73,7 +73,8 @@
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
-				alert(JSON.stringify(resp));
+				//alert(JSON.stringify(resp));
+				$("#cropyear").append('<option value="">---------Select--------</option>');
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
 					$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
@@ -89,7 +90,15 @@
 		var inputwbdcode = $("#inputwbdcode").val();
 		var inputuserid = $("#inputuserid").val();
 		var wbemname = $("#wbemname").val();
-		alert("inputwbdcode=============>"+inputwbdcode);
+		
+		
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
+		
+		
 		$.ajax({
 			type: "get",
 			url: "./util/getFbDetails1?dcode=" + inputdcode + "&mcode=" + inputmcode + "&cropyear=" + cropYear+ "&wbdcode=" + inputwbdcode,
@@ -101,7 +110,16 @@
 				for (var j = 0; j < resp.length; j++) {
 					sno = sno +1;
 					var bean = resp[j];
-					$("#databody").append('<tr><td>' +sno+ '</td><td>' +wbemname + '</td><td>' + bean.bookingid + '</td><td>' + bean.oc_name + '</td><td>' + bean.oc_fname + '</td><td>' + bean.cr_sno + '</td><td>' + bean.kh_no + '</td><td>' + bean.tot_extent + '</td><td>' + bean.occupant_extent + '</td><td>' + bean.mobileno + '</td></tr>');
+					$("#databody").append('<tr><td>' +sno+ '</td>'
+					+'<td>' +wbemname + '</td>'
+					+'<td>' + bean.bookingid + '</td>'
+					+'<td>' + bean.oc_name + '</td>'
+					+'<td>' + bean.oc_fname + '</td>'
+					+'<td>' + bean.cr_sno + '</td>'
+					+'<td>' + bean.kh_no + '</td>'
+					+'<td>' + bean.tot_extent + '</td>'
+					+'<td>' + bean.occupant_extent + '</td>'
+					+'<td>' + bean.mobileno + '</td></tr>');
 				}
 			}
 		});
@@ -157,16 +175,16 @@
 						</tr>
 					</thead>
 					<tbody id="databody">
-						<tr th:each="bean : ${Farmerlist}">
-							<td th:text="${bean.bookingid}"></td>
-							<td th:text="${bean.oc_name}"></td>
-							<td th:text="${bean.oc_fname}"></td>
-							<td th:text="${bean.cr_sno}"></td>
-							<td th:text="${bean.kh_no}"></td>
-							<td th:text="${bean.tot_extent}"></td>
-							<td th:text="${bean.occupant_extent}"></td>
-							<td th:text="${bean.mobileno}"></td>
-						</tr>
+<!-- 						<tr th:each="bean : ${Farmerlist}"> -->
+<!-- 							<td th:text="${bean.bookingid}"></td> -->
+<!-- 							<td th:text="${bean.oc_name}"></td> -->
+<!-- 							<td th:text="${bean.oc_fname}"></td> -->
+<!-- 							<td th:text="${bean.cr_sno}"></td> -->
+<!-- 							<td th:text="${bean.kh_no}"></td> -->
+<!-- 							<td th:text="${bean.tot_extent}"></td> -->
+<!-- 							<td th:text="${bean.occupant_extent}"></td> -->
+<!-- 							<td th:text="${bean.mobileno}"></td> -->
+<!-- 						</tr> -->
 					</tbody>
 				</table>
 			</div>

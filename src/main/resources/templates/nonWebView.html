@@ -74,6 +74,7 @@
 			timeout: 600000,
 			success: function (resp) {
 				//alert(JSON.stringify(resp));
+					$("#cropyear").append('<option value="">------Select-------</option>');
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
 					$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
@@ -83,11 +84,18 @@
 	});
 
 	function getData() {
-	    alert("getData=========>");
+		
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
+		
+	  
 	    var cropyear = $("#cropyear").val();
 	    var inputdcode = $("#inputdcode").val();
 	    var inputmcode = $("#inputmcode").val();
-	    alert("cropyear=========>" + cropyear);
+	  
 
 	    var data = {};
 	    data['dcode'] = inputdcode;

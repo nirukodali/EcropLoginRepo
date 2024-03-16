@@ -86,19 +86,20 @@
 					alert(JSON.stringify(resp));
 					for (var j = 0; j < resp.length; j++) {
 							sno= sno + 1;
+						
 						var bean = resp[j];
 						$("#databody").append('<tr style="fontsize:200px; font-weight: bold;">'
-						+'<td>' + sno + '</td>'
-						+'<td>' + bean.wbvname + '</td>'
-						+'<td>' + bean.ocname +'</td>'
-						+'<td>' + bean.ocfname + '</td>'
-						+'<td>' + bean.farmer_name + '</td>'
-						+'<td>' + bean.father_name + '</td>'
-						+'<td>' + bean.survey_no + '</td>'
-						+'<td>' + bean.kh_no + '</td>'
-						+'<td>' + bean.occupant_extent + '</td>'
-						+'<td>' + bean.tot_extent + '</td>'
-						+'<td>' + bean.allowable_ext + '</td>'
+						+'<td align="center">' + sno + '</td>'
+						+'<td align="left">' + bean.wbvname + '</td>'
+						+'<td align="left">' + bean.ocname +'</td>'
+						+'<td align="left">' + bean.ocfname + '</td>'
+						+'<td align="left">' + bean.farmer_name + '</td>'
+						+'<td align="left">' + bean.father_name + '</td>'
+						+'<td align="center">' + bean.survey_no + '</td>'
+						+'<td align="center">' + bean.khno + '</td>'
+						+'<td align="right">' + bean.occupant_extent + '</td>'
+						+'<td align="right">' + bean.tot_extent + '</td>'
+// 						+'<td align="right">' + bean.allowable_ext + '</td>'
 						+'</tr>');
 
 					}
@@ -166,7 +167,7 @@
 							<th> <b> Khata No </b> </th>
 							<th> <b> Cultivator Extent </b> </th>
 							<th> <b> Total Extent</b> </th>
-							<th> <b> Available Extent for Booking </b> </th>
+<!-- 							<th> <b> Available Extent for Booking </b> </th> -->
 						</tr>
 
 					</thead>

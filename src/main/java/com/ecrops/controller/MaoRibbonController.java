@@ -46,8 +46,8 @@ public class MaoRibbonController {
 		String dcode = (String) httpSession.getAttribute("dcode");
 		String mcode = (String) httpSession.getAttribute("mcode");
 
-		System.out.println("dcode===================" + dcode);
-		System.out.println("mcode==============" + mcode);
+//		System.out.println("dcode===================" + dcode);
+//		System.out.println("mcode==============" + mcode);
 		model.addAttribute("dcode", "dcode");
 		model.addAttribute("mcode", "mcode");
 		return "normalareasmao";

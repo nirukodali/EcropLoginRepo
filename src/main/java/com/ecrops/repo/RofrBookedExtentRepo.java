@@ -21,33 +21,27 @@ public interface RofrBookedExtentRepo extends JpaRepository<RofrBookedExtent, In
 			+ " cast(tot_extent  as character varying) as tot_extent  from\r\n"
 			+ " ecrop2023.cr_booking_nwb a,wbvillage_mst_v b  where data_src=:dataSrc \r\n"
 			+ " and a.cr_vcode=b.wbvcode  and a.dcode=:dcode and a.mcode=:mcode order by wbvname ", nativeQuery = true)
-	public List<EfishDetailsR> efishDetailsR(@Param("dataSrc") String dataSrc, @Param("dcode") Integer dcode,
-			@Param("mcode") Integer mcode);
+	public List<EfishDetailsR> efishDetailsR(@Param("dataSrc") String dataSrc,
+			                                @Param("dcode") Integer dcode,
+			                                @Param("mcode") Integer mcode);
 
 	interface EfishDetailsR {
 		String getWbvname();
-
 		String getOcname();
-
 		String getOcfname();
-
 		String getFarmer_name();
-
 		String getFather_name();
-
 		String getSurvey_no();
-
 		String getKhno();
-
 		String getOccupant_extent();
-
 		String getTot_extent();
 
 	}
 
 	@Query(value = " select b.dcode,b.mcode,village_name as wbvname,pattadar_name as ocname,pattadar_father_name as ocfname,booking_available,\r\n"
 			+ "  allowable_ext,occupant_name  as farmer_name,occupant_father_name  as father_name, cr_sno  as survey_no, kh_no, \r\n"
-			+ "  occupant_extent, total_extent as tot_extent from ecrop2023.cr_details_efish_2023 a, wbvillage_mst b where booking_available='Y'\r\n"
+			+ "  occupant_extent, total_extent as tot_extent from ecrop2023.cr_details_efish_2023 a,"
+			+ "  wbvillage_mst b where booking_available='Y'\r\n"
 			+ "  and  \r\n" + "  cast(a.cr_vcode  as character varying)=\r\n"
 			+ "  cast(b.wbvcode  as character varying)  \r\n"
 			+ "  and  b.dcode=:dcode and b.mcode=:mcode order by wbvname", nativeQuery = true)
@@ -80,6 +74,7 @@ public interface RofrBookedExtentRepo extends JpaRepository<RofrBookedExtent, In
 		String getOccupant_extent();
 
 		String getTot_extent();
+		;
 
 	}
 	

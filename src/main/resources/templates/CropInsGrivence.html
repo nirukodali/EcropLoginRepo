@@ -73,6 +73,7 @@
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
+				$("#cropyear").append('<option value="">-----------Select--------</option>');
 				//alert(JSON.stringify(resp));
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
@@ -83,11 +84,15 @@
 	});
 
 	function getData() {
-		alert("getData=========>");
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
+		
 		var cropyear = $("#cropyear").val();
 		var inputdcode = $("#inputdcode").val();
 		var inputmcode = $("#inputmcode").val();
-		alert("cropyear=========>" + cropyear);
 
 		var data = {};
 		data['dcode'] = inputdcode;
@@ -133,7 +138,8 @@
 </script>
 
 <body>
-	<div class="heading" colspan="20" style="text-align:center;"><b>Device Registration Details</b> </div>
+	<div class="heading" colspan="20" style="text-align:center;"><b> Report On Crop Insurance Grievance Details(Kharif 2022) :: KHARIF 2022  </font></b> </td>
+                    </tr></b> </div>
 	<p th:text="${msg}"></p>
 	<input type="hidden" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />
 	<input type="hidden" id="inputmcode" th:value="${#session.getAttribute('mcode')}" />

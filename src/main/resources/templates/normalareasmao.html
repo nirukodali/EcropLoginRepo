@@ -73,6 +73,7 @@
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
+				$("#cropyear").append('<option value="">-------Select---------</option>');
 				alert(JSON.stringify(resp));
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
@@ -83,7 +84,11 @@
 	});
 
 	function getData() {
-		
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
 		var cropYear = $("#cropyear").val();
 		var inputdcode = $("#inputdcode").val();
 		var inputmcode = $("#inputmcode").val();

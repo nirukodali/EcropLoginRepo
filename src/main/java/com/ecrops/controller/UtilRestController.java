@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ import com.ecrops.config.RegularExpressionclassMethod;
 import com.ecrops.entity.AllocatedSurveyNoMapping;
 import com.ecrops.entity.AuthMAOvaaVroEkyc;
 import com.ecrops.entity.CropBookingDetailsMaoIntf;
-import com.ecrops.entity.CropInsAbstract;
+
 import com.ecrops.entity.CropwiseExtBookedRBKwise;
 import com.ecrops.entity.DataSourceWiseBookingReport;
 import com.ecrops.entity.FarmerBookingDetails;
@@ -63,7 +63,7 @@ import com.ecrops.partitions.SuperChk_rejReportPartition;
 import com.ecrops.partitions.SuperchekupdstatusPartition;
 import com.ecrops.projections.MasterProjections;
 import com.ecrops.repo.AllocataedSurveyNoMappingRepo;
-import com.ecrops.repo.CropInsAbstractRepo;
+
 import com.ecrops.repo.FarmerBookingDetailsPartitions;
 import com.ecrops.repo.FarmerBookingDetailsRepo;
 import com.ecrops.repo.MaoAuthVaaVroekycPartition;
@@ -79,6 +79,7 @@ import com.ecrops.repo.RofrBookedExtentRepo.EfishDetailsR;
 import com.ecrops.repo.RofrBookedExtentRepo.FarmerDetails;
 import com.ecrops.repo.SeasonCropBookedExtentRepo;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.BlockedEfishExtent;
+import com.ecrops.repo.SeasonCropBookedExtentRepo.CropInsAbstractt;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.CropInsGrievance;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.DeviceRegDetails;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.EmployeeList;
@@ -87,7 +88,7 @@ import com.ecrops.repo.SeasonCropBookedExtentRepo.ObjUnobj;
 import com.ecrops.repo.SeasonCropBookedExtentRepo.RepVaaDetails;
 import com.ecrops.repo.SupercheckVillRepo;
 import com.ecrops.util.MasterFunctions;
-import com.ecrops.util.MasterFunctions1;
+
 
 @RestController
 
@@ -98,8 +99,7 @@ public class UtilRestController {
 
 	@Autowired
 	private NormalAreasMwiseMaoRepo normalAreasMwiseMaoRepo;
-	@Autowired
-	private FarmerBookingDetailsRepo farmerBookingDetailsRepo;
+	
 	@Autowired
 	private FarmerBookingDetailsPartitions partition;
 	@Autowired
@@ -108,14 +108,11 @@ public class UtilRestController {
 	private MaoAuthVaaVroekycRepo maoAuthVaaVroekycRepo;
 	@Autowired
 	private MaoAuthVaaVroekycPartition maoAuthVaaVroekycPartition;
-	@Autowired
-	private RbkSurveyNoMappingRepo rbkSurveyNoMappingRepo;
-
+	
 	@Autowired
 	private RbkSurveyNoMappingPartition rbkSurveyNoMappingPartition;
 
-	@Autowired
-	private AllocataedSurveyNoMappingRepo allocataedSurveyNoMappingRepo;
+	
 
 	@GetMapping("/getAllSeason")
 	public List<MasterProjections> getAllSeasonn() {
@@ -168,35 +165,21 @@ public class UtilRestController {
 		String[] season = cropyear.split("@");
 		String seasonType = season[0];
 		Integer seasonYear = Integer.parseInt(season[1]);
-		//System.out.println("seasonType=>" + seasonType);
-		//System.out.println("seasonYear=>" + seasonYear);
+		
 
 		Integer ddcode = Integer.parseInt(dcode);
 		Integer mmcode = Integer.parseInt(mcode);
 
-		System.out.println("dcode=>" + dcode);
-		System.out.println("mcode=>" + mcode);
-		System.out.println("cropyear=>" + cropyear);
-
 		RegularExpressionclassMethod  regexpressionmethod=new RegularExpressionclassMethod();
-
-		System.out.println("dcode------------->"+ddcode);
-		System.out.println("seasonYear------------->"+seasonYear);
-		System.out.println("season------------->"+seasonType);
-
 	    boolean val= regexpressionmethod.districtCode(ddcode.toString());
 		boolean year= regexpressionmethod.year(seasonYear.toString());
 		boolean season1= regexpressionmethod.season(seasonType.toString());
-		System.out.println("year------------->"+year);
-
-	System.out.println("val-------------->"+val);
-	System.out.println("season1-------------->"+season1);
 	
 	if(val && year && season1) {
 		List<NormalAreasMwiseMao> listt = normalAreasMwiseMaoRepo.getListt(ddcode, mmcode, seasonType, seasonYear);
 		
-		System.out.println("list size=>" + listt.size());
-		System.out.println("list =>" + listt.toString());
+		//System.out.println("list size=>" + listt.size());
+		//System.out.println("list =>" + listt.toString());
 		return listt;
 	   }
 	
@@ -204,37 +187,46 @@ public class UtilRestController {
 	}
 
 // <-------------FARMER BOOKING DETAILS----------->
-	@GetMapping("/getFbDetails")
-	List<FarmerBookingDetails> getFarmers(String dcode, String mcode, String cropyear, HttpSession session,
-			String userid) {
-		String[] season = cropyear.split("@");
-		String seasonType = season[0];
-		String year = season[1];
-		Integer seasonYear = Integer.parseInt(season[1]);
-
-		Integer ddcode = Integer.parseInt(dcode);
-		Integer mmcode = Integer.parseInt(mcode);
-		String wbdcode = (String) session.getAttribute("wbdcode");
-
-		List<FarmerBookingDetails> Farmerlist = partition.farmerBookingDetails(dcode, mcode, year, wbdcode);
-
-		return Farmerlist;
-	}
+//	@GetMapping("/getFbDetails")
+//	List<FarmerBookingDetails> getFarmers(String dcode, String mcode, String cropyear, HttpSession session,
+//			String userid) {
+//		String[] season = cropyear.split("@");
+//		String seasonType = season[0];
+//		String year = season[1];
+//		Integer seasonYear = Integer.parseInt(season[1]);
+//
+//		Integer ddcode = Integer.parseInt(dcode);
+//		Integer mmcode = Integer.parseInt(mcode);
+//		String wbdcode = (String) session.getAttribute("wbdcode");
+//
+//		List<FarmerBookingDetails> Farmerlist = partition.farmerBookingDetails(dcode, mcode, year, wbdcode);
+//
+//		return Farmerlist;
+//	}
 
 	@GetMapping("/getFbDetails1")
 	List<FarmerBookingDetails> getFbDetails(String dcode, String mcode, String cropyear, String wbdcode,
 			String userid) {
-//		System.out.println("dcode===================>" + dcode);
-//		System.out.println("mcode===================>" + mcode);
-//		System.out.println("cropyear===================>" + cropyear);
-//		System.out.println("wbdcode===================>" + wbdcode);
+		
+		String[] season = cropyear.split("@");
+		String seasonType = season[0];
+		Integer seasonYear = Integer.parseInt(season[1]);
+		
+		RegularExpressionclassMethod  regexpressionmethod=new RegularExpressionclassMethod();
+	    boolean val= regexpressionmethod.districtCode(dcode.toString());
+	    boolean val1= regexpressionmethod.mandalCode(mcode.toString());
+		boolean year= regexpressionmethod.year(seasonYear.toString());
+		
+	
+	if(val && val1 && year) {
 
 		List<FarmerBookingDetails> list = partition.farmerBookingDetails(dcode, mcode, cropyear, wbdcode);
 		System.out.println("details===================>" + list.size());
 
 		return list;
 	}
-
+	return null;
+	}
 	// <------------------ROFR BOOKED EXTENT----------------->//
 
 	@GetMapping("/getRofr")
@@ -422,7 +414,7 @@ return null;
 		RegularExpressionclassMethod  regexpressionmethod=new RegularExpressionclassMethod();
 
 	    boolean val= regexpressionmethod.districtCode(wbdcode.toString());
-	    boolean wbmcd= regexpressionmethod.districtCode(wbmcode.toString());
+	    boolean wbmcd= regexpressionmethod.mandalCode(wbmcode.toString());
 		boolean year1= regexpressionmethod.year(year.toString());
 		boolean season1= regexpressionmethod.season(seasonType.toString());
 	
@@ -435,14 +427,22 @@ return null;
 	}
 	return null;
 }
-	// **********************efishDetails***************************
+// **********************efishDetails***************************
 	@Autowired
 	private RofrBookedExtentRepo rofrBookedExtentRepo;
 
 	@GetMapping("/efishDetails")
 	public ResponseEntity<?> efishDetails(@RequestParam("dataSrc") String dataSrc,
+			@RequestParam("dcode") String dcode, 
+			@RequestParam("mcode") String mcode) {
+		
+		RegularExpressionclassMethod  regexpressionmethod=new RegularExpressionclassMethod();
 
-			@RequestParam("dcode") String dcode, @RequestParam("mcode") String mcode) {
+	    boolean val= regexpressionmethod.districtCode(dcode.toString());
+	    boolean wbmcd= regexpressionmethod.mandalCode(mcode.toString());
+		
+	
+	if(val && wbmcd) {
 		if (dataSrc.equalsIgnoreCase("R")) {
 			List<EfishDetailsR> efishDetailsR = rofrBookedExtentRepo.efishDetailsR(dataSrc, Integer.parseInt(dcode),
 					Integer.parseInt(mcode));
@@ -455,7 +455,8 @@ return null;
 		}
 		return null;
 	}
-
+	return null;
+	}
 	// **************** Farmer Details****************
 @GetMapping("/farmerdet")
 	public ResponseEntity<?> farmerdet(@RequestParam("mcode") String mcode, @RequestParam("date") 
@@ -485,15 +486,23 @@ return null;
 	@GetMapping("/allcrp1")
 	List<SeasonCropBookedExtent> getAllCrop(String wbmcode, String cropyear, String userid, String wbdcode) {
 
-		System.out.println("wbmcode===================>" + wbmcode);
-		System.out.println("cropyear===================>" + cropyear);
-		System.out.println("userid===================>" + userid);
+		String[] season = cropyear.split("@");
+		String seasonType = season[0];
+		String year = season[1];
+		
+		RegularExpressionclassMethod  regexpressionmethod=new RegularExpressionclassMethod();
+	    
+		boolean wbdcd= regexpressionmethod.districtCode(wbdcode.toString());
+	    boolean wbmcd= regexpressionmethod.mandalCode(wbmcode.toString());
+		boolean year1= regexpressionmethod.year(year.toString());
+	if( year1 && wbdcd&&wbmcd) {
 
 		List<SeasonCropBookedExtent> scp = seasonCropBookedExtentPartition.getAllCrops(wbmcode, cropyear, userid,
 				wbdcode);
 		System.out.println("details===================>" + scp.get(0));
 		return scp;
 	}
+	return null;}
 //=============================BLOCKED e-fish EXTENT============================//
 
 	@GetMapping("/blockedext")
@@ -518,7 +527,7 @@ return null;
 		
 	
 	if( dcode1 && mcode1&&wbvcode1) {
-		@SuppressWarnings("unchecked")
+	
 		List<BlockedEfishExtent> blockedExtent = seasonCropBookedExtentRepo.findByExtent(parsedDcode, parsedMcode,
 				parsedWbvcode);
 
@@ -579,15 +588,6 @@ return null;
 	}
 		return null;
 	}
-//	@GetMapping("/devregdet1")
-//	List<DeviceRegDetails> getCropyear(HttpSession session, String cropyear) {
-//		String[] season = cropyear.split("@");
-//		String seasonType = season[0];
-//		String year = season[1];
-//		Integer seasonYear = Integer.parseInt(season[1]);
-//
-//		return null;
-//	}
 
 //--------------------------------- Device Reg Details-----------------------------------------------//
 	@PostMapping("/devregdet")
@@ -621,17 +621,23 @@ return null;
 	@PostMapping("/crpinsgri")
 	public ResponseEntity<?> getCropInsGri(@RequestBody RequestModel requestModel) {
 		System.out.println("requestModel=>" + requestModel.toString());
+		
+		String[] season = requestModel.getCropyear().split("@");
+		String cseason = season[0];
+		Integer Year = Integer.parseInt(season[1]);
+		RegularExpressionclassMethod regexpressionmethod = new RegularExpressionclassMethod();
+		boolean dcode=	regexpressionmethod.districtCode(requestModel.getDcode());
+		boolean mcode=	regexpressionmethod.mandalCode(requestModel.getMcode());
+		boolean   saesonid=		regexpressionmethod.year(Year.toString());
+		if(mcode && saesonid &&dcode) {
 
 		try {
-			String[] season = requestModel.getCropyear().split("@");
-			System.out.println("season=========" + season);
-			String cseason = season[0];
-			System.out.println("seasonType=========" + cseason);
-			Integer Year = Integer.parseInt(season[1]);
-			System.out.println("seasonYear=========" + Year);
+			
 
 			List<CropInsGrievance> crpins = seasonCropBookedExtentRepo.getCropIns(
-					Integer.parseInt(requestModel.getDcode()), Integer.parseInt(requestModel.getMcode()), Year,
+					Integer.parseInt(requestModel.getDcode()), 
+					Integer.parseInt(requestModel.getMcode()), 
+					Year,
 					cseason);
 			System.out.println("crpins size=>" + crpins.size());
 			return new ResponseEntity<List<CropInsGrievance>>(crpins, HttpStatus.OK);
@@ -642,6 +648,7 @@ return null;
 			return null;
 		}
 	}
+		return null;}
 
 //================================ SperCheck Allotment Records==========================================//
 	@Autowired
@@ -650,13 +657,25 @@ return null;
 	@PostMapping("/supchkalltrecrds")
 	List<SuperCheckRecordsAlloted> getSupChkR(@RequestBody RequestModel requestModel) {
 		System.out.println("requestModel=>" + requestModel.toString());
-
-		List<SuperCheckRecordsAlloted> spckr = superCheckRecordsAllotedPartition.getSupchkRds(requestModel.getWbdcode(),
-				requestModel.getWbmcode(), requestModel.getUserid(), requestModel.getCropyear());
+		String[] season = requestModel.getCropyear().split("@");
+		String cseason = season[0];
+		Integer Year = Integer.parseInt(season[1]);
+		
+		RegularExpressionclassMethod regexpressionmethod = new RegularExpressionclassMethod();
+		boolean wbdcode=	regexpressionmethod.districtCode(requestModel.getWbdcode());
+		boolean wbmcode=	regexpressionmethod.mandalCode(requestModel.getWbmcode());
+		boolean   saesonid=		regexpressionmethod.year(Year.toString());
+		if(wbdcode && wbmcode &&saesonid) {
+		List<SuperCheckRecordsAlloted> spckr = superCheckRecordsAllotedPartition.getSupchkRds(
+				requestModel.getWbdcode(),
+				requestModel.getWbmcode(), 
+				requestModel.getUserid(), 
+				requestModel.getCropyear());
 		System.out.println("details===================>" + spckr.size());
 		return spckr;
 	}
-
+		return null;
+	}
 //================SpuperCheck APPR Report==================//
 	@Autowired
 	SpuperChkApprPartition spuperChkApprPartition;
@@ -664,12 +683,25 @@ return null;
 	@PostMapping("/supchapprintf")
 	List<SpuperChkAppr> getSupChkAppr(@RequestBody RequestModel requestModel) {
 		System.out.println("requestModel=>" + requestModel.toString());
-
-		List<SpuperChkAppr> spcapr = spuperChkApprPartition.getSupchkAppr(requestModel.getWbdcode(),
-				requestModel.getWbmcode(), requestModel.getUserid(), requestModel.getCropyear());
+		String[] season = requestModel.getCropyear().split("@");
+		String cseason = season[0];
+		Integer Year = Integer.parseInt(season[1]);
+		
+		RegularExpressionclassMethod regexpressionmethod = new RegularExpressionclassMethod();
+		boolean wbdcode=	regexpressionmethod.districtCode(requestModel.getWbdcode());
+		boolean wbmcode=	regexpressionmethod.mandalCode(requestModel.getWbmcode());
+		boolean   saesonid=		regexpressionmethod.year(Year.toString());
+		if(wbdcode && wbmcode &&saesonid) {
+		List<SpuperChkAppr> spcapr = spuperChkApprPartition.getSupchkAppr(
+				requestModel.getWbdcode(),
+				requestModel.getWbmcode(), 
+				requestModel.getUserid(),
+				requestModel.getCropyear());
 		System.out.println("details===================>" + spcapr.size());
 		return spcapr;
 	}
+		return null;
+		}
 //=========================SuperCheck Report===============================//
 
 	@Autowired
@@ -678,12 +710,24 @@ return null;
 	@PostMapping("/supcheckReport")
 	List<SuperChkReport> getSupChk(@RequestBody RequestModel requestModel) {
 		System.out.println("requestModel=>" + requestModel.toString());
-
-		List<SuperChkReport> supkr = superChkReportPartition.getSupchkRep(requestModel.getWbdcode(),
-				requestModel.getWbmcode(), requestModel.getUserid(), requestModel.getCropyear());
+		String[] season = requestModel.getCropyear().split("@");
+		String cseason = season[0];
+		Integer Year = Integer.parseInt(season[1]);
+		
+		RegularExpressionclassMethod regexpressionmethod = new RegularExpressionclassMethod();
+		boolean wbdcode=	regexpressionmethod.districtCode(requestModel.getWbdcode());
+		boolean wbmcode=	regexpressionmethod.mandalCode(requestModel.getWbmcode());
+		boolean   saesonid=		regexpressionmethod.year(Year.toString());
+		if(wbdcode && wbmcode &&saesonid) {
+		List<SuperChkReport> supkr = superChkReportPartition.getSupchkRep(
+				requestModel.getWbdcode(),
+				requestModel.getWbmcode(),
+				requestModel.getUserid(), 
+				requestModel.getCropyear());
 		System.out.println("details===================>" + supkr.size());
 		return supkr;
 	}
+		return null;}
 //========================== SuperCheck Rejected===============================//
 
 	@Autowired
@@ -696,14 +740,25 @@ return null;
 		System.out.println("requestModel=>" + requestModel.toString());
 
 		// masterFunctions.getCropImageMao(null, null, null, null, null, null)
+		String[] season = requestModel.getCropyear().split("@");
+		String cseason = season[0];
+		Integer Year = Integer.parseInt(season[1]);
+		
+		RegularExpressionclassMethod regexpressionmethod = new RegularExpressionclassMethod();
+		boolean wbdcode=	regexpressionmethod.districtCode(requestModel.getWbdcode());
+		boolean wbmcode=	regexpressionmethod.mandalCode(requestModel.getWbmcode());
+		boolean   saesonid=		regexpressionmethod.year(Year.toString());
+		if(wbdcode && wbmcode &&saesonid) {
 
-		List<SuperChk_rejReport> supkrej = superChk_rejReportPartition.getSupchkRej(requestModel.getWbdcode(),
+		List<SuperChk_rejReport> supkrej = superChk_rejReportPartition.getSupchkRej(
+				requestModel.getWbdcode(),
 				requestModel.getWbmcode(),
 				// requestModel.getUserid(),
 				requestModel.getCropyear());
 		System.out.println("details===================>" + supkrej.size());
 		return supkrej;
 	}
+		return null;}
 	// ================CropBookingDetailsMaoIntf====================//
 
 	@Autowired
@@ -746,12 +801,25 @@ return null;
 	@PostMapping("/phyack")
 	List<PhyAckVwise> getPhyAckVwise(@RequestBody RequestModel requestModel) throws SQLException {
 		System.out.println("requestModel=>" + requestModel.toString());
+		String[] season = requestModel.getCropyear().split("@");
+		String cseason = season[0];
+		Integer Year = Integer.parseInt(season[1]);
+		
+		RegularExpressionclassMethod regexpressionmethod = new RegularExpressionclassMethod();
+		boolean wbdcode=	regexpressionmethod.districtCode(requestModel.getWbdcode());
+		boolean wbmcode=	regexpressionmethod.mandalCode(requestModel.getWbmcode());
+		boolean   saesonid=		regexpressionmethod.year(Year.toString());
+		if(wbdcode && wbmcode &&saesonid) {
 
-		List<PhyAckVwise> phyack = phyAckVwisePartition.getPhyAck(requestModel.getWbdcode(), requestModel.getWbmcode(),
-				requestModel.getCropyear(), requestModel.getUserid());
+		List<PhyAckVwise> phyack = phyAckVwisePartition.getPhyAck(
+				requestModel.getWbdcode(), 
+				requestModel.getWbmcode(),
+				requestModel.getCropyear(), 
+				requestModel.getUserid());
 		return phyack;
 	}
-
+		return null;
+	}
 	// ================ Rep_phy_ack_rbk====================//
 	@Autowired
 	Rep_phy_ack_rbkPartition rep_phy_ack_rbkPartition;
@@ -759,12 +827,22 @@ return null;
 	@PostMapping("/phyrbk")
 	List<Rep_phy_ack_rbk> getPhyAckRBK(@RequestBody RequestModel requestModel) throws SQLException {
 		System.out.println("requestModel=>" + requestModel.toString());
-
+		String[] season = requestModel.getCropyear().split("@");
+		String cseason = season[0];
+		Integer Year = Integer.parseInt(season[1]);
+		
+		RegularExpressionclassMethod regexpressionmethod = new RegularExpressionclassMethod();
+		boolean wbmcode=	regexpressionmethod.mandalCode(requestModel.getWbmcode());
+		boolean   saesonid=		regexpressionmethod.year(Year.toString());
+		if(wbmcode &&saesonid) {
 		List<Rep_phy_ack_rbk> phyrbk = rep_phy_ack_rbkPartition.getPhyRbk(requestModel.getWbdcode(),
-				requestModel.getWbmcode(), requestModel.getCropyear(), requestModel.getUserid());
+				requestModel.getWbmcode(),
+				requestModel.getCropyear(),
+				requestModel.getUserid());
 		System.out.println("details===================>" + phyrbk.size());
 		return phyrbk;
 	}
+		return null;}
 //==========================Rep_DownloadedDetailsIntf===========================//
 	@Autowired
 	Rep_DownloadedDetailsIntfPartition rep_DownloadedDetailsIntfPartition;
@@ -819,18 +897,26 @@ return null;
 	}
 		return null;
 	}
-	// ----------------------------------
-	// NonWebView---------------------------------------//
+	// ---------------------------------- NonWebView---------------------------------------//
 	@PostMapping("/nonwebv")
 	public ResponseEntity<?> getNonWebV(@RequestBody RequestModel requestModel) {
 		System.out.println("requestModel=>" + requestModel.toString());
+		String[] season = requestModel.getCropyear().split("@");
+		String cseason = season[0];
+		Integer Year = Integer.parseInt(season[1]);
 
+		RegularExpressionclassMethod regexpressionmethod = new RegularExpressionclassMethod();
+		boolean dcode=	regexpressionmethod.districtCode(requestModel.getDcode());
+		boolean mcode=	regexpressionmethod.mandalCode(requestModel.getMcode());
+		boolean   year=		regexpressionmethod.year(Year.toString());
+		if(dcode && mcode && year) {
+		
 		try {
-			String[] season = requestModel.getCropyear().split("@");
-			String cseason = season[0];
-			Integer Year = Integer.parseInt(season[1]);
+			
 			List<NonWebView> nonwebv = seasonCropBookedExtentRepo.getNonwebView(
-					Integer.parseInt(requestModel.getDcode()), Integer.parseInt(requestModel.getMcode()), cseason,
+					Integer.parseInt(requestModel.getDcode()), 
+					Integer.parseInt(requestModel.getMcode()), 
+					cseason,
 					Year);
 			System.out.println("crpins size=>" + nonwebv.size());
 			return new ResponseEntity<List<NonWebView>>(nonwebv, HttpStatus.OK);
@@ -839,8 +925,10 @@ return null;
 			System.out.println("Exception =>" + e);
 			return null;
 		}
-	}
-
+		
+		}
+		return null;
+		}
 	// =====================CropwiseExtBookedRBKwise=======================//
 	@Autowired
 	CropwiseExtBookedRBKwisePartition cropwiseExtBookedRBKwisePartition;
@@ -918,6 +1006,15 @@ return null;
 				@PostMapping("/supchkupdstatus")
 				public ResponseEntity<?> getSupChkUpdSts(@RequestBody RequestModel requestModel) {
 					System.out.println("requestModel=>" + requestModel.toString());
+					String[] season = requestModel.getCropyear().split("@");
+					String cseason = season[0];
+					Integer Year = Integer.parseInt(season[1]);
+					
+					RegularExpressionclassMethod regexpressionmethod = new RegularExpressionclassMethod();
+					boolean wbdcode=	regexpressionmethod.districtCode(requestModel.getWbdcode());
+					boolean wbmcode=	regexpressionmethod.mandalCode(requestModel.getWbmcode());
+					boolean   saesonid=		regexpressionmethod.year(Year.toString());
+					if(wbdcode && wbmcode &&saesonid) {
 
 					try {
 
@@ -933,7 +1030,8 @@ return null;
 						return null;
 					}
 				}
-				
+					return null;
+				}	
 //===========================//MaoSocialAuditcorrectionRepo//================//
 				@Autowired private MaoSocialAuditcorrectionRepo maoSocialAuditcorrectionRepo;
 				
@@ -945,6 +1043,12 @@ return null;
 					String seasonType = season[0];
 					Integer seasonYear = Integer.parseInt(season[1]);
 					
+					RegularExpressionclassMethod regexpressionmethod = new RegularExpressionclassMethod();
+					boolean wbdcode=	regexpressionmethod.districtCode(requestModel.getDcode());
+					boolean wbmcode=	regexpressionmethod.mandalCode(requestModel.getMcode());
+					boolean   saesonid=		regexpressionmethod.year(seasonYear.toString());
+					if(wbdcode && wbmcode &&saesonid) {
+					
 					List<MaoSocialAuditcorrection> socialaudit = maoSocialAuditcorrectionRepo.getSocialAudit(
 							Integer.parseInt(requestModel.getDcode()),
 							Integer.parseInt( requestModel.getMcode()),
@@ -955,19 +1059,22 @@ return null;
 					System.out.println("list =>" + socialaudit.toString());
 					return socialaudit;
 				}
+					return null;
 				
+				}	
 				//===========================//Rep_Suprcheck_Vill//================//
 				@Autowired private SupercheckVillRepo supercheckVillRepo;
 				
 				@PostMapping("/supvill")
 				List<SupercheckVill> getSupchkVill(@RequestBody RequestModel requestModel) {
 					System.out.println("requestModel=>" + requestModel.toString());
-//					
-//					String[] season = requestModel.getCropyear().split("@");
-//					String seasonType = season[0];
-//					Integer seasonYear = Integer.parseInt(season[1]);
-//					System.out.println("seasonType=>" + seasonType);
-//					System.out.println("seasonYear=>" + seasonYear);
+					RegularExpressionclassMethod regexpressionmethod = new RegularExpressionclassMethod();
+					boolean wbdcode=	regexpressionmethod.districtCode(requestModel.getWbdcode());
+					boolean wbmcode=	regexpressionmethod.mandalCode(requestModel.getWbmcode());
+					
+					if(wbdcode && wbmcode) {
+
+				
 					List<SupercheckVill> supvil = supercheckVillRepo.getSupVill(
 							requestModel.getWbdcode(),
 						     requestModel.getWbmcode());
@@ -975,18 +1082,23 @@ return null;
 					System.out.println("list =>" + supvil.toString());
 					return supvil;
 				}
-				//===========================//Rep_cropIns_abtract//================//
-				@Autowired private CropInsAbstractRepo cropInsAbstractRepo;
+					return null;
+}	
+					//===========================//Rep_cropIns_abtract//================//
+				//@Autowired private CropInsAbstractRepo cropInsAbstractRepo;
 				
 				@PostMapping("/cropinsab")
-				List<CropInsAbstract> getCropInsAbstract(@RequestBody RequestModel requestModel) {
+				List<CropInsAbstractt> getCropInsAbstract(@RequestBody RequestModel requestModel) {
 					System.out.println("requestModel=>" + requestModel.toString());
 
-					List<CropInsAbstract> cropinsab = cropInsAbstractRepo.getCropIns(
-							Integer.parseInt(requestModel.getDcode()));
-					System.out.println("list size=>" + cropinsab.size());
-					System.out.println("list =>" + cropinsab.toString());
-					return cropinsab;
+					
+						List<CropInsAbstractt> cropinsab = seasonCropBookedExtentRepo.getCropInss(
+								Integer.parseInt(requestModel.getDcode()));
+						System.out.println("list size=>" + cropinsab.size());
+						//System.out.println("list =>" + cropinsab.toString());
+						return cropinsab;
+					
+					
 				}
 				
 				//===========================//Rep_Pernnial_Mand//================//

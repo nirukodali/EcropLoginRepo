@@ -93,6 +93,12 @@
 			});
 	
 	function getData() {
+		
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
 		$("#loadingsign").show();
 		var dcode = $("#inputdcode").val();
 		var mcode = $("#inputmcode").val();

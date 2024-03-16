@@ -73,7 +73,7 @@
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
-				alert(JSON.stringify(resp));
+				//alert(JSON.stringify(resp));
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
 					$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
@@ -83,12 +83,18 @@
 	});
 
 	function getData() {
-		alert("getData=========>");
+		
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
+		
 		var inputwbdcode = $("#inputwbdcode").val();
 		var inputwbmcode = $("#inputwbmcode").val();
 		var userid = $("#inputuserid").val();
 		var cropyear = $("#cropyear").val();
-		alert("cropyear=========>" + cropyear);
+	
 
 		var data = {};
 		data['wbdcode'] = inputwbdcode;
@@ -156,6 +162,7 @@
 					<td align="right" width="30%"><b>Crop Year</b></td>
 					<td align="left">
 						<select id="cropyear" name="cropyear" style="width: 200px">
+						<option value="">-------Select------</option>
 						</select>
 					</td>
 				</tr>
