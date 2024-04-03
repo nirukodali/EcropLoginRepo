@@ -44,9 +44,16 @@ public class SuperCheckRecordsAllotedPartition {
 			System.out.println("part_key==========>"+part_key);
 			System.out.println("part_key1==========>"+part_key1);
 		}
-	       
-        String   tableName ="ecrop" + Year + "." +"cr_crop_det_new_v_" + part_key;
-       String  tableName2 =  "ecrop" + Year + "." +"supercheck_exceptions_" + part_key1;
+	     
+		String tableName;
+		String tableName2;
+		if(Year>=2023) {
+           tableName ="ecrop" + Year + "." +"cr_crop_det_new_v_" + part_key;
+         tableName2 =  "ecrop" + Year + "." +"supercheck_exceptions_" + part_key1;
+		}else {
+			     tableName ="ecrop" + Year + "." +"cr_crop_det_new_v_" + part_key;
+		         tableName2 =  "ecrop" + Year + "." +"supercheck_exceptions_" + part_key1;	
+		}
 		System.out.println("tableName---------------->" + tableName);
 
 		String Sql = "select a.mname as mname,a.vname ,cast(bookingid as character varying) as  bookingid, cast (kh_no as character varying) as kh_no, a.cr_no,oc_name as occupname,ekycfarmername,\r\n"

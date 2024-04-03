@@ -42,9 +42,12 @@ public class SuperChk_rejReportPartition {
 			System.out.println("part_key==========>"+part_key);
 			
 		}
-	       
-        String   tableName ="ecrop" + Year + "." +"superchk_rej_" + part_key +"_mv";
-     
+	       String tableName;
+		if(Year >=2023) {
+           tableName ="ecrop" + Year + "." +"superchk_rej_" + part_key +"_mv";
+	       }else {
+	    	   tableName ="superchk_rej_" + part_key +"_mv";   
+	       }
 		System.out.println("tableName---------------->" + tableName);
 
 		String Sql = " select wbdname,wbmname,wbvname,cast(bookingid as character varying) as bookingid,occupname,ekycfarmername,occupfname,\r\n"

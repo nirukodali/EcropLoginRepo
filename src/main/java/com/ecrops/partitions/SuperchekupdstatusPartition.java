@@ -30,10 +30,15 @@ public class SuperchekupdstatusPartition {
 		} else {
 			part_key = seasonType + "0" + wbdcode + seasonYear; 
 		}
-		 
-		String tableName = "ecrop" + seasonYear + "." + "cr_details_" + part_key;
-		String tableName1 = "ecrop" + seasonYear + "." + "supercheck_upd";
-
+		 String tableName;
+		String tableName1;
+		if(seasonYear>=2023) {
+		 tableName = "ecrop" + seasonYear + "." + "cr_details_" + part_key;
+		 tableName1 = "ecrop" + seasonYear + "." + "supercheck_upd";
+		 }else {
+			  tableName = "cr_details_" + part_key;
+			  tableName1 = "supercheck_upd";
+		 }
 		System.out.println("tableName---------------->" + tableName);
 
 		String Sql = " select wbdname,wbmname,wbvname,x.bookingid,occup_name,occup_fname, cropname,"
@@ -109,9 +114,8 @@ public class SuperchekupdstatusPartition {
 			}else {
 				entity.setMao_remarks((String) row[15].toString());
 			}
-			
-			String mroremarks=(String) row[16].toString();
-			if(mroremarks == null) {
+
+			if(row[16] == null) {
 				entity.setMro_remarks("");
 				
 			}else {

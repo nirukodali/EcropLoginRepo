@@ -2,12 +2,12 @@ package com.ecrops.repo;
 
 import java.math.BigDecimal;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.hibernate.query.Query;
@@ -34,6 +34,12 @@ public class FarmerBookingDetailsPartitions {
 			part_key = seasonType + "0" + Integer.parseInt(wbdcode) + seasonYear;
 		}
 		String tableName = "ecrop" + seasonYear + "." + "cr_details_" + part_key;
+		
+		if(seasonYear >= 2023) {
+			tableName = "ecrop" + seasonYear + "." + "cr_details_" + part_key;
+		}else {
+			tableName ="cr_details_" + part_key;	
+		}
 
 		System.out.println("tableName---------------->" + tableName);
 
@@ -61,9 +67,9 @@ public class FarmerBookingDetailsPartitions {
 			entity.setOc_name((String) row[1]);
 			entity.setOc_fname((String) row[2]);
 			entity.setCr_sno((String) row[3]);
-			entity.setOccupant_extent(((BigDecimal) row[4]).intValue());
-			entity.setKh_no(((BigDecimal) row[5]).intValue());
-			entity.setTot_extent(((BigDecimal) row[6]).intValue());
+			entity.setOccupant_extent(((BigDecimal) row[4]));
+			entity.setKh_no(((BigDecimal) row[5]));
+			entity.setTot_extent(((BigDecimal) row[6]));
 			entity.setMobileno(Long.valueOf(row[7].toString()));
 			detailsEntities.add(entity);
 

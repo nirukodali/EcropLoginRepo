@@ -84,7 +84,7 @@
 	});
 
 	function getData() {
-		
+		$("#databody").empty();
 		var cropyear = $("#cropyear").val();
 		if(cropyear == "" || cropyear == null){
 			alert("Please Select Cropyear");
@@ -166,7 +166,7 @@
 	<div class="container">
 		<form id="unlockreport" name="unlockreport" method="post">
 			<div align="center" id="divPrint">
-				<table id="databody" align="center" class="table table-striped border border-secondary">
+				<table id="tableEx" align="center" class="table table-striped border border-secondary">
 					<thead>
 						<tr>
 					   <th> <b> S.No. </b> </th>
@@ -194,7 +194,7 @@
 		<div align="center" style="color:black">
 			<input class="btn btn-primary" name="ctl00$ContentPlaceHolder1$btnPrint" type="button"
 				id="ctl00_ContentPlaceHolder1_btnPrint" onClick="javascript:CallPrint('divPrint')" value="Print">
-			<input class="btn btn-primary" type="button" onclick="tableToExcel('databody', 'Abstract')" value="Excel">
+			<input class="btn btn-primary" type="button" onclick="tableToExcel('tableEx', 'Abstract')" value="Excel">
 			<!--			<input  class="btn btn-primary" type="button" value="Back" onclick="goBack()" />-->
 		</div>
 	</div>

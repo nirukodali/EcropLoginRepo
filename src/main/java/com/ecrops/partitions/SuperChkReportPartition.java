@@ -43,9 +43,13 @@ public class SuperChkReportPartition {
 			
 			System.out.println("part_key==========>"+part_key);
 		}
-	       
-        String   tableName ="ecrop" + Year + "." +"cr_details_" + part_key;
-      
+	      String tableName;
+	      
+		if(Year>=2023) {
+           tableName ="ecrop" + Year + "." +"cr_details_" + part_key;
+	      }else {
+	    	     tableName ="cr_details_" + part_key; 
+	      }
 		System.out.println("tableName---------------->" + tableName);
 
 		String Sql = " select wbdname,wbmname,wbvname, cast(bookingid as character varying) as bookingid, occupname as occup_name,occupfname as occup_fname,\r\n" + 

@@ -1,5 +1,7 @@
 package com.ecrops.entity;
 
+import java.math.BigInteger;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,31 +14,31 @@ public class MaoSocialAuditcorrection {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String wbvname;
-	private Long farmername;
-	private Long crop;
-	private Long variety;
-	private Long extent;
-	private Long src_irr;
-	private Long cr_pattern;
-	private Long sow_date;
-	private Long farming_type;
-	private Long vaadeleted;
-	private Long tot_corrections;
-	private Long totbookings;
-	private Long maoapproved;
-	private Long maorejected;
-	private Long maoprocessed;
-	private Long tahrejected;
-	private Long tahapproved;
-	private Long tahprocessed;
+	private BigInteger farmername;
+	private BigInteger crop;
+	private BigInteger variety;
+	private BigInteger extent;
+	private BigInteger src_irr;
+	private BigInteger cr_pattern;
+	private BigInteger sow_date;
+	private BigInteger farming_type;
+	private BigInteger vaadeleted;
+	private BigInteger tot_corrections;
+	private BigInteger totbookings;
+	private BigInteger maoapproved;
+	private BigInteger maorejected;
+	private BigInteger maoprocessed;
+	private BigInteger tahrejected;
+	private BigInteger tahapproved;
+	private BigInteger tahprocessed;
 	public MaoSocialAuditcorrection() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public MaoSocialAuditcorrection(String wbvname, Long farmername, Long crop, Long variety, Long extent, Long src_irr,
-			Long cr_pattern, Long sow_date, Long farming_type, Long vaadeleted, Long tot_corrections, Long totbookings,
-			Long maoapproved, Long maorejected, Long maoprocessed, Long tahrejected, Long tahapproved,
-			Long tahprocessed) {
+	public MaoSocialAuditcorrection(String wbvname, BigInteger farmername, BigInteger crop, BigInteger variety, BigInteger extent, BigInteger src_irr,
+			BigInteger cr_pattern, BigInteger sow_date, BigInteger farming_type, BigInteger vaadeleted, BigInteger tot_corrections, BigInteger totbookings,
+			BigInteger maoapproved, BigInteger maorejected, BigInteger maoprocessed, BigInteger tahrejected, BigInteger tahapproved,
+			BigInteger tahprocessed) {
 		super();
 		this.wbvname = wbvname;
 		this.farmername = farmername;
@@ -63,106 +65,106 @@ public class MaoSocialAuditcorrection {
 	public void setWbvname(String wbvname) {
 		this.wbvname = wbvname;
 	}
-	public Long getFarmername() {
+	public BigInteger getFarmername() {
 		return farmername;
 	}
-	public void setFarmername(Long farmername) {
+	public void setFarmername(BigInteger farmername) {
 		this.farmername = farmername;
 	}
-	public Long getCrop() {
+	public BigInteger getCrop() {
 		return crop;
 	}
-	public void setCrop(Long crop) {
+	public void setCrop(BigInteger crop) {
 		this.crop = crop;
 	}
-	public Long getVariety() {
+	public BigInteger getVariety() {
 		return variety;
 	}
-	public void setVariety(Long variety) {
+	public void setVariety(BigInteger variety) {
 		this.variety = variety;
 	}
-	public Long getExtent() {
+	public BigInteger getExtent() {
 		return extent;
 	}
-	public void setExtent(Long extent) {
+	public void setExtent(BigInteger extent) {
 		this.extent = extent;
 	}
-	public Long getSrc_irr() {
+	public BigInteger getSrc_irr() {
 		return src_irr;
 	}
-	public void setSrc_irr(Long src_irr) {
+	public void setSrc_irr(BigInteger src_irr) {
 		this.src_irr = src_irr;
 	}
-	public Long getCr_pattern() {
+	public BigInteger getCr_pattern() {
 		return cr_pattern;
 	}
-	public void setCr_pattern(Long cr_pattern) {
+	public void setCr_pattern(BigInteger cr_pattern) {
 		this.cr_pattern = cr_pattern;
 	}
-	public Long getSow_date() {
+	public BigInteger getSow_date() {
 		return sow_date;
 	}
-	public void setSow_date(Long sow_date) {
+	public void setSow_date(BigInteger sow_date) {
 		this.sow_date = sow_date;
 	}
-	public Long getFarming_type() {
+	public BigInteger getFarming_type() {
 		return farming_type;
 	}
-	public void setFarming_type(Long farming_type) {
+	public void setFarming_type(BigInteger farming_type) {
 		this.farming_type = farming_type;
 	}
-	public Long getVaadeleted() {
+	public BigInteger getVaadeleted() {
 		return vaadeleted;
 	}
-	public void setVaadeleted(Long vaadeleted) {
+	public void setVaadeleted(BigInteger vaadeleted) {
 		this.vaadeleted = vaadeleted;
 	}
-	public Long getTot_corrections() {
+	public BigInteger getTot_corrections() {
 		return tot_corrections;
 	}
-	public void setTot_corrections(Long tot_corrections) {
+	public void setTot_corrections(BigInteger tot_corrections) {
 		this.tot_corrections = tot_corrections;
 	}
-	public Long getTotbookings() {
+	public BigInteger getTotbookings() {
 		return totbookings;
 	}
-	public void setTotbookings(Long totbookings) {
+	public void setTotbookings(BigInteger totbookings) {
 		this.totbookings = totbookings;
 	}
-	public Long getMaoapproved() {
+	public BigInteger getMaoapproved() {
 		return maoapproved;
 	}
-	public void setMaoapproved(Long maoapproved) {
+	public void setMaoapproved(BigInteger maoapproved) {
 		this.maoapproved = maoapproved;
 	}
-	public Long getMaorejected() {
+	public BigInteger getMaorejected() {
 		return maorejected;
 	}
-	public void setMaorejected(Long maorejected) {
+	public void setMaorejected(BigInteger maorejected) {
 		this.maorejected = maorejected;
 	}
-	public Long getMaoprocessed() {
+	public BigInteger getMaoprocessed() {
 		return maoprocessed;
 	}
-	public void setMaoprocessed(Long maoprocessed) {
+	public void setMaoprocessed(BigInteger maoprocessed) {
 		this.maoprocessed = maoprocessed;
 	}
-	public Long getTahrejected() {
+	public BigInteger getTahrejected() {
 		return tahrejected;
 	}
-	public void setTahrejected(Long tahrejected) {
+	public void setTahrejected(BigInteger tahrejected) {
 		this.tahrejected = tahrejected;
 	}
-	public Long getTahapproved() {
+	public BigInteger getTahapproved() {
 		return tahapproved;
 	}
-	public void setTahapproved(Long tahapproved) {
+	public void setTahapproved(BigInteger tahapproved) {
 		this.tahapproved = tahapproved;
 	}
-	public Long getTahprocessed() {
+	public BigInteger getTahprocessed() {
 		return tahprocessed;
 	}
-	public void setTahprocessed(Long tahprocessed) {
+	public void setTahprocessed(BigInteger tahprocessed) {
 		this.tahprocessed = tahprocessed;
 	}
 	@Override

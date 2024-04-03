@@ -95,6 +95,7 @@ function getCrop() {
 		
 	}
 	function getData() {
+		$("#databody").empty();
 		var cropid = $("#cropid").val();
 		var cropyear = $("#cropyear").val();
 		if(cropyear == "" || cropyear == null){
@@ -124,7 +125,7 @@ function getCrop() {
 			timeout: 600000,
 			success: function (resp) {
 				$("#databody").empty();
-				//alert(JSON.stringify(resp));
+				alert(JSON.stringify(resp));
 				
 				var sno = 0;
 				var totalbookingsTotal = 0,totextentTotal=0,vaaauthcountTotal=0,vaaauthextentTotal=0,

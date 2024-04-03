@@ -29,16 +29,21 @@ public class DataSourceWiseBookingReportPartitions {
 		
 		String part_key = "";
 		part_key = seasonType  + seasonYear;
-		String tableName = "ecrop" + seasonYear + "." + "cr_data_src_det_mv_" + part_key;
+		
 //		if (Integer.parseInt(wbdcode) > 9) {
 //			part_key = seasonType + Integer.parseInt(wbdcode) + seasonYear;
 //		} else {
 //			part_key = seasonType + "0" + Integer.parseInt(wbdcode) + seasonYear;
 //		}
 		
-		
-		
 		//String tableName = "ecrop"+seasonYear +"." +"cr_data_src_det_mv_" + part_key;
+		
+		String tableName = "ecrop" + seasonYear + "." + "cr_data_src_det_mv_" + part_key;
+		if(seasonYear >= 2023) {
+			tableName = "ecrop" + seasonYear + "." + "cr_data_src_det_mv_" + part_key;
+		}else {
+			tableName = "cr_data_src_det_mv_" + part_key;
+		}
 		
 		System.out.println("tableName---------------->" + tableName);
 

@@ -39,10 +39,13 @@ public class SpuperChkApprPartition {
 			part_key = cseason + "0" + wbdcode + Year; 
 			System.out.println("part_key==========>"+part_key);
 		}
-	       
-        String   tableName ="ecrop" + Year + "." +"cr_details_" + part_key;
+	       String tableName;
+		if(Year >=2023) {
+           tableName ="ecrop" + Year + "." +"cr_details_" + part_key;
 		System.out.println("tableName---------------->" + tableName);
-
+	       }else {
+	    	   tableName ="cr_details_" + part_key;   
+	       }
 		String Sql = "select wbdname,wbmname,wbvname,cast(bookingid as character varying) as bookingid ,\r\n" + 
 				"occupname as occup_name,occupfname as occup_fname,\r\n" + 
 				"cropname,varietyname,cast(cr_sow_date as character varying) as cr_sow_dt, cast(kh_no as character varying)as kh_no ,\r\n" + 

@@ -1,5 +1,7 @@
 package com.ecrops.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,16 +16,16 @@ public class AllocatedSurveyNoMapping {
 	@Id
 	private String lgdvname;
 	private String data_src;
-	private Long occup_extent;
+	private BigDecimal occup_extent;
 	private Integer kh_no;
 	private String cr_sno;
-	private Long tot_extent;
+	private BigDecimal tot_extent;
 	public AllocatedSurveyNoMapping() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public AllocatedSurveyNoMapping(String lgdvname, String data_src, Long occup_extent, Integer kh_no, String cr_sno,
-			Long tot_extent) {
+	public AllocatedSurveyNoMapping(String lgdvname, String data_src, BigDecimal occup_extent, Integer kh_no, String cr_sno,
+			BigDecimal tot_extent) {
 		super();
 		this.lgdvname = lgdvname;
 		this.data_src = data_src;
@@ -45,10 +47,10 @@ public class AllocatedSurveyNoMapping {
 	public void setData_src(String data_src) {
 		this.data_src = data_src;
 	}
-	public Long getOccup_extent() {
+	public BigDecimal getOccup_extent() {
 		return occup_extent;
 	}
-	public void setOccup_extent(Long occup_extent) {
+	public void setOccup_extent(BigDecimal occup_extent) {
 		this.occup_extent = occup_extent;
 	}
 	public Integer getKh_no() {
@@ -63,10 +65,10 @@ public class AllocatedSurveyNoMapping {
 	public void setCr_sno(String cr_sno) {
 		this.cr_sno = cr_sno;
 	}
-	public Long getTot_extent() {
+	public BigDecimal getTot_extent() {
 		return tot_extent;
 	}
-	public void setTot_extent(Long tot_extent) {
+	public void setTot_extent(BigDecimal tot_extent) {
 		this.tot_extent = tot_extent;
 	}
 	@Override

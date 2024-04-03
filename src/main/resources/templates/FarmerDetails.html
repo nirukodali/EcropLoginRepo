@@ -67,7 +67,7 @@
 </head>
 <script>
 	$(document).ready(function () {
-		
+		$("#loadingsign").hide();
 		$.ajax({
 			type: "get",
 			url: "./util/getAllSeason",
@@ -85,52 +85,64 @@
 
 
 	function getData() {
-
-		var cropYear = $("#cropyear").val();
-		var inputmcode = $("#inputmcode").val();
-		var wbdcode = $("#wbdcode").val();
-		var userid = $("#userid").val();
-		var date = $("#date").val();
-		
-		var cropyear = $("#cropyear").val();
-		if(cropyear == "" || cropyear == null){
-			alert("Please Select Cropyear");
-			return false;
-		}
-		
-		$.ajax({
-			type: "get",
-			url: "./util/farmerdet?cropyear=" + cropYear + "&mcode=" + inputmcode + "&date=" + date,
-			cache: false,
-			timeout: 600000,
-			success: function (resp) {
-				$("#databody").empty();
-				alert(JSON.stringify(resp));
-				
-				if(resp.length == 0){
-					 alert(" No Records Found");
-				}
-				var sno = 0;
-				for (var j = 0; j < resp.length; j++) {
-					sno = sno + 1;
-					var bean = resp[j];
-					$("#databody").append('<tr style="fontsize:200px; font-weight: bold;">'
-						+ '<td>' + sno + '</td>'
-						+ '<td>' + bean.wbmname + '</td>'
-						+ '<td>' + bean.wbvname + '</td>'
-						+ '<td>' + bean.occupname + '</td>'
-						+ '<td>' + bean.occupfname + '</td>'
-						//+ '<td>' + bean.caste + '</td>'
-						+ '<td>' + bean.cr_sno + '</td>'
-						+ '<td>' + bean.cropname + '</td>'
-						+ '<td>' + bean.varietyname + '</td>'
-						+ '<td>' + bean.bookedext + '</td>'
-						+ '<td>' + bean.mobileno + '</td>'
-						+ '</tr>');
-				}
-			}
-		});
+		$("#loadingsign").show();
+	    var inputwbdcode = $("#inputwbdcode").val();
+	    var cropYear = $("#cropyear").val();
+	    var inputwbmcode = $("#inputwbmcode").val();
+	    var date = $("#date").val();
+	    
+	    var cropyear = $("#cropyear").val();
+	    if (cropyear == "" || cropyear == null) {
+	        alert("Please Select Cropyear");
+	        return false;
+	    }
+	    
+	    var data = {
+	        wbdcode: inputwbdcode,
+	        cropyear: cropyear,
+	        wbmcode: inputwbmcode,
+	        date: date
+	    };
+	    
+	    $.ajax({
+	        type: "post",
+	        url: "./util/farmerdet",
+	        contentType: 'application/json',
+	        data: JSON.stringify(data),
+	        cache: false,
+	        timeout: 600000,
+	        success: function (resp) {
+	        	$("#loadingsign").hide();
+	        	
+	            $("#databody").empty();
+	            alert(JSON.stringify(resp));
+	            
+	            if (resp.length == 0) {
+	                alert("No Records Found");
+	            }
+	            
+	            var sno = 0;
+	            for (var j = 0; j < resp.length; j++) {
+	                sno++;
+	                var bean = resp[j];
+	                $("#databody").append('<tr style="font-weight: bold;">'
+	                    + '<td align="center">' + sno + '</td>'
+	                    + '<td align="left">' + bean.wbmname + '</td>'
+	                    + '<td align="left">' + bean.wbvname + '</td>'
+	                    + '<td align="left">' + bean.occupname + '</td>'
+	                    + '<td align="left">' + bean.occupfname + '</td>'
+	                    + '<td align="left">' + bean.cr_sno + '</td>'
+	                    + '<td align="left">' + bean.cropname + '</td>'
+	                    + '<td align="left">' + bean.varietyname + '</td>'
+	                    + '<td align="right">' + bean.bookedext + '</td>'
+	                    + '<td align="left">' + bean.cr_sow_date + '</td>'
+	                    + '<td align="center">' + bean.mobileno + '</td>'
+	                    + '</tr>');
+	            }
+	        }
+	    });
 	}
+
 </script>
 <style>
 	#ObjEntryTable {
@@ -144,9 +156,17 @@
 	<div class="heading" colspan="20" style="text-align:center;"><b> Daily Report On Crop Booking</b> </div>
 	<p th:text="${msg}"></p>
 
-	<input type="hidden" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />
-	<input type="hidden" id="inputmcode" th:value="${#session.getAttribute('mcode')}" />
+	<input type="hidden" id="inputwbdcode" th:value="${#session.getAttribute('wbdcode')}" />
+	<input type="hidden" id="inputwbmcode" th:value="${#session.getAttribute('wbmcode')}" />
 	<input type="hidden" id="inputuserid" th:value="${#session.getAttribute('userid')}" />
+<!-- LoadingSpinner -->	
+	<div id="loadingsign">
+	<div class="d-flex justify-content-center" >
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+</div>
 	<div align="center">
 		<form>
 			<table id="ObjEntryTable">
@@ -178,7 +198,7 @@
 	<div class="container">
 		<form id="unlockreport" name="unlockreport" method="post">
 			<div align="center" id="divPrint" class="table table-hover table table-striped">
-				<table id="tableStkId" align="center" style=" text-align: center;">
+				<table id="tableStkId" align="center" style=" text-align: left;">
 					<thead>
 						<tr>
 							<th>S.No </th>

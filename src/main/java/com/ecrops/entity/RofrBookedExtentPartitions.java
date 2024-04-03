@@ -30,6 +30,16 @@ public class RofrBookedExtentPartitions {
 		String tableName = "ecrop" + seasonYear + "." + "cr_data_src_det_mv_" + part_key;
 
 		System.out.println("tableName---------------->" + tableName);
+		
+		
+		if(seasonYear>=2023) {
+			tableName = "ecrop" + seasonYear + "." + "cr_data_src_det_mv_" + part_key;
+		}
+		else {
+			tableName = "cr_data_src_det_mv_" + part_key;
+		}
+		
+		
 
 //		String Sql = " select bookingid,occupname as oc_name,occupfname as oc_fname,cr_sno,kh_no,tot_extent,"
 //				+ "occupant_extent,COALESCE(mobileno, 0) as mobileno,cr_mand_code,mcode from " + tableName + "  where dcode=? and "
@@ -60,20 +70,20 @@ public class RofrBookedExtentPartitions {
 			RofrBookedExtent entity = new RofrBookedExtent();
 			entity.setWbevname((String) row[0]);
 			entity.setWeb_farmers(Long.valueOf(row[1].toString()));
-			entity.setBooked_web_ext(((BigDecimal) row[2]).intValue());
-			entity.setWeb_ext(((BigDecimal) row[3]).intValue());
+			entity.setBooked_web_ext(((BigDecimal) row[2]));
+			entity.setWeb_ext(((BigDecimal) row[3]));
 			entity.setNweb_farmers(Long.valueOf(row[4].toString()));
-			entity.setBooked_nweb_ext(((BigDecimal) row[5]).intValue());
-			entity.setNweb_ext(((BigDecimal) row[6]).intValue());
+			entity.setBooked_nweb_ext(((BigDecimal) row[5]));
+			entity.setNweb_ext(((BigDecimal) row[6]));
 			entity.setCcrc_farmers(Long.valueOf(row[7].toString()));
-			entity.setBooked_ccrc_ext(((BigDecimal) row[8]).intValue());
-			entity.setCcrc_ext(((BigDecimal) row[9]).intValue());
+			entity.setBooked_ccrc_ext(((BigDecimal) row[8]));
+			entity.setCcrc_ext(((BigDecimal) row[9]));
 			entity.setRofr_farmers(Long.valueOf(row[10].toString()));
-			entity.setBooked_rofr_ext(((BigDecimal) row[11]).intValue());
-			entity.setRofr_ext(((BigDecimal) row[12]).intValue());
+			entity.setBooked_rofr_ext(((BigDecimal) row[11]));
+			entity.setRofr_ext(((BigDecimal) row[12]));
 			entity.setUsus_farmers(Long.valueOf(row[13].toString()));
-			entity.setBooked_usus_ext(((BigDecimal) row[14]).intValue());
-			entity.setUsus_ext(((BigDecimal) row[15]).intValue());
+			entity.setBooked_usus_ext(((BigDecimal) row[14]));
+			entity.setUsus_ext(((BigDecimal) row[15]));
 			entityDetails.add(entity);
 
 		}

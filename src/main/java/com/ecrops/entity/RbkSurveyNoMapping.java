@@ -1,5 +1,7 @@
 package com.ecrops.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,53 +13,42 @@ import javax.persistence.Table;
 public class RbkSurveyNoMapping {
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
-	private String rbkuserid;
-	private Integer mao_alloted_ext;
-	private Integer vaa_alloted_ext;
-	private Integer occupant_extent;
+	private String srno_userid;
+	private BigDecimal Mao_allotted_ext;
+	private BigDecimal vaa_allotted_ext;
 	public RbkSurveyNoMapping() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public RbkSurveyNoMapping(String rbkuserid, Integer mao_alloted_ext, Integer vaa_alloted_ext,
-			Integer occupant_extent) {
+	public RbkSurveyNoMapping(String srno_userid, BigDecimal mao_allotted_ext, BigDecimal vaa_allotted_ext) {
 		super();
-		this.rbkuserid = rbkuserid;
-		this.mao_alloted_ext = mao_alloted_ext;
-		this.vaa_alloted_ext = vaa_alloted_ext;
-		this.occupant_extent = occupant_extent;
+		this.srno_userid = srno_userid;
+		Mao_allotted_ext = mao_allotted_ext;
+		this.vaa_allotted_ext = vaa_allotted_ext;
 	}
-	public String getRbkuserid() {
-		return rbkuserid;
+	public String getSrno_userid() {
+		return srno_userid;
 	}
-	public void setRbkuserid(String rbkuserid) {
-		this.rbkuserid = rbkuserid;
+	public void setSrno_userid(String srno_userid) {
+		this.srno_userid = srno_userid;
 	}
-	public Integer getMao_alloted_ext() {
-		return mao_alloted_ext;
+	public BigDecimal getMao_allotted_ext() {
+		return Mao_allotted_ext;
 	}
-	public void setMao_alloted_ext(Integer mao_alloted_ext) {
-		this.mao_alloted_ext = mao_alloted_ext;
+	public void setMao_allotted_ext(BigDecimal mao_allotted_ext) {
+		Mao_allotted_ext = mao_allotted_ext;
 	}
-	public Integer getVaa_alloted_ext() {
-		return vaa_alloted_ext;
+	public BigDecimal getVaa_allotted_ext() {
+		return vaa_allotted_ext;
 	}
-	public void setVaa_alloted_ext(Integer vaa_alloted_ext) {
-		this.vaa_alloted_ext = vaa_alloted_ext;
-	}
-	public Integer getOccupant_extent() {
-		return occupant_extent;
-	}
-	public void setOccupant_extent(Integer occupant_extent) {
-		this.occupant_extent = occupant_extent;
+	public void setVaa_allotted_ext(BigDecimal vaa_allotted_ext) {
+		this.vaa_allotted_ext = vaa_allotted_ext;
 	}
 	@Override
 	public String toString() {
-		return "RbkSurveyNoMapping [rbkuserid=" + rbkuserid + ", mao_alloted_ext=" + mao_alloted_ext
-				+ ", vaa_alloted_ext=" + vaa_alloted_ext + ", occupant_extent=" + occupant_extent + "]";
+		return "RbkSurveyNoMapping [srno_userid=" + srno_userid + ", Mao_allotted_ext=" + Mao_allotted_ext
+				+ ", vaa_allotted_ext=" + vaa_allotted_ext + "]";
 	}
-	
-	
 	
 
 }

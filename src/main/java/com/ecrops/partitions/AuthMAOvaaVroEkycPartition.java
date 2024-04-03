@@ -27,9 +27,12 @@ public class AuthMAOvaaVroEkycPartition {
 		String part_key = "";
 		
 		part_key = seasonType  + seasonYear;
-		
-		String tableName = "ecrop" + seasonYear + "." + "cr_authdetails_rbk_mv_" + part_key;
-
+		String tableName;
+		if(seasonYear >=2023) {
+		 tableName = "ecrop" + seasonYear + "." + "cr_authdetails_rbk_mv_" + part_key;
+		}else {
+			tableName = "cr_authdetails_rbk_mv_" + part_key;
+		}
 		System.out.println("tableName---------------->" + tableName);
 
 		String Sql = "select cast(rbkname||' (RBK_'||rbkcode||')' as varchar) AS rbk,  cast(totfarmercount as varchar), \r\n"

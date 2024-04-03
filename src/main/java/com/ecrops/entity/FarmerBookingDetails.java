@@ -1,5 +1,7 @@
 package com.ecrops.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,9 +17,9 @@ private Long bookingid;
 private String oc_name;
 private String oc_fname;
 private String cr_sno;
-private Integer kh_no;
-private Integer tot_extent;
-private Integer occupant_extent;
+private BigDecimal kh_no;
+private BigDecimal tot_extent;
+private BigDecimal occupant_extent;
 private Integer mcode;
 private Integer cr_mand_code;
 private Long mobileno;
@@ -25,8 +27,8 @@ public FarmerBookingDetails() {
 	super();
 	// TODO Auto-generated constructor stub
 }
-public FarmerBookingDetails(Long bookingid, String oc_name, String oc_fname, String cr_sno, Integer kh_no,
-		Integer tot_extent, Integer occupant_extent, Integer mcode, Integer cr_mand_code, Long mobileno) {
+public FarmerBookingDetails(Long bookingid, String oc_name, String oc_fname, String cr_sno, BigDecimal kh_no,
+		BigDecimal tot_extent, BigDecimal occupant_extent, Integer mcode, Integer cr_mand_code, Long mobileno) {
 	super();
 	this.bookingid = bookingid;
 	this.oc_name = oc_name;
@@ -63,22 +65,22 @@ public String getCr_sno() {
 public void setCr_sno(String cr_sno) {
 	this.cr_sno = cr_sno;
 }
-public Integer getKh_no() {
+public BigDecimal getKh_no() {
 	return kh_no;
 }
-public void setKh_no(Integer kh_no) {
+public void setKh_no(BigDecimal kh_no) {
 	this.kh_no = kh_no;
 }
-public Integer getTot_extent() {
+public BigDecimal getTot_extent() {
 	return tot_extent;
 }
-public void setTot_extent(Integer tot_extent) {
+public void setTot_extent(BigDecimal tot_extent) {
 	this.tot_extent = tot_extent;
 }
-public Integer getOccupant_extent() {
+public BigDecimal getOccupant_extent() {
 	return occupant_extent;
 }
-public void setOccupant_extent(Integer occupant_extent) {
+public void setOccupant_extent(BigDecimal occupant_extent) {
 	this.occupant_extent = occupant_extent;
 }
 public Integer getMcode() {

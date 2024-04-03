@@ -1,5 +1,6 @@
 package com.ecrops.repo;
 import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -17,7 +18,10 @@ public class MaoAuthVaaVroekycPartition {
 	private EntityManager entityManager;
 
 	public List<MaoAuthVaaVroekyc> vaaVroEkyc(String wbdcode, String mcode,String cropyear,String cropid) {
-		
+		System.out.println("wbdcode====>"+wbdcode);
+		System.out.println("mcode====>"+mcode);
+		System.out.println("cropyear====>"+cropyear);
+		System.out.println("cropid====>"+cropid);
 		String[] season = cropyear.split("@");
 		String seasonType = season[0];
 		Integer seasonYear = Integer.parseInt(season[1]);
@@ -25,9 +29,11 @@ public class MaoAuthVaaVroekycPartition {
 		String part_key = "",sql="",tableName="";
 		
 			part_key = seasonType + seasonYear;
-		
+		if(seasonYear >= 2023) {
 		 tableName = "ecrop" + seasonYear + "." + "cr_authdetails_rbk_mv_cropwise_" + part_key;
-
+		}else {
+			 tableName = "cr_authdetails_rbk_mv_cropwise_" + part_key;	
+		}
 		System.out.println("tableName---------------->" + tableName);
 
 	
@@ -49,29 +55,35 @@ public class MaoAuthVaaVroekycPartition {
 		List<MaoAuthVaaVroekyc> entityDetails = new ArrayList<MaoAuthVaaVroekyc>();
 		
 
-		for (Object[] row : ekycMao) {
+		try {
+			for (Object[] row : ekycMao) {
 
-			MaoAuthVaaVroekyc entity = new MaoAuthVaaVroekyc();
-			
-			//System.out.println("row[0]=>"+row[0]);
-			//System.out.println("row[1]=>"+row[1]);
-			
-			entity.setVname((String) row[0]);
-			entity.setUpdatedby((String) row[1]);
-			entity.setTotalbookings(Long.valueOf(row[2].toString()));
-			entity.setTotextent(((BigDecimal) row[3]).intValue());
-			entity.setVaaauthcount(Long.valueOf(row[4].toString()));
-			entity.setVaaauthextent(((BigDecimal) row[5]).intValue());
-			entity.setVroauthcount(Long.valueOf(row[6].toString()));
-			entity.setVroauthextent(((BigDecimal) row[7]).intValue());
-			entity.setTotekycbookings(Long.valueOf(row[8].toString()));
-			entity.setTotfarmercount(Long.valueOf(row[9].toString()));
-			entity.setEkycfarmercount(Long.valueOf(row[10].toString()));
-			entity.setEkycbookedext(((BigDecimal) row[11]).intValue());
-			entityDetails.add(entity);
+				MaoAuthVaaVroekyc entity = new MaoAuthVaaVroekyc();
+				
+				//System.out.println("row[0]=>"+row[0]);
+				//System.out.println("row[1]=>"+row[1]);
+				
+				entity.setVname((String) row[0]);
+				entity.setUpdatedby((String) row[1]);
+				entity.setTotalbookings(Long.valueOf(row[2].toString()));
+				entity.setTotextent(((BigDecimal) row[3]).intValue());
+				entity.setVaaauthcount(Long.valueOf(row[4].toString()));
+				entity.setVaaauthextent(((BigDecimal) row[5]).intValue());
+				entity.setVroauthcount(Long.valueOf(row[6].toString()));
+				entity.setVroauthextent(((BigDecimal) row[7]).intValue());
+				entity.setTotekycbookings(Long.valueOf(row[8].toString()));
+				entity.setTotfarmercount(Long.valueOf(row[9].toString()));
+				entity.setEkycfarmercount(Long.valueOf(row[10].toString()));
+				entity.setEkycbookedext(((BigDecimal) row[11]).intValue());
+				entityDetails.add(entity);
 
+			}
+			
+			return entityDetails;
+		} catch (NumberFormatException e) {
+			System.out.println("Exception===>"+e);
+			e.printStackTrace();
 		}
-		
 		return entityDetails;
 
 	}

@@ -79,23 +79,23 @@
 			}
 		});
 	});
-	function getMnadals() {
-		var inputdcode=$("#inputdcode").val()
+// 	function getMnadals() {
+// 		var inputdcode=$("#inputdcode").val()
 		
-		$.ajax({
-			type: "get",
-			url: "./util/getAllMandals?dcode="+inputdcode,
-			cache: false,
-			timeout: 600000,
-			success: function (resp) {
-				//alert(JSON.stringify(resp));
-				for (var j = 0; j < resp.length; j++) {
-					var bean = resp[j];
-					$("#mandal").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
-				}
-			}
-		});
-	}
+// 		$.ajax({
+// 			type: "get",
+// 			url: "./util/getAllMandals?dcode="+inputdcode,
+// 			cache: false,
+// 			timeout: 600000,
+// 			success: function (resp) {
+// 				//alert(JSON.stringify(resp));
+// 				for (var j = 0; j < resp.length; j++) {
+// 					var bean = resp[j];
+// 					$("#mandal").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
+// 				}
+// 			}
+// 		});
+// 	}
 
 	function getData() {
 		
@@ -104,14 +104,6 @@
 			alert("Please Select Cropyear");
 			return false;
 		}
-		
-		var mandal = $("#mandal").val();
-		if(mandal == "" || mandal == null){
-			alert("Please Select MandalName");
-			return false;
-		}
-		
-
 		var cropYear = $("#cropyear").val();
 		var inputwbmcode = $("#inputwbmcode").val();
 		var inputwbdcode = $("#inputwbdcode").val();
@@ -167,20 +159,20 @@
 					<td align="right" width="30%"><b>Crop Year <font color="red">*</font></b></td>
 
 					<td align="left">
-						<select id="cropyear" name="cropyear" style="width: 200px" onchange="return getMnadals();">
+						<select id="cropyear" name="cropyear" style="width: 200px" >
 							<option value="">-------Select-------</option>
 						</select>
 					</td>
 				</tr>
-				<tr>
-					<td align="right" width="30%"><b>Mandals <font color="red">*</font></b></td>
+<!-- 				<tr> -->
+<!-- 					<td align="right" width="30%"><b>Mandals <font color="red">*</font></b></td> -->
 
-					<td align="left">
-						<select id="mandal" name="mandal" style="width: 200px">
-							<option value="">-------Select-------</option>
-						</select>
-					</td>
-				</tr>
+<!-- 					<td align="left"> -->
+<!-- 						<select id="mandal" name="mandal" style="width: 200px"> -->
+<!-- 							<option value="">-------Select-------</option> -->
+<!-- 						</select> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
 
 			</table>
 			<div colspan="3" align="center" style="padding-top:10px;padding-bottom:10px;">

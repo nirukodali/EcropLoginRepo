@@ -67,19 +67,56 @@
 
 </head>
 <script>
-	$(document).ready(function () {
+$(document).ready(function () {
+	$.ajax({
+		type: "get",
+		url: "./util/getAllSeason",
+		cache: false,
+		timeout: 600000,
+		success: function (resp) {
+			//alert(JSON.stringify(resp));
+				$("#cropyear").append('<option value="">------Select-------</option>');
+			for (var j = 0; j < resp.length; j++) {
+				var bean = resp[j];
+				$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
+			}
+		}
+	});	
+});
+
+
+
+
+	function getData() {
+		$("#databody").empty();
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
+		
 		var inputmcode = $("#inputmcode").val();
-		var userid = $("#userid").val();
-		var inputdcode = $("#inputdcode").val();
+		var cropyear = $("#cropyear").val();
+		
 		alert("inputmcode=========>" + inputmcode)
-		alert("inputdcode=========>" + inputdcode)
+		
+		
+		var rbody={};
+		rbody['mcode']= inputmcode;
+		rbody['cropyear']= cropyear;
+		
 		$.ajax({
-			type: "get",
-			url: "./util/vaadet?userid=" + userid + "&mcode=" + inputmcode,
+			type: "post",
+			url: "./util/vaadet",
+			contentType:"application/json",
+			data:JSON.stringify(rbody),
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
-				$("#databody").empty();
+				if(resp.length == 0){
+					 alert(" No Records Found");
+				}
+				
 				alert("success============>" + JSON.stringify(resp));
 				var sno = 0;
 				for (var j = 0; j < resp.length; j++) {
@@ -99,7 +136,7 @@
 				}
 			}
 		});
-	});
+	}
 </script>
 <style>
 	#ObjEntryTable {
@@ -116,11 +153,30 @@
 	<input type="hidden" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />
 	<input type="hidden" id="inputmcode" th:value="${#session.getAttribute('mcode')}" />
 	<input type="hidden" id="inputuserid" th:value="${#session.getAttribute('userid')}" />
-
+<div align="center">
+		<form>
+			<table id="ObjEntryTable">
+				<tr>
+					<td colspan="3"></td>
+				</tr>
+				<tr>
+					<td align="right" width="30%"><b>Crop Year</b></td>
+					<td align="left">
+						<select id="cropyear" name="cropyear" style="width: 200px">
+						</select>
+					</td>
+				</tr>
+			</table>
+			<div colspan="3" align="center" style="padding-top:10px;padding-bottom:50px;">
+				<button type="button" id="btnSubmit" class="btn btn-primary" value="Submit"
+					onclick="return getData();">Submit</button>
+			</div>
+		</form>
+	</div>
 	<div class="container">
 		<form id="unlockreport" name="unlockreport" method="post">
 			<div align="center" id="divPrint" class="table table-hover table table-striped">
-				<table id="databody" align="center" style=" text-align: center;">
+				<table id=tableStkId align="center" style=" text-align: center;">
 					<thead>
 						<tr>
 							<th> <b> S.No. </b> </th>

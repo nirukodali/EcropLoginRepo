@@ -93,7 +93,7 @@
 			});
 	
 	function getData() {
-		
+		$("#databody").empty();
 		var cropyear = $("#cropyear").val();
 		if(cropyear == "" || cropyear == null){
 			alert("Please Select Cropyear");
@@ -103,12 +103,14 @@
 		var dcode = $("#inputdcode").val();
 		var mcode = $("#inputmcode").val();
 		var cropYear = $("#cropyear").val();
+		var inputwbdcode = $("#inputwbdcode").val();
 		
 		var data = {};
 		
 		data['dcode'] = dcode;
 		data['mcode'] = mcode;
 		data['cropyear'] = cropYear;
+		data['wbdcode'] = inputwbdcode;
 		
 		
 		$.ajax({
@@ -169,9 +171,10 @@
     </style>
 <body>
 
-	<div class="heading" colspan="20" style="text-align: center;"><b>Supervisory Records Updation Status</b></div>
+	<div class="heading" colspan="20" style="text-align: center;"><b>Village Wise Rabi 2022-2023 Social Audit Grievances Redressed Report</b></div>
 	<p th:text="${msg}"></p>
 
+<input type="hidden" id="inputwbdcode" th:value="${#session.getAttribute('wbdcode')}" />
 <input type="hidden" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />
 <input type="hidden" id="inputmcode" th:value="${#session.getAttribute('mcode')}" />
 <input type="hidden" id="inputuserid" th:value="${#session.getAttribute('userid')}" />

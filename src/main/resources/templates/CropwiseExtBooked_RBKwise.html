@@ -136,7 +136,7 @@
 
 	function getData() {
 		
-
+		$("#databody").empty();
 		var cropyear = $("#cropyear").val();
 		if(cropyear == "" || cropyear == null){
 			alert("Please Select Cropyear");
@@ -163,7 +163,6 @@
 		var crpgrpId = $("#crpgrpId").val();
 
 		var data = {};
-		
 		data['dcode'] = dcode;
 		data['mcode'] = mcode;
 		data['cropyear'] = cropYear;

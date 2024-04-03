@@ -32,10 +32,15 @@ public class PhyAckVwisePartition {
 		String part_key = "";
 
 		part_key = seasonType  + seasonYear; System.out.println("part_key==========>"+part_key);
-		
-		String tableName = "ecrop" + seasonYear + "." + "ekycgenerated_vill_mv_" + part_key; 
-		String tableName1 = "ecrop" + seasonYear + "." + "cr_authdetails_vill_mv_" + part_key; 
-
+		String tableName;
+		String tableName1;
+		if(seasonYear >=2023) {
+		 tableName = "ecrop" + seasonYear + "." + "ekycgenerated_vill_mv_" + part_key; 
+		 tableName1 = "ecrop" + seasonYear + "." + "cr_authdetails_vill_mv_" + part_key; 
+		}else {
+			 tableName = "ekycgenerated_vill_mv_" + part_key; 
+			 tableName1 = "cr_authdetails_vill_mv_" + part_key; 	
+		}
 		System.out.println("tableName---------------->" + tableName);
 
 		String Sql = "select vname as wbvname, coalesce(a.totfarmers,0) as ackcount,coalesce(c.ekycfarmercount,0) as ekycfarmercount ,\r\n"

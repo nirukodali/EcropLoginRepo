@@ -85,7 +85,7 @@
 	});
 
 	function getData() {
-		
+		$("#databody").empty();
 		var cropyear = $("#cropyear").val();
 		if(cropyear == "" || cropyear == null){
 			alert("Please Select Cropyear");
@@ -141,6 +141,8 @@
 	<p th:text="${msg}"></p>
 	<input type="hidden" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />
 	<input type="hidden" id="inputmcode" th:value="${#session.getAttribute('mcode')}" />
+<!-- 	<input type="text" id="wbwnm" th:value="${#session.getAttribute('wbmname')}" /> -->
+<!-- 	<input type="text" id="wbvnm," th:value="${#session.getAttribute('wbvname')}" /> -->
 	<div align="center">
 		<form >
 			<table id="ObjEntryTable">
@@ -165,7 +167,7 @@
 	<div class="container">
 		<form id="unlockreport" name="unlockreport" method="post">
 			<div align="center" id="divPrint">
-				<table id="databody" align="center" class="table table-striped border border-secondary">
+				<table id="tableStkId" align="center" class="table table-striped border border-secondary">
 					<thead>
 						<tr>
 							<th> <b> S.No. </b> </th>

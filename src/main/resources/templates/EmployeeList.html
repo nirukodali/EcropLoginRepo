@@ -68,14 +68,48 @@
 </head>
 <script>
 	$(document).ready(function () {
+		$.ajax({
+			type: "get",
+			url: "./util/getAllSeason",
+			cache: false,
+			timeout: 600000,
+			success: function (resp) {
+				//alert(JSON.stringify(resp));
+					$("#cropyear").append('<option value="">------Select-------</option>');
+				for (var j = 0; j < resp.length; j++) {
+					var bean = resp[j];
+					$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
+				}
+			}
+		});	
+	});
+	
+	
+	function getData(){
+		$("#databody").empty();
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
 		var inputmcode = $("#inputmcode").val();
 		var userid = $("#userid").val();
 		var inputdcode = $("#inputdcode").val();
+		var cropyear = $("#cropyear").val();
 		alert("inputmcode=========>"+inputmcode)
 		alert("inputdcode=========>"+inputdcode)
+		
+		var rbody={};
+		rbody['dcode']= inputdcode;
+		rbody['mcode']= inputmcode;
+		rbody['cropyear']= cropyear;
+		
+		
 		$.ajax({
-			type: "get",
-			url: "./util/emplist?dcode=" + inputdcode + "&mcode=" + inputmcode,
+			type: "Post",
+			url: "./util/emplist",
+			contentType:"application/json",
+			data:JSON.stringify(rbody),
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
@@ -84,21 +118,24 @@
 				var sno = 0;
 				for (var j = 0; j < resp.length; j++) {
 					sno = sno + 1;
+					if(resp.length == 0){
+						 alert(" No Records Found");
+					}
 					var bean = resp[j];
 					$("#databody").append('<tr style="fontsize:200px; font-weight: bold;">'
-						+ '<td>' + sno + '</td>'
-						+ '<td>' + bean.vname + '('+ bean.rbkuserid+')</td>'
-						+ '<td>' + bean.emp_code + '</td>'
-						+ '<td>' + bean.emp_name + '</td>'
-						+ '<td>' + bean.designation + '</td>'
-						+ '<td>' + bean.mobile + '</td>'
-						+ '<td>' + bean.email + '</td>'
-						+ '<td>' + bean.aadhaar_id + '</td>'
+						+ '<td align="center">' + sno + '</td>'
+						+ '<td align="left">' + bean.vname + '('+ bean.rbkuserid+')</td>'
+						+ '<td align="center">' + bean.emp_code + '</td>'
+						+ '<td align="left">' + bean.emp_name + '</td>'
+						+ '<td align="center">' + bean.designation + '</td>'
+						+ '<td align="center">' + bean.mobile + '</td>'
+						+ '<td align="left">' + bean.email + '</td>'
+						+ '<td align="center">' + bean.aadhaar_id + '</td>'
 						+ '</tr>');
 				}
 			}
-		});
-	});
+		});	
+	}
 </script>
 <style>
 	#ObjEntryTable {
@@ -115,7 +152,26 @@
 	<input type="hidden" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />
 	<input type="hidden" id="inputmcode" th:value="${#session.getAttribute('mcode')}" />
 	<input type="hidden" id="inputuserid" th:value="${#session.getAttribute('userid')}" />
-
+<div align="center">
+		<form>
+			<table id="ObjEntryTable">
+				<tr>
+					<td colspan="3"></td>
+				</tr>
+				<tr>
+					<td align="right" width="30%"><b>Crop Year</b></td>
+					<td align="left">
+						<select id="cropyear" name="cropyear" style="width: 200px">
+						</select>
+					</td>
+				</tr>
+			</table>
+			<div colspan="3" align="center" style="padding-top:10px;padding-bottom:50px;">
+				<button type="button" id="btnSubmit" class="btn btn-primary" value="Submit"
+					onclick="return getData();">Submit</button>
+			</div>
+		</form>
+	</div>
 	<div class="container">
 		<form id="unlockreport" name="unlockreport" method="post">
 			<div align="center" id="divPrint" class="table table-hover table table-striped">

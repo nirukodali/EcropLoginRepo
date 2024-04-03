@@ -68,18 +68,45 @@
 
 	<script>
 		$(document).ready(function () {
+			
+			$.ajax({
+				type: "get",
+				url: "./util/getAllSeason",
+				cache: false,
+				timeout: 600000,
+				success: function (resp) {
+					$("#cropyear").append('<option value="">-----------Select--------</option>');
+					//alert(JSON.stringify(resp));
+					for (var j = 0; j < resp.length; j++) {
+						var bean = resp[j];
+						$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
+					}
+				}
+			});
 		});
 
+		
+		
 		function getData() {
+			$("#databody").empty();
 			var dcode = $("#inputdcode").val();
 			var mcode = $("#inputmcode").val();
 			var dataSrc = $("#dataSelId").val();
+			var cropyear = $("#cropyear").val();
 	var sno = 0;
-
+	
+	var data = {};
+	data['dcode'] = dcode;
+	data['mcode'] = mcode;
+	data['data_src'] = dataSrc;
+	data['cropyear'] = cropyear;
+	
 			alert("grtdata");
 			$.ajax({
-				type: "get",
-				url: "./util/efishDetails?dataSrc=" + dataSrc + "&dcode=" + dcode + "&mcode=" + mcode,
+				type: "post",
+				url: "./util/efishDetails",
+				contentType : 'application/json',
+				data : JSON.stringify(data),
 				cache: false,
 				timeout: 600000,
 				success: function (resp) {
@@ -131,6 +158,13 @@
 			<table id="ObjEntryTable" style="font-size: inherit ! important; border-radius:10px;">
 				<tr>
 					<td colspan="3"></td>
+				</tr>
+				<tr>
+					<td align="right" width="30%"><b>Crop Year</b></td>
+					<td align="left">
+						<select id="cropyear" name="cropyear" style="width: 200px">
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td align="right" width="30%"><b>Select Rofr/E fish<font color="red">*</font></b></td>

@@ -47,7 +47,10 @@ public class RegularExpressionclassMethod {
         return doubleValue != null && doubleValue.matches("^\\d{2}(?:\\d{2})?$") && !doubleValue.isEmpty();
 
     }
-    
+    public boolean mandalCode1(String doubleValue) {
+        return doubleValue != null && doubleValue.matches("^\\d{1,4}$") && !doubleValue.isEmpty();
+    }
+
    
     public boolean districtCode(String doubleValue) {
         return doubleValue != null && doubleValue.matches("^\\d{1,3}$") && !doubleValue.isEmpty();

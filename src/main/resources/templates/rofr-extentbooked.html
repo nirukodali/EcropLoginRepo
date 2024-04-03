@@ -92,29 +92,75 @@
 		var inputmcode = $("#inputmcode").val();
 		var inputwbdcode = $("#inputwbdcode").val();
 		var inputuserid = $("#inputuserid").val();
-		alert("inputdcode=============>" + inputdcode +"  , "+"wbmcode=======>"+ inputmcode);
+		//alert("inputdcode=============>" + inputdcode +"  , "+"wbmcode=======>"+ inputmcode);
 		$.ajax({
 			type: "get",
 			url: "./util/getRofr1?wbdcode=" + inputdcode + "&wbmcode=" + inputmcode + "&cropyear=" + cropYear,
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
-				alert(JSON.stringify(resp));
+				//alert(JSON.stringify(resp));
 				var sno = 0;
-				var totalweb_farmersss = "0";
-				var totalweb_extt = "0.0";
-				var totalbooked_ext
+				var totalweb_farmersss = 0;
+				var totalweb_extt = 0;
+				var totalbooked_ext=0;
+				
+				var web_farmers = 0,booked_web_ext=0,web_ext=0,
+			    nweb_farmers=0,booked_nweb_ext=0,nweb_ext = 0,
+			    rofr_farmers=0,booked_rofr_ext=0,rofr_ext=0,
+			    ccrc_farmers=0 ,booked_ccrc_ext=0,ccrc_ext=0;
+			    usus_farmers=0 ,booked_usus_ext=0,usus_ext=0;
+			    
+			    var totFarmers=0, totBookedExt=0, totExt=0;
 				
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
 					
-				
 					
-					totalweb_farmersss = bean.web_farmers + bean.nweb_farmers + bean.ccrc_farmers + bean.rofr_farmers + bean.usus_farmers;
-					totalbooked_ext =  parseFloat(bean.booked_web_ext) + parseFloat(bean.booked_nweb_ext) + parseFloat(bean.booked_ccrc_ext) + parseFloat(bean.booked_rofr_ext) + parseFloat(bean.booked_usus_ext);
-					totalbooked_ext = totalbooked_ext.toFixed(2);
-					totalweb_extt =  parseFloat(bean.web_ext) + parseFloat(bean.nweb_ext) + parseFloat(bean.ccrc_ext) + parseFloat(bean.booked_rofr_ext) + parseFloat(bean.usus_ext);
- 					totalweb_extt = totalweb_extt.toFixed(2);
+					
+					web_farmers = web_farmers + bean.web_farmers;
+					//booked_web_ext = parseFloat(booked_web_ext.toFixed(2))+ parseFloat(bean.booked_web_ext.toFixed(2));
+					 booked_web_ext = parseFloat((booked_web_ext + bean.booked_web_ext).toFixed(2));
+					web_ext = parseFloat((web_ext + bean.web_ext).toFixed(2));
+					
+					nweb_farmers = nweb_farmers + bean.nweb_farmers;
+					booked_nweb_ext = parseFloat((booked_nweb_ext + bean.booked_nweb_ext).toFixed(2));
+					nweb_ext = parseFloat((nweb_ext + bean.nweb_ext).toFixed(2));
+					
+					rofr_farmers = rofr_farmers + bean.rofr_farmers;
+					booked_rofr_ext = parseFloat((booked_rofr_ext + bean.booked_rofr_ext).toFixed(2));
+					rofr_ext = parseFloat((rofr_ext + bean.rofr_ext).toFixed(2));
+					
+					ccrc_farmers = ccrc_farmers + bean.ccrc_farmers;
+					booked_ccrc_ext = parseFloat((booked_ccrc_ext + bean.booked_ccrc_ext).toFixed(2));
+					ccrc_ext = parseFloat((ccrc_ext + bean.ccrc_ext).toFixed(2));
+					
+					usus_farmers = usus_farmers + bean.usus_farmers;
+					booked_usus_ext = parseFloat((booked_usus_ext + bean.booked_usus_ext).toFixed(2));
+					usus_ext = parseFloat((usus_ext + bean.usus_ext).toFixed(2));
+					
+					
+					
+				/* 	totalweb_farmersss = bean.web_farmers + bean.nweb_farmers + bean.ccrc_farmers + 
+					bean.rofr_farmers + bean.usus_farmers; */
+					
+					totalweb_farmersss = parseInt(bean.web_farmers) + parseInt(bean.nweb_farmers) + parseInt(bean.ccrc_farmers) + 
+                    parseInt(bean.rofr_farmers) + parseInt(bean.usus_farmers);
+					
+					totalbooked_ext =  parseFloat((bean.booked_web_ext + bean.booked_nweb_ext + 
+					                   bean.booked_ccrc_ext + bean.booked_rofr_ext + bean.booked_usus_ext).toFixed(2));
+					//totalbooked_ext = totalbooked_ext.toFixed(2);
+// 					totalweb_extt =  parseFloat((bean.web_ext + bean.nweb_ext + bean.ccrc_ext
+// 					                 bean.rofr_ext + bean.usus_ext).toFixed(2));
+					 totalweb_extt = parseFloat((bean.web_ext + bean.nweb_ext + bean.ccrc_ext +
+							 bean.rofr_ext + bean.usus_ext).toFixed(2));
+
+					
+ 					//totalweb_extt = totalweb_extt.toFixed(2);
+ 					
+ 					totFarmers = parseFloat((totFarmers + totalweb_farmersss).toFixed(2));
+ 					totBookedExt = parseFloat((totBookedExt + totalbooked_ext).toFixed(2));
+ 					totExt = parseFloat((totExt + totalweb_extt).toFixed(2));
 					
 					sno = sno + 1;
 					$("#databody").append('<tr>'
@@ -136,9 +182,37 @@
 					+'<td>'+ bean.booked_usus_ext + '</td>'
 					+'<td>' + bean.usus_ext + '</td>'
 					+'<td>' + totalweb_farmersss + '</td>'
-					+'<td>'+totalbooked_ext+'</td>'
-					+'<td>'+totalweb_extt+'</td></tr>');
+					+'<td>'+ totalbooked_ext+'</td>'
+					+'<td>'+ totalweb_extt+'</td></tr>');
 				}
+				$("#databody").append('<tr style="fontsize:200px; font-weight: bold;">'
+						+'<td colspan = "2">TOTAL<b></b></td>'
+						+'<td>'+web_farmers+'</td>'
+						+'<td>'+booked_web_ext+'</td>'
+						+'<td>'+web_ext+'</td>'
+						
+						+'<td>'+nweb_farmers+'</td>'
+						+'<td>'+booked_nweb_ext+'</td>'
+						+'<td>'+nweb_ext+'</td>'
+						
+						+'<td>'+ccrc_farmers+'</td>'
+						+'<td>'+booked_ccrc_ext+'</td>'
+						+'<td>'+ccrc_ext+'</td>'
+						
+						+'<td>'+rofr_farmers+'</td>'
+						+'<td>'+booked_rofr_ext+'</td>'
+						+'<td>'+rofr_ext+'</td>'
+						
+						+'<td>'+usus_farmers+'</td>'
+						+'<td>'+booked_usus_ext+'</td>'
+						+'<td>'+usus_ext+'</td>'
+						
+						+'<td>'+totFarmers+'</td>'
+ 						+'<td>'+totBookedExt+'</td>'
+ 						+'<td>'+totExt+'</td>'
+						
+						
+					+'</tr>')
 			}
 		});
 	}
@@ -162,7 +236,9 @@
 					<td align="right" width="30%"><b>Crop Year</b></td>
 
 					<td align="left">
-						<select id="cropyear" name="cropyear" style="width: 200px"></select>
+						<select id="cropyear" name="cropyear" style="width: 200px">
+						<option value="">----Select----</option>
+						</select>
 					</td>
 				</tr>
 			</table>

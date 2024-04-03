@@ -33,18 +33,24 @@ public class AllocatedSurveyNoMappingPartition {
 			part_key = seasonType + "0" + wbdcode + seasonYear;
 		}
 		String tableName = "ecrop" + seasonYear + "." + "rbk_surveyno_mapping_" + part_key;
-
+if(seasonYear >= 2023) {
+	tableName = "ecrop" + seasonYear + "." + "rbk_surveyno_mapping_" + part_key;
+}else {
+	tableName = "rbk_surveyno_mapping_" + part_key;
+}
 		System.out.println("tableName---------------->" + tableName);
 
 		String Sql = " select lgdvname,data_src,occup_extent,kh_no,cr_sno,tot_extent from "+tableName+" \r\n"
-				+ "a, wbvillage_mst b where a.vcode=wbvcode and a.mcode=? and rbkcode=?  \r\n"
+				+ "a, wbvillage_mst b where a.vcode=wbvcode and a.mcode=? and rbkcode=? "
+				+ " and cr_season=? and cr_year=? \r\n"
 				+ "order by lgdvname,cr_sno,kh_no ";
 
 		Query insertQuery = (Query) entityManager.createNativeQuery(Sql);
 		insertQuery.setParameter(1, Integer.parseInt(mcode));
-		insertQuery.setParameter(2, Integer.parseInt(rbkid));
-		//insertQuery.setParameter(3,  seasonYear);
-		//insertQuery.setParameter(4, seasonType);
+		insertQuery.setParameter(2, Integer.parseInt(rbkid));System.out.println("rbkcode----"+ Integer.parseInt(rbkid));
+		insertQuery.setParameter(3, seasonType);
+		insertQuery.setParameter(4,  seasonYear);
+		
 		
 		System.out.println("insertQuery=>"+insertQuery);
 		List<Object[]> detailsEntities1 = insertQuery.getResultList();
@@ -58,26 +64,10 @@ public class AllocatedSurveyNoMappingPartition {
 			AllocatedSurveyNoMapping entity = new AllocatedSurveyNoMapping();
 			entity.setLgdvname((String) row[0]);
 			entity.setData_src(String.valueOf(row[1]));
-			
-			String df = (String)row[2].toString();
-			
-	        BigDecimal bigDecimalValue = new BigDecimal(df);
-	        bigDecimalValue = bigDecimalValue.stripTrailingZeros();
-	        String resultString = bigDecimalValue.toString();
-	      
-			entity.setOccup_extent((long)Double.parseDouble(resultString));
-			
+			entity.setOccup_extent((BigDecimal)row[2]);
 			entity.setKh_no(((BigDecimal) row[3]).intValue());
 			entity.setCr_sno((String) row[4]);
-			
-			String df2 = (String)row[5].toString();
-			
-	        BigDecimal bigDecimalValue2 = new BigDecimal(df);
-	        bigDecimalValue2 = bigDecimalValue2.stripTrailingZeros();
-	        String resultString2 = bigDecimalValue2.toString();
-	       
-			entity.setTot_extent((long)Double.parseDouble(resultString2));
-			
+			entity.setTot_extent((BigDecimal)row[5]);
 			detailsEntities.add(entity);
 
 		}

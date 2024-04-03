@@ -23,7 +23,7 @@ public class RbkSurveyNoMappingPartition {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public List<RbkSurveyNoMapping> rbkSno(String wbdcode, String mcode,String cropyear,String updatedby,String userid) {
+	public List<RbkSurveyNoMapping> rbkSno(String wbdcode, String mcode,String cropyear) {
 		
 		String[] season = cropyear.split("@");
 		String seasonType = season[0];
@@ -36,25 +36,43 @@ public class RbkSurveyNoMappingPartition {
 			part_key = seasonType + "0" + Integer.parseInt(wbdcode) + seasonYear;
 		}
 		
-		 tableName1 = "ecrop" + seasonYear + "." + "cr_booking_partition_" + part_key;
-		 tableName2 = "ecrop" + seasonYear + "." + "rbk_surveyno_mapping_" + part_key;
+		if(seasonYear>=2023) {
+			 tableName1 = "ecrop" + seasonYear + "." + "cr_booking_partition_" + part_key;
+			 tableName2 = "ecrop" + seasonYear + "." + "rbk_surveyno_mapping_" + part_key;
+		}
+		else {
+			 tableName1 = "cr_booking_partition_" + part_key;
+			 tableName2 = "rbk_surveyno_mapping_" + part_key;
+		}
+		
 
 		System.out.println("tableName1---------------->" + tableName1);
 		System.out.println("tableName2---------------->" + tableName2);
 
+		
+
 	
 
-		String sql="  select rbkuserid,mao_alloted_ext,vaa_alloted_ext,occupant_extent from (select rbkuserid,round(sum(tot_extent),2) as mao_alloted_ext from \r\n"
-		 		+ " (select distinct mcode,vcode,rbkuserid,kh_no,cr_sno,updatedby,tot_extent from "+tableName2+" where updatedby=?  \r\n"
-		 		+ "  order by updatedby,vcode,cr_sno) a1 group by rbkuserid) a, (select srno_userid,round(sum(tot_extent),2) as vaa_alloted_ext,  \r\n"
-		 		+ "round(sum(occupant_extent),2) as occupant_extent from (select distinct cr_vcode,cr_sno,srno_userid,tot_extent,occupant_extent \r\n"
-		 		+ " from "+tableName1+" where mcode=?) b  group by srno_userid) b where rbkuserid=? ";
+//		String sql="  select rbkuserid,mao_alloted_ext,vaa_alloted_ext,occupant_extent from (select rbkuserid,round(sum(tot_extent),2) as mao_alloted_ext from \r\n"
+//		 		+ " (select distinct mcode,vcode,rbkuserid,kh_no,cr_sno,updatedby,tot_extent from "+tableName2+" where updatedby=?  \r\n"
+//		 		+ "  order by updatedby,vcode,cr_sno) a1 group by rbkuserid) a, (select srno_userid,round(sum(tot_extent),2) as vaa_alloted_ext,  \r\n"
+//		 		+ "round(sum(occupant_extent),2) as occupant_extent from (select distinct cr_vcode,cr_sno,srno_userid,tot_extent,occupant_extent \r\n"
+//		 		+ " from "+tableName1+" where mcode=?) b  group by srno_userid) b where rbkuserid=? ";
+//		
+		
+		String sql="select srno_userid,sum(mao_allotted_ext) as mao_allotted_ext,sum(vaa_selected_ext) as vaa_allotted_ext from(\r\n"
+				+ "(select sum (occup_extent)  as mao_allotted_ext ,vcode,rbkuserid,cr_sno,mcode \r\n"
+				+ " from "+tableName2+" where mcode=? group by  mcode,vcode,cr_sno,rbkuserid) a \r\n"
+				+ "right join \r\n"
+				+ "(select sum (occupant_extent) as vaa_selected_ext,cr_vcode,srno_userid,cr_sno,mcode from \r\n"
+				+ " "+tableName1+" where srno_userid is not null and cultivator_type is not null and mcode=? \r\n"
+				+ " group by mcode,cr_vcode,cr_sno,srno_userid) b\r\n"
+				+ " on a.vcode=b.cr_vcode and a.rbkuserid=b.srno_userid and a.cr_sno=b.cr_sno)x\r\n"
+				+ "group by srno_userid";
 
 		Query sesnyr = (Query) entityManager.createNativeQuery(sql);
-		sesnyr.setParameter(1,updatedby);
+		sesnyr.setParameter(1, Integer.parseInt(mcode));
 		sesnyr.setParameter(2, Integer.parseInt(mcode));
-		sesnyr.setParameter(3,userid);
-		
 		
 //		sesnyr.setParameter(3,  seasonYear);
 //		sesnyr.setParameter(4, seasonType);
@@ -70,13 +88,10 @@ public class RbkSurveyNoMappingPartition {
 
 			RbkSurveyNoMapping entity = new RbkSurveyNoMapping();
 			
-			System.out.println("row[0]=>"+row[0]);
-			System.out.println("row[1]=>"+row[1]);
-			
-			entity.setRbkuserid((String) row[0]);
-			entity.setMao_alloted_ext(((BigDecimal) row[1]).intValue());
-			entity.setVaa_alloted_ext(((BigDecimal) row[2]).intValue());
-			entity.setOccupant_extent(((BigDecimal) row[3]).intValue());
+			entity.setSrno_userid((String) row[0]);
+			entity.setMao_allotted_ext(((BigDecimal) row[1]));
+			entity.setVaa_allotted_ext(((BigDecimal) row[2]));
+			//entity.setOccupant_extent(((BigDecimal) row[3]).intValue());
 			entityDetails.add(entity);
 
 		}

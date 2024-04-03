@@ -84,7 +84,7 @@
 	});
 
 	function getData() {
-		
+		$("#databody").empty();
 		var cropyear = $("#cropyear").val();
 		if(cropyear == "" || cropyear == null){
 			alert("Please Select Cropyear");
@@ -93,13 +93,13 @@
 		
 	  
 	    var cropyear = $("#cropyear").val();
-	    var inputdcode = $("#inputdcode").val();
-	    var inputmcode = $("#inputmcode").val();
+	    var inputdcodee = $("#inputdcode").val();
+	    var inputmcodee = $("#inputmcode").val();
 	  
 
 	    var data = {};
-	    data['dcode'] = inputdcode;
-	    data['mcode'] = inputmcode;
+	    data['dcode'] = inputdcodee;
+	    data['mcode'] = inputmcodee;
 	    data['cropyear'] = cropyear;
 	    
 	    $.ajax({
@@ -148,7 +148,7 @@
 </script>
 
 <body>
-	<div class="heading" colspan="20" style="text-align:center;"><b>Device Registration Details</b> </div>
+	<div class="heading" colspan="20" style="text-align:center;"><b>Non Web Land Entry Details</b> </div>
 	<p th:text="${msg}"></p>
 	<input type="hidden" id="inputdcode" th:value="${#session.getAttribute('dcode')}" />
 	<input type="hidden" id="inputmcode" th:value="${#session.getAttribute('mcode')}" />
@@ -173,12 +173,12 @@
 		</form>
 	</div>
 	<div class="container">
-		<form id="unlockreport" name="unlockreport" method="post">
+		<form id="unlockreport" name="unlockreport" >
 			<div align="center" id="divPrint">
-				<table id="databody" align="center" class="table table-striped border border-secondary">
+				<table id="tableStkId" align="center" class="table table-striped border border-secondary">
 					<thead>
 						<tr>
-							 <th> <b> S.No. </b> </th>
+						<th> <b> S.No. </b> </th>
                         <th> <b> Khata No  </b> </th>
                         <th> <b> Survey NO   </b> </th>  
                         <th> <b> Enjoyer Name  </b> </th>

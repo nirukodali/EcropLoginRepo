@@ -37,8 +37,15 @@ public class Rep_DownloadedDetailsIntfPartition {
 			part_key = seasonType + "0" + wbdcode + seasonYear; System.out.println("part_key==========>"+part_key);
 		}
 		
+		String tableName;
+		//String tableName = "ecrop" + seasonYear + "." + "cr_booking_partition_" + part_key;
+		if(seasonYear >= 2023) {
+			 tableName = "ecrop" + seasonYear + "." + "cr_booking_partition_" + part_key;	
+		}else {
+			 tableName =  "cr_booking_partition_" + part_key;
+		}
 		
-		String tableName = "ecrop" + seasonYear + "." + "cr_booking_partition_" + part_key; 
+		 
 		
 		System.out.println("tableName---------------->" + tableName);
 

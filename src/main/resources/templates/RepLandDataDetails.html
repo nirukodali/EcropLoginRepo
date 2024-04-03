@@ -94,7 +94,7 @@
 			});
 
 	function getData() {
-		
+		$("#databody").empty();
 		var cropyear = $("#cropyear").val();
 		if(cropyear == "" || cropyear == null){
 			alert("Please Select Cropyear");
@@ -120,8 +120,9 @@
 					data : JSON.stringify(data),
 					cache : false,
 					timeout : 600000,
-					success : function(resp) {
+					success : function(resp) {						
 						alert(JSON.stringify(resp));
+					
 						var sno = 0;
 
 						for (var j = 0; j < resp.length; j++) {
@@ -131,7 +132,7 @@
 							$("#databody").append(
 									'<tr style="fontsize:200px; font-weight: bold;">'
 											+ '<td>' + sno + '</td>'
-											+ '<td><a href="javascript:getVillData(\''+bean.dcode+'\',\''+bean.mcode+'\')">'+ bean.mname + '<\a></td>' 
+											+ '<td><a href="javascript:getVillData(\''+inputdcode+'\',\''+inputmcode+'\',\''+cropyear+'\')">'+ bean.mname + '<\a></td>' 
 											+ '<td>'+ bean.totrev + '</td>'
 											+ '<td>' + bean.downloadedcnt + '</td>'
 											+ '<td>' + bean.notdownloadedcnt + '</td>'
@@ -143,10 +144,11 @@
 				});
 	}
 	
-	function getVillData(dcode,mcode){
-		//alert("dcode===========>"+dcode+",mcode=========>"+mcode);
-		$("#dcode").val(dcode);
-		$("#mcode").val(mcode);
+	function getVillData(dcode,mcode,cropyear){
+		alert("dcode===========>"+dcode+",mcode=========>"+mcode+",cropyear=>"+cropyear);
+		$("#dcodee").val(dcode);
+		$("#mcodee").val(mcode);
+		$("#cropyearr").val(cropyear);
 		
 		document.forms['landdata'].submit();
 	}
@@ -185,13 +187,16 @@
 	<div class="container">
 		<form id="landdata" name="landdata" method="post" action="./villLandData">
 		
-		<input type="hidden" name="dcode" id="dcode" />
-		<input type="hidden" name="mcode" id="mcode" />
+<!-- 		<input type="text" name="dcodee" id="dcodee" />  -->
+<!-- 		<input type="text" name="mcodee" id="mcodee" />  -->
+<!-- 		<input type="text" name="cropyearr" id="cropyearr" /> -->
 		
-			<div align="center" id="divPrint">
-				<table id="databody" align="center"
+			
+		
+		<div align="center" id="divPrint" >
+				<table  align="center"
 					class="table table-striped border border-secondary">
-					<thead>
+					<thead >
 						<tr>
 						<th> <b> S.No.</b> </th>
                         <th> <b> Mandal</b> </th> 
@@ -200,12 +205,11 @@
                         <th> <b> No.of Villages Not Downloaded </b> </th> 
                         <th> <b> No.of Records Downloaded From Web Land  </b> </th>
 					</thead>
-					<tbody id="databody">
+					<tbody  id="databody">
 
 					</tbody>
 				</table>
 			</div>
-		</form>
 		<div align="center" style="color: black">
 			<input class="btn btn-primary"
 				name="ctl00$ContentPlaceHolder1$btnPrint" type="button"
@@ -215,7 +219,7 @@
 				onclick="tableToExcel('databody', 'Abstract')" value="Excel">
 			<!--			<input  class="btn btn-primary" type="button" value="Back" onclick="goBack()" />-->
 		</div>
-	</div>
+		</form>
 	</div>
 </body>
 

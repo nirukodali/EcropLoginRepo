@@ -63,14 +63,14 @@
 </head>
 <script>
 	$(document).ready(function () {
-		alert("get crop year");
+		//alert("get crop year");
 		$.ajax({
 			type: "get",
 			url: "./util/getAllSeason",
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
-				alert(JSON.stringify(resp));
+				//alert(JSON.stringify(resp));
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
 					$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
@@ -81,6 +81,7 @@
 
 
 	function getData() {
+		$("#databody").empty()
 		var cropyear = $("#cropyear").val();
 		if(cropyear == "" || cropyear == null){
 			alert("Please Select Cropyear");
@@ -89,7 +90,7 @@
 		var cropYear = $("#cropyear").val();
 		var mcode = $("#mcode").val();
 		var wbdcode = $("#wbdcode").val();
-		var userid = $("#userid").val();
+		//var userid = $("#userid").val();
 		
 		//alert("cropYear=>"+cropYear);
 		//alert("mcode=>"+mcode);
@@ -97,22 +98,21 @@
 		//alert("userid=>"+userid);
 		$.ajax({
 			type: "get",
-			url: "./util/rbk1?wbdcode=" + wbdcode + "&cropyear=" + cropYear + "&mcode=" + mcode + "&userid=" + userid,
+			url: "./util/rbk1?wbdcode=" + wbdcode + "&cropyear=" + cropYear + "&mcode=" + mcode,
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
 				$("#databody").empty();
-				alert(JSON.stringify(resp));
+				//alert(JSON.stringify(resp));
 				var sno = 0;
 				for (var j = 0; j < resp.length; j++) {
 					sno = sno + 1;
 					var bean = resp[j];
 					$("#databody").append('<tr style="fontsize:200px; font-weight: bold;">'
 						+ '<td>' + sno + '</td>'
-						+ '<td>' + bean.rbkuserid + '</td>'
-						+ '<td>' + bean.mao_alloted_ext + '</td>'
-						+ '<td>' + bean.vaa_alloted_ext + '</td>'
-						+ '<td>' + bean.occupant_extent + '</td>'
+						+ '<td>' + bean.srno_userid + '</td>'
+						+ '<td>' + bean.mao_allotted_ext + '</td>'
+						+ '<td>' + bean.vaa_allotted_ext + '</td>'
 						+ '</tr>');
 				}
 
@@ -169,7 +169,6 @@
 							<th> <b> RBK User ID </b> </th>
 							<th> <b> MAO Alloted Extent </b> </th>
 							<th> <b> VAA Alloted Extent</b> </th>
-							<th> <b> Occupant Extent </b> </th>
 						</tr>
 
 					</thead>

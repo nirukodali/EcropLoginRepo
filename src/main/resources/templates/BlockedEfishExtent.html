@@ -64,29 +64,53 @@
 
 </head>
 <script>
-	$(document).ready(function () {
-		//alert("gdgd");
-		var inputdcode = $("#inputdcode").val()
-		var inputmcode = $("#inputmcode").val()
-		var vcode = $("#vcode").val()
-		//alert("inputdcode======"+inputdcode)
-		//alert("inputmcode======"+inputmcode)
-		//alert("vcode======"+vcode)
-		$.ajax({
-			type: "get",
-			url: "./util/getAllVillages?dcode=" + inputdcode + "&mcode=" + inputmcode ,
-			cache: false,
-			timeout: 600000,
-			success: function (resp) {
-				//alert("sucess=>"+JSON.stringify(resp));
-				for (var j = 0; j < resp.length; j++) {
-					var bean = resp[j];
-					$("#vcode").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
-				}
+$(document).ready(function () {
+	//alert("get crop year");
+	$("#loadingsign").hide();
+	$.ajax({
+		type: "get",
+		url: "./util/getAllSeason",
+		cache: false,
+		timeout: 600000,
+		success: function (resp) {
+			//alert(JSON.stringify(resp));
+			for (var j = 0; j < resp.length; j++) {
+				var bean = resp[j];
+				$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
 			}
-		});
+		}
+	});
 });
+function getVillage() {
+	//alert("gdgd");
+var inputdcode = $("#inputdcode").val()
+var inputmcode = $("#inputmcode").val()
+var vcode = $("#vcode").val()
+
+$.ajax({
+	type: "get",
+	url: "./util/getAllVillages?dcode=" + inputdcode + "&mcode=" + inputmcode ,
+	cache: false,
+	timeout: 600000,
+	success: function (resp) {
+		//alert("sucess=>"+JSON.stringify(resp));
+		for (var j = 0; j < resp.length; j++) {
+			var bean = resp[j];
+			$("#vcode").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
+		}
+	}
+});
+}
+
 	function getData() {
+		$("#databody").empty();
+		
+		var cropyear = $("#cropyear").val();
+		if(cropyear == "" || cropyear == null){
+			alert("Please Select Cropyear");
+			return false;
+		}
+		
 		var village = $("#vcode").val();
 		if(village == "" || village == null){
 			alert("Please Select Village");
@@ -97,10 +121,20 @@
 		var inputmcode = $("#inputmcode").val()
 		var vcode = $("#vcode").val()
 		var userid = $("#userid").val();
- 
+		var cropyear = $("#cropyear").val();
+		
+		var data = {};
+		data['dcode'] = inputdcode;
+		data['mcode'] = inputmcode;
+		data['wbvcode'] = vcode;
+		data['userid'] = userid;
+		data['cropyear'] = cropyear;
+		
 		$.ajax({
-			type: "get",
-			url: "./util/blockedext?dcode=" + inputdcode + "&mcode=" + inputmcode + "&vcode=" + vcode,
+			type: "post",
+			url: "./util/blockedext",
+			contentType: 'application/json',
+			data: JSON.stringify(data),
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
@@ -152,7 +186,15 @@
 				<tr>
 					<td colspan="3"></td>
 				</tr>
+<tr>
+					<td align="right" width="30%"><b>Crop Year <font color="red">*</font></b></td>
 
+					<td align="left">
+						<select id="cropyear" name="cropyear" style="width: 200px" onchange="getVillage()">
+							<option value="">-------Select-------</option>
+						</select>
+					</td>
+				</tr>
 				<tr>
 					<td align="right" width="30%"><b>Villages <font color="red">*</font></b></td>
 

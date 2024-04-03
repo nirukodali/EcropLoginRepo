@@ -70,14 +70,12 @@
 </head>
 <script>
 	$(document).ready(function () {
-alert("jdsjdwsf");
 		$.ajax({
 			type: "get",
 			url: "./util/getAllSeason",
 			cache: false,
 			timeout: 600000,
 			success: function (resp) {
-				alert(JSON.stringify(resp));
 				for (var j = 0; j < resp.length; j++) {
 					var bean = resp[j];
 					$("#cropyear").append('<option value="' + bean.col1 + '">' + bean.col2 + '</option>');
@@ -89,6 +87,7 @@ alert("jdsjdwsf");
 
 
 	function getData() {
+		$("#databody").empty();
 		var cropYear = $("#cropyear").val();
 		var inputdcode = $("#inputdcode").val();
 		var inputmcode = $("#inputmcode").val();
@@ -111,7 +110,7 @@ alert("jdsjdwsf");
 				$("#databody").empty();
 				alert(JSON.stringify(resp));
 				alert(resp.length);
-				var sno = 0;
+				var sno = 0,a1=0,a2=0;
 				var totaloccup_extent = 0, tot_extentTotal = 0;
 				
 				var totalweb_extt = "0.0";
@@ -150,6 +149,12 @@ alert("jdsjdwsf");
 	
 					totalweb_extt =  parseFloat(web_extt) + parseFloat(nweb_extt) + parseFloat(ccrc_extt) + parseFloat(rofr_extt) + parseFloat(usus_extt);
 					totalweb_extt = totalweb_extt.toFixed(2);
+					
+					a1 = a1 + parseInt(totalweb_farmersss);
+					a2 = a2 + parseInt(totalweb_extt);
+					
+					
+					
 					$("#databody").append('<tr style="fontsize:200px; font-weight: bold;">'
 						+ '<td>'+sno+'</td>'
 						+ '<td>'+bean.wbevname+'</td>'
@@ -179,8 +184,8 @@ alert("jdsjdwsf");
 					+'<td>'+rofr_extt+'</td>'
 					+'<td>'+usus_farmers+'</td>'
 					+'<td>'+usus_extt+'</td>'
-					+'<td>'+totalweb_farmersss+'</td>'
-					+'<td>'+totalweb_extt+'</td>'
+					+'<td>'+ a1 +'</td>'
+					+'<td>'+ a2 +'</td>'
 				+'</tr>')
 			}
 		});

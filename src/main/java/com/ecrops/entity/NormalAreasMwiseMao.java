@@ -1,6 +1,10 @@
 package com.ecrops.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,13 +14,14 @@ public class NormalAreasMwiseMao {
 	
 	private String mname;
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String wbvname;
-	private Integer normalarea;
+	private BigDecimal normalarea;
 	public NormalAreasMwiseMao() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public NormalAreasMwiseMao(String mname, String wbvname, Integer normalarea) {
+	public NormalAreasMwiseMao(String mname, String wbvname, BigDecimal normalarea) {
 		super();
 		this.mname = mname;
 		this.wbvname = wbvname;
@@ -35,10 +40,10 @@ public class NormalAreasMwiseMao {
 	public void setWbvname(String wbvname) {
 		this.wbvname = wbvname;
 	}
-	public Integer getNormalarea() {
+	public BigDecimal getNormalarea() {
 		return normalarea;
 	}
-	public void setNormalarea(Integer normalarea) {
+	public void setNormalarea(BigDecimal normalarea) {
 		this.normalarea = normalarea;
 	}
 	@Override
